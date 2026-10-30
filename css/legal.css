@@ -1,0 +1,22 @@
+/* Vilkår og personvern – rolig lesekolonne. Bygger på css/om.css */
+.skip { position: absolute; left: -9999px; top: 8px; z-index: 100; padding: 10px 16px; border-radius: 999px; background: #fff; color: #000; font-weight: 600; text-decoration: none; }
+.skip:focus { left: 16px; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+.legal { max-width: 720px; margin: 0 auto; padding: 140px 24px 12vh; }
+.lg-head { margin-bottom: 48px; }
+.lg-eyebrow { margin: 0 0 10px; font-size: 15px; font-weight: 600; color: var(--ink-2); }
+.legal h1 { margin: 0; font-family: var(--font-display); font-size: clamp(40px, 7vw, 64px); line-height: 1.05; letter-spacing: -0.035em; }
+.lg-meta { margin: 14px 0 0; font-size: 14px; color: var(--ink-3); }
+.lg-lead { margin: 24px 0 0; font-size: clamp(18px, 2vw, 21px); line-height: 1.5; color: var(--ink-2); }
+.legal a { color: var(--blue); text-underline-offset: 3px; }
+.lg-toc { margin: 0 0 56px; padding: 22px 24px; border-radius: 20px; background: #141416; border: 1px solid rgba(255,255,255,.06); }
+.lg-toc ol { margin: 0; padding-left: 22px; columns: 2 240px; column-gap: 32px; font-size: 15px; line-height: 1.9; color: var(--ink-3); }
+.lg-toc a { color: var(--ink-2); text-decoration: none; }
+.lg-toc a:hover { color: var(--ink); }
+.legal section { padding: 28px 0; border-top: 1px solid rgba(255,255,255,.08); }
+.legal h2 { margin: 0 0 14px; font-family: var(--font-display); font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+.legal p, .legal li { font-size: 16px; line-height: 1.65; color: #c7c7cc; }
+.legal p { margin: 0 0 12px; }
+.legal ul { margin: 0 0 12px; padding-left: 20px; }
+.legal b { color: var(--ink); font-weight: 600; }

@@ -1,0 +1,102 @@
+/* ─────────────────────────────────────────────────────────────
+   Tjenester – film, foto & drone, design & animasjon (Apple-stil, alltid mørk)
+   Bygger på css/om.css (topplinje, meny, bunntekst, .reveal, .grad)
+   ───────────────────────────────────────────────────────────── */
+.skip { position: absolute; left: -9999px; top: 8px; z-index: 100; padding: 10px 16px; border-radius: 999px; background: #fff; color: #000; font-weight: 600; text-decoration: none; }
+.skip:focus { left: 16px; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Intro */
+.tj-hero { min-height: 92vh; min-height: 92svh; display: grid; place-content: center; text-align: center; padding: 120px 24px 10vh; }
+.tj-eyebrow, .tj-num { margin: 0 0 14px; font-size: clamp(15px, 1.4vw, 19px); font-weight: 600; letter-spacing: -0.01em; color: var(--ink-2); }
+.tj-h1 { margin: 0 auto; max-width: 12ch; font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(48px, 9vw, 120px); line-height: 1; letter-spacing: -0.045em; }
+.tj-lead { margin: 26px auto 0; max-width: 34ch; font-size: clamp(18px, 1.9vw, 24px); line-height: 1.45; color: var(--ink-2); letter-spacing: -0.01em; }
+.tj-jump { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 40px; }
+.tj-jump a, .tj-dock a { text-decoration: none; font-size: 15px; font-weight: 500; letter-spacing: -0.01em; }
+.tj-jump a { padding: 11px 20px; border-radius: 999px; color: var(--ink); background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1); transition: background .25s, transform .25s cubic-bezier(.2,1.4,.4,1); }
+.tj-jump a:hover { background: rgba(255,255,255,.14); }
+.tj-jump a:active { transform: scale(.96); }
+
+/* Seksjoner */
+.tj-sec { padding: 16vh 0 4vh; }
+.tj-head { max-width: 980px; margin: 0 auto; padding: 0 24px; text-align: center; }
+.tj-h2 { margin: 0 auto; max-width: 14ch; font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(40px, 7vw, 96px); line-height: 1.02; letter-spacing: -0.04em; }
+.tj-p { margin: 22px auto 0; max-width: 36ch; font-size: clamp(17px, 1.7vw, 22px); line-height: 1.5; color: var(--ink-2); letter-spacing: -0.01em; }
+
+/* Video i ramme: åpner seg mot full bredde mens man skroller (--e: 0 → 1) */
+.tj-media { --e: 0; margin: 9vh auto 0; padding: 0 16px; max-width: 1280px; }
+.tj-frame { position: relative; overflow: hidden; aspect-ratio: 16 / 9; background: #0b0b0c;
+  border-radius: 28px; transform: translateZ(0); }
+.tj-expand .tj-frame {
+  clip-path: inset(0 calc((1 - var(--e)) * 7%) round calc(28px - var(--e) * 10px));
+  border-radius: 0;
+  box-shadow: none;
+}
+.tj-frame video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  transform: scale(calc(1.12 - var(--e) * .12)); }
+.tj-media figcaption { margin: 16px 0 0; text-align: center; font-size: 14px; color: var(--ink-3); letter-spacing: -0.01em; }
+.tj-wide { max-width: none; padding: 0; }
+.tj-wide .tj-frame { aspect-ratio: 16 / 8; }
+@media (max-width: 700px) { .tj-wide .tj-frame { aspect-ratio: 4 / 5; } .tj-expand .tj-frame { clip-path: inset(0 calc((1 - var(--e)) * 5%) round calc(22px - var(--e) * 8px)); } }
+
+/* Animasjonen får et svakt lilla lys rundt seg, som fra stjernebildet */
+.tj-glow { position: relative; }
+.tj-glow::before { content: ""; position: absolute; inset: 8% 10%; z-index: -1; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(167,139,250,.28), rgba(232,121,249,.12) 55%, transparent);
+  filter: blur(40px); opacity: calc(.4 + var(--e) * .6); }
+.tj-space { position: relative; isolation: isolate; }
+
+/* Tre punkter under hver video */
+.tj-feats { list-style: none; margin: 8vh auto 0; padding: 0 24px; max-width: 1080px;
+  display: grid; gap: 34px; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .tj-feats { grid-template-columns: repeat(3, 1fr); gap: 40px; } }
+.tj-feats li { border-top: 1px solid rgba(255,255,255,.12); padding-top: 22px; }
+.tj-ico { display: block; font-size: 13px; font-weight: 600; color: var(--ink-3); letter-spacing: .02em; font-variant-numeric: tabular-nums; }
+.tj-feats h3, .tj-card-t h3 { margin: 10px 0 8px; font-family: var(--font-display); font-size: 21px; font-weight: 600; letter-spacing: -0.02em; }
+.tj-feats p, .tj-card-t p { margin: 0; font-size: 16px; line-height: 1.5; color: var(--ink-2); }
+
+/* Foto & drone: liten video + to kort ved siden av */
+.tj-split { display: grid; gap: 16px; max-width: 1280px; margin: 16px auto 0; padding: 0 16px; }
+@media (min-width: 900px) { .tj-split { grid-template-columns: 1.35fr 1fr; } }
+.tj-split .tj-card { margin: 0; padding: 0; max-width: none; }
+.tj-card .tj-frame { height: 100%; min-height: 260px; aspect-ratio: auto; }
+.tj-card .tj-frame video { transform: none; }
+.tj-cards { display: grid; gap: 16px; }
+.tj-card-t { padding: 30px 28px; border-radius: 28px; background: #141416; border: 1px solid rgba(255,255,255,.06); }
+.tj-card-t h3 { margin-top: 0; font-size: clamp(24px, 2.4vw, 30px); }
+@media (max-width: 899px) { .tj-card .tj-frame { aspect-ratio: 16 / 10; min-height: 0; } }
+
+/* Avslutning */
+.tj-cta { padding: 22vh 24px 18vh; text-align: center; }
+.tj-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 36px; }
+.tj-btn { display: inline-flex; align-items: center; height: 52px; padding: 0 28px; border-radius: 999px; text-decoration: none;
+  font-size: 17px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); background: rgba(255,255,255,.1);
+  transition: transform .25s cubic-bezier(.2,1.4,.4,1), background .25s; }
+.tj-btn.primary { background: #f5f5f7; color: #000; }
+.tj-btn:hover { background: rgba(255,255,255,.16); }
+.tj-btn.primary:hover { background: #fff; }
+.tj-btn:active { transform: scale(.96); }
+.tj-link { display: inline-flex; align-items: center; gap: 2px; margin-top: 26px; color: var(--blue); text-decoration: none; font-size: 17px; }
+.tj-link svg { width: 16px; height: 16px; transition: transform .25s; }
+.tj-link:hover svg { transform: translateX(3px); }
+
+/* Flytende snarvei nederst (vises etter introen) */
+.tj-dock { position: fixed; left: 50%; bottom: max(16px, env(safe-area-inset-bottom)); z-index: 40;
+  display: flex; gap: 2px; padding: 4px; border-radius: 999px;
+  background: rgba(30,30,32,.62); -webkit-backdrop-filter: blur(20px) saturate(170%); backdrop-filter: blur(20px) saturate(170%);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.1), 0 10px 30px rgba(0,0,0,.35);
+  transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
+  transition: opacity .4s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
+.tj-dock.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+.tj-dock a { padding: 9px 16px; border-radius: 999px; color: var(--ink-2); white-space: nowrap; transition: color .25s, background .3s; }
+.tj-dock a.on { color: #000; background: #f5f5f7; }
+.tj-dock a:not(.on):hover { color: var(--ink); }
+@media (max-width: 380px) { .tj-dock a { padding: 9px 12px; font-size: 14px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .tj-media { --e: 1 !important; }
+  .tj-dock { transition: none; }
+}
