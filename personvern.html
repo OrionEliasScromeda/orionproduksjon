@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>
+    /* Lett versjon: alle mobiler/nettbrett, svake maskiner (≤ 4 GB minne), sparemodus, treg tilkobling eller lav bildefrekvens
+       får html.lite – samme design, men uten de tyngste effektene. Test med ?lite eller ?full (huskes i fanen). */
+    (function () { try {
+      var d = document.documentElement, n = navigator, c = n.connection || {}, q = location.search, k = 'orion-lite', s = sessionStorage, m;
+      if (matchMedia('(pointer: coarse)').matches) d.classList.add('touch');   // mobil/nettbrett
+      if (/[?&]full\b/.test(q)) s.setItem(k, '0'); else if (/[?&]lite\b/.test(q)) s.setItem(k, '1');
+      m = s.getItem(k);
+      // to versjoner: PC får alltid den fulle, telefon/nettbrett alltid den lette (?lite / ?full overstyrer)
+      if (m ? m === '1' : d.classList.contains('touch')) d.classList.add('lite');
+    } catch (e) {} })();
+  </script>
+  <title>Personvern – Orion Produksjon</title>
+  <meta name="description" content="Slik behandler Orion Produksjon personopplysninger, og hvilke rettigheter du har.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/om.css">
+  <link rel="stylesheet" href="css/legal.css">
+</head>
+<body id="top">
+  <a class="skip" href="#innhold">Hopp til innhold</a>
+  <!-- Topplinje -->
+  <header class="om-top">
+    <a class="om-pill om-back" href="index.html" aria-label="Tilbake til forsiden">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5.5L8.5 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Orion</span>
+    </a>
+    <div class="om-right">
+      <a class="om-pill" href="index.html?kontakt">Kontakt</a>
+    <button class="om-pill menu-btn" type="button" aria-label="Meny" aria-expanded="false" aria-controls="meny">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line class="l l1" x1="4" y1="6" x2="20" y2="6"/><line class="l l2" x1="4" y1="12" x2="20" y2="12"/><line class="l l3" x1="4" y1="18" x2="20" y2="18"/>
+      </svg>
+    </button>
+    </div>
+  </header>
+  <div class="topbar">
+    <div class="nav-scrim" aria-hidden="true"></div>
+    <nav class="nav" id="meny" aria-label="Hovedmeny">
+      <div class="mm">
+        <div class="mm-pane mm-main">
+          <div class="mm-col mm-primary">
+            <h2 class="mm-label">Tjenester</h2>
+            <ul class="mm-big">
+              <li style="--k:0"><a href="om.html">Om</a></li>
+              <li style="--k:1"><a class="mm-more" href="tjenester.html#film" aria-controls="mm-film"><span class="mm-more-text">Film og videoproduksjon<small>3 tjenester · Film, foto &amp; drone, design</small></span><span class="mm-badge" aria-hidden="true"><svg class="mm-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5.5l6.5 6.5L9 18.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a></li>
+              <li style="--k:2"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">Nettsider &amp; digitale løsninger<span class="soon-wrap"><span class="soon-tag">Kommer snart</span></span></a></li>
+              <li style="--k:3"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">Markedsføring &amp; strategi<span class="soon-wrap"><span class="soon-tag">Kommer snart</span></span></a></li>
+              <li style="--k:4"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">AI &amp; automatisering<span class="soon-wrap"><span class="soon-tag">Kommer snart</span></span></a></li>
+              <li style="--k:5"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">App<span class="soon-wrap"><span class="soon-tag">Kommer</span></span></a></li>
+              <li style="--k:6"><a href="prisgrunnlaget.html">Prisgrunnlaget</a></li>
+            </ul>
+          </div>
+          <div class="mm-col mm-secondary mm-film-col" style="--k:5">
+            <h2 class="mm-label">Film og videoproduksjon</h2>
+            <ul class="mm-small"><li><a href="tjenester.html#film">Film &amp; videoproduksjon</a></li><li><a href="tjenester.html#foto">Foto &amp; drone</a></li><li><a href="tjenester.html#design">Grafisk design &amp; animasjon</a></li></ul>
+          </div>
+          <div class="mm-col mm-secondary" style="--k:6">
+            <h2 class="mm-label">Kom i gang</h2>
+            <ul class="mm-small">
+              <li><a href="index.html?kontakt">Ta kontakt</a></li>
+              <li><a href="index.html?kontakt">Diskuter en idé</a></li>
+              <li><a href="index.html?pris">Beregn en pris</a></li>
+              <li><a href="prisgrunnlaget.html">Prisgrunnlaget</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="mm-pane mm-sub" id="mm-film">
+          <button class="mm-back" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5.5L8.5 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Tjenester</span></button>
+          <h2 class="mm-label">Film og videoproduksjon</h2>
+          <ul class="mm-big"><li style="--k:0"><a href="tjenester.html#film">Film &amp; videoproduksjon</a></li><li style="--k:1"><a href="tjenester.html#foto">Foto &amp; drone</a></li><li style="--k:2"><a href="tjenester.html#design">Grafisk design &amp; animasjon</a></li></ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <main id="innhold" class="legal">
+    <header class="lg-head">
+      <p class="lg-eyebrow">Orion Produksjon</p>
+      <h1>Personvern</h1>
+      <p class="lg-meta">Oppdatert 30. oktober 2026</p>
+      <p class="lg-lead">Her forklarer vi hvilke opplysninger vi får når du bruker nettsiden eller tar kontakt, hva vi bruker dem til, og hvilke rettigheter du har.</p>
+    </header>
+
+    <section id="p1"><h2>Hvem som er ansvarlig</h2>
+      <p>Orion Produksjon, drevet av Orion Elias Scromeda på Siggerud i Follo, er ansvarlig for behandlingen av personopplysningene som beskrives her. Spørsmål om personvern sendes til <a href="mailto:info@orionproduksjon.no">info@orionproduksjon.no</a>.</p>
+    </section>
+
+    <section id="p2"><h2>Når du sender en forespørsel</h2>
+      <p>Når du bruker kontaktskjemaet, får vi det du fyller inn: navn, e-post, eventuelt telefonnummer, hva du ønsker hjelp med, beskrivelse, lenker, ønskede datoer og eventuelt prisestimatet fra kalkulatoren. Sender du oss e-post direkte, får vi det som står i e-posten.</p>
+      <p><b>Formål:</b> å svare deg, avklare oppdraget og eventuelt gi deg et tilbud.</p>
+      <p><b>Grunnlag:</b> at du har bedt oss om noe før en eventuell avtale (personvernforordningen artikkel 6 nr. 1 bokstav b), og vår berettigede interesse i å svare på henvendelser (artikkel 6 nr. 1 bokstav f).</p>
+      <p><b>Mottaker:</b> Skjemaet sendes gjennom tjenesten <a href="https://web3forms.com/privacy" target="_blank" rel="noopener">Web3Forms</a>, som videresender innholdet som e-post til oss. Web3Forms kan behandle opplysningene utenfor EU/EØS – se deres personvernerklæring for hvordan de gjør det.</p>
+      <p><b>Hvor lenge:</b> Vi beholder henvendelsen så lenge vi trenger den for å følge den opp. Fører den ikke til et oppdrag, sletter vi den når den ikke lenger trengs. Blir det et oppdrag, må enkelte opplysninger – for eksempel på fakturaer – oppbevares så lenge bokføringsreglene krever.</p>
+      <p>Vi selger ikke opplysningene dine og bruker dem ikke til markedsføring uten at du har sagt ja til det.</p>
+    </section>
+
+    <section id="p3"><h2>Kunder og oppdrag</h2>
+      <p>Blir det et oppdrag, bruker vi kontaktopplysningene dine til å gjennomføre det: planlegge, levere og fakturere. Grunnlaget er avtalen med deg og våre plikter etter bokføringsreglene. Opptak av personer og bruk av bilder og film avtales særskilt for hvert oppdrag – se <a href="vilkar.html#v13">vilkårene, punkt 13</a>.</p>
+    </section>
+
+    <section id="lagring"><h2>Informasjonskapsler og lagring i nettleseren</h2>
+      <p>Vi setter ingen informasjonskapsler (cookies), og vi bruker ikke analyse-, annonse- eller sporingsverktøy.</p>
+      <p>Priskalkulatoren husker valgene dine mens fanen er åpen, slik at de følger med mellom kalkulatoren og Prisgrunnlaget. Dette lagres bare i din egen nettleser (sessionStorage) og forsvinner når du lukker fanen. Trykker du «Lagre» i kalkulatoren, lagres valgene i nettleseren din (localStorage) til du starter på nytt eller sletter nettleserdataene. Nettsiden husker også i fanen om den skal vises i en lettere versjon for svake mobiler (sessionStorage). Ingenting av dette sendes til oss.</p>
+    </section>
+
+    <section id="p5"><h2>Tjenester nettsiden henter innhold fra</h2>
+      <p>For å vise nettsiden og kartene henter nettleseren din innhold fra noen eksterne tjenester. Da får disse tjenestene IP-adressen din og vanlig teknisk informasjon om nettleseren, slik det skjer når du besøker en hvilken som helst nettside:</p>
+      <ul>
+        <li><b>Google Fonts</b> – skrifttyper.</li>
+        <li><b>unpkg</b> – kartbiblioteket Leaflet, bare når et kart åpnes.</li>
+        <li><b>Esri (ArcGIS)</b> – kartbildene.</li>
+        <li><b>OpenStreetMap (Nominatim)</b> – når du søker etter et sted eller trykker i kartet i kalkulatoren, sendes søketeksten eller punktet for å finne stedsnavnet.</li>
+        <li><b>OSRM</b> – beregner kjøreruten fra Siggerud til stedet du velger i kalkulatoren.</li>
+      </ul>
+      <p>Vi får ikke disse opplysningene selv. Tjenestene behandler dem etter sine egne personvernerklæringer, og noen av dem kan behandle data utenfor EU/EØS.</p>
+    </section>
+
+    <section id="p6"><h2>Rettighetene dine</h2>
+      <p>Du kan be om innsyn i opplysningene vi har om deg, og be oss rette eller slette dem. Du kan også be oss begrense behandlingen, protestere mot behandling som bygger på berettiget interesse, og be om å få opplysningene dine utlevert. Send en e-post til <a href="mailto:info@orionproduksjon.no">info@orionproduksjon.no</a>, så svarer vi så raskt vi kan og senest innen én måned.</p>
+      <p>Mener du at vi behandler personopplysninger i strid med reglene, kan du klage til <a href="https://www.datatilsynet.no" target="_blank" rel="noopener">Datatilsynet</a>. Vi setter pris på om du tar kontakt med oss først, så vi kan rydde opp.</p>
+    </section>
+
+    <section id="p7"><h2>Endringer</h2>
+      <p>Endrer vi hvordan vi behandler personopplysninger, oppdaterer vi denne siden og datoen øverst.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer" aria-labelledby="footer-title">
+    <h2 id="footer-title" class="visually-hidden">Om nettstedet</h2>
+    <div class="ft-inner">
+      <div class="ft-top">
+        <a class="ft-brand" href="#top" data-to-top aria-label="Orion Produksjon – til toppen">
+          <svg viewBox="737 193 380 380" aria-hidden="true"><path d="M857.27,321.28c-20.17,15.69-32.83,38.33-34.85,63.68-3.48,43.7,23.11,84.84,64.56,100.26,32.34,12.03,67.79,4.73,92.7-18.96,15.12-14.38,24.89-33,29.09-53.52,6.2-30.34.76-61.74-15.66-87.77-21.23-33.67-59.53-51.42-99.34-46.29-30.61,3.95-56.08,19.29-77.03,42.1,16.45-23.58,44.22-38.2,72.21-43.57,19.82-3.8,39.91-3.48,58.83,1.35,52.39,12.54,87.47,58.45,86.42,111.13-.83,41.4-25.1,77.99-64.14,94.59-58.92,25.04-132.43-.76-151.16-63.65-14.03-47.11,11.95-97.32,60.12-112.14-7.42,5.03-14.92,7.5-21.75,12.81"/><path d="M927.73,203.5c3,120,3,153,15,165s45,12,165,15c-120,3-153,3-165,15s-12,45-15,165c-3-120-3-153-15-165s-45-12-165-15c120-3,153-3,165-15s12-45,15-165Z"/></svg>
+          <span>Orion Produksjon</span>
+        </a>
+        <p class="ft-tag">Film, foto, drone og design – direkte fra personen som lager det.</p>
+      </div>
+
+      <nav class="ft-cols" aria-label="Bunntekst">
+        <div class="ft-col">
+          <h3>Tjenester</h3>
+          <ul>
+            <li><a href="tjenester.html#film">Film og videoproduksjon</a></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>Nettsider &amp; digitale løsninger</span><em>Kommer snart</em></span></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>Markedsføring &amp; strategi</span><em>Kommer snart</em></span></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>AI &amp; automatisering</span><em>Kommer snart</em></span></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>App</span><em>Kommer</em></span></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h3>Orion</h3>
+          <ul>
+            <li><a href="om.html?orion">Om Orion</a></li>
+            <li><a href="index.html#prosjekter">Tidligere prosjekter</a></li>
+            <li><a href="index.html?kontakt">Kontakt</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h3>Kom i gang</h3>
+          <ul>
+            <li><a href="index.html?kontakt">Diskuter en idé</a></li>
+            <li><a href="index.html?pris">Beregn en pris</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h3>Kontakt</h3>
+          <ul>
+            <li><a href="mailto:info@orionproduksjon.no">info@orionproduksjon.no</a></li>
+            <li><button class="ft-place" type="button" aria-haspopup="dialog">Follo / Oslo-området</button></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="ft-social" aria-label="Sosiale medier">
+        <a href="https://www.instagram.com/orion.produksjon" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/></svg></a>
+        <a class="off" aria-disabled="true" aria-label="YouTube (kommer)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10.2 9.2v5.6l4.8-2.8z" fill="currentColor"/></svg></a>
+        <a href="https://www.tiktok.com/@orion.produksjon" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 3v11.2a3.7 3.7 0 1 1-3.7-3.7M14.5 3c.4 2.6 2.1 4.3 4.8 4.6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="off" aria-disabled="true" aria-label="LinkedIn (kommer)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-3.4c0-1.6 1-2.6 2.3-2.6s2.2.9 2.2 2.6v3.4M11.5 10.5v6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></a>
+      </div>
+
+      <div class="ft-bottom">
+        <p>© <span data-year>2026</span> Orion Produksjon.</p>
+        <ul class="ft-legal">
+          <li><a href="personvern.html">Personvern</a></li>
+          <li><a href="personvern.html#lagring">Informasjonskapsler</a></li>
+          <li><a href="vilkar.html">Vilkår</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/legal.js"></script>
+  <script>
+    // «Kommer snart»-punktene i menyen: ingen navigasjon, menyen blir stående åpen, merket vises ved trykk
+    document.querySelectorAll('.mm-soon').forEach((el) => el.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      el.classList.add('tapped'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('tapped'), 1800);
+    }));
+  </script>
+  <script type="module" src="js/ft-map.js"></script>
+</body>
+</html>

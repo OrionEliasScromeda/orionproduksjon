@@ -1,0 +1,1216 @@
+<!doctype html>
+<html lang="no" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    /* Lett versjon: alle mobiler/nettbrett, svake maskiner (≤ 4 GB minne), sparemodus, treg tilkobling eller lav bildefrekvens
+       får html.lite – samme design, men uten de tyngste effektene. Test med ?lite eller ?full (huskes i fanen). */
+    (function () { try {
+      var d = document.documentElement, n = navigator, c = n.connection || {}, q = location.search, k = 'orion-lite', s = sessionStorage, m;
+      if (matchMedia('(pointer: coarse)').matches) d.classList.add('touch');   // mobil/nettbrett
+      if (/[?&]full\b/.test(q)) s.setItem(k, '0'); else if (/[?&]lite\b/.test(q)) s.setItem(k, '1');
+      m = s.getItem(k);
+      // to versjoner: PC får alltid den fulle, telefon/nettbrett alltid den lette (?lite / ?full overstyrer)
+      if (m ? m === '1' : d.classList.contains('touch')) d.classList.add('lite');
+    } catch (e) {} })();
+  </script>
+  <title>Orion Produksjon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    /* Samme fonter som apple.com: SF Pro Display (overskrifter) og SF Pro Text (brødtekst).
+       SF Pro er systemfonten på iPhone/iPad/Mac og hentes derfra (Apple tillater ikke
+       at fontfilene legges ut på andre nettsider). Andre enheter får Inter, nærmeste åpne font. */
+    :root {
+      --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --font-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    body {
+      font-family: var(--font-text);
+      -webkit-font-smoothing: antialiased;
+      background: #0b0b14;
+      color: #fff;
+    }
+    .nav {
+      position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+      z-index: 5;
+      display: flex; gap: 24px; align-items: center;
+      padding: 14px 28px;
+      font-size: 15px;
+    }
+    .nav > * { position: relative; z-index: 2; }
+    .nav a { color: #fff; text-decoration: none; opacity: .85; white-space: nowrap; }
+    .nav a:hover { opacity: 1; }
+
+    /* Topplinje med menyen (egen glass-rot) */
+    /* Topplinja er bare en plassholder; knappene er ekte glass (.lglass) som
+       viser og bøyer alt som faktisk ligger bak dem – video, farger og tekst */
+    .topbar {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 20;
+      height: 0;
+    }
+
+
+    /* ── Ekte flytende glass (Apple-stil): backdrop-filter ser ALT som ligger bak ──
+       Frost + metning, lys kant og speilglans. I Chrome legges det i tillegg på en
+       SVG-forvrengning langs kantene (refraksjon), bygget per knapp i JS. */
+    .lglass.lglass {
+      --glass-r: 999px;
+      border-radius: var(--glass-r);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.20), rgba(255,255,255,0.06) 55%, rgba(255,255,255,0.10));
+      -webkit-backdrop-filter: blur(10px) saturate(160%) brightness(1.04);
+              backdrop-filter: blur(10px) saturate(160%) brightness(1.04);
+      box-shadow:
+        inset 0 1px 0.5px rgba(255,255,255,0.65),
+        inset 0 -1px 1px rgba(255,255,255,0.18),
+        inset 0 0 0 1px rgba(255,255,255,0.16),
+        inset 0 0 18px rgba(255,255,255,0.06),
+        0 10px 28px rgba(0,0,0,0.22),
+        0 1px 3px rgba(0,0,0,0.16);
+      transition: transform .25s cubic-bezier(.2, 1.4, .4, 1), box-shadow .25s;
+    }
+    .lglass::before {
+      content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+      background: radial-gradient(120% 90% at 28% -10%, rgba(255,255,255,0.38), rgba(255,255,255,0) 55%);
+      mix-blend-mode: screen; opacity: .8;
+    }
+    .lglass > * { position: relative; z-index: 1; }
+    .lglass:active { transform: scale(.96); }
+    a.lglass.btn:active, .stage .btn.lglass:active { transform: translateX(-50%) scale(.96); }
+    .nav.lglass { --glass-r: 24px; }
+    @media (max-width: 640px) { .nav.lglass { --glass-r: 22px; } }
+
+    /* Kontakt-knapp som fester seg øverst ved siden av menyknappen (telefon) */
+    .btn-pin {
+      position: absolute; top: 16px; right: 78px; z-index: 6;
+      height: 52px; padding: 15px 22px;
+      font-size: 15px; line-height: 22px; font-weight: 600; white-space: nowrap;
+      color: #fff; text-decoration: none;
+      visibility: hidden; pointer-events: none;
+    }
+    .btn-pin span { position: relative; z-index: 2; }
+
+    /* Menyknapp (kun telefon) */
+    .menu-btn {
+      position: absolute; top: 16px; right: 16px; z-index: 6;
+      width: 52px; height: 52px;
+      display: grid; place-items: center;
+      visibility: hidden; pointer-events: none;
+      border: 0; background: none; color: #fff; cursor: pointer;
+    }
+    .menu-btn svg { position: relative; z-index: 2; width: 22px; height: 22px; }
+    .menu-btn .l { transition: transform .25s ease, opacity .2s ease; transform-origin: 12px 12px; }
+    .menu-btn[aria-expanded="true"] .l1 { transform: translateY(6px) rotate(45deg); }
+    .menu-btn[aria-expanded="true"] .l2 { opacity: 0; }
+    .menu-btn[aria-expanded="true"] .l3 { transform: translateY(-6px) rotate(-45deg); }
+
+    @media (max-width: 640px) {
+      /* Lite hjørne rundt menyknappen så Kontakt kan gli helt opp uten å bli skjult.
+         Når Kontakt har festet seg (eller menyen er åpen) blir det en toppstripe
+         som toner mykt ut nederst, så innholdet glir pent under */
+      .topbar { position: fixed; }
+      .menu-btn { visibility: visible; pointer-events: auto; }
+      /* Skjules med visibility (ikke display:none) så glasset beholder størrelsen sin */
+      .nav {
+        visibility: hidden; opacity: 0; pointer-events: none;
+        transition: opacity .2s ease, visibility 0s linear .2s;
+        top: 80px; left: auto; right: 16px; transform: none;
+        flex-direction: column; align-items: stretch; gap: 0;
+        min-width: 220px; padding: 8px;
+        font-size: 17px;
+      }
+      .nav.open { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity .2s ease; }
+      .nav a { padding: 14px 16px; opacity: .9; }
+      .nav a + a { border-top: 1px solid rgba(255,255,255,0.08); }
+      .stage .btn { bottom: 40px; padding: 20px 56px; font-size: 19px; line-height: 22px; }
+      .topbar.pinned .btn-pin { visibility: visible; pointer-events: auto; }
+    }
+
+    .btn {
+      position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%);
+      z-index: 5;
+      display: inline-block;
+      padding: 14px 32px;
+      color: #fff; font-size: 16px; font-weight: 600;
+      text-decoration: none;
+    }
+    .btn span { position: relative; z-index: 2; }
+
+    body { background: #000; }
+    /* mens en automatisk glidetur spiller kan ikke siden skrolles */
+    html.locked { overflow: hidden; touch-action: none; overscroll-behavior: none; }
+    html, body { overflow-x: clip; }
+
+    /* ── Videoer med fargeskift (som apple.com) ── */
+    /* Det røde arket dras opp OVER overskriften: reel starter én skjermhøyde før .work slutter */
+    .reel { position: relative; z-index: 2; margin-top: -100vh; margin-top: -100svh; }
+    .reel-item:first-child { clip-path: inset(0 round var(--rr, 0px) var(--rr, 0px) 0 0); }
+    .reel-item:last-child {
+      height: 240vh; height: 240svh;
+      /* nederste del toner mykt ut, så «La oss skape noe.» avdekkes uten hard kant */
+      --fade: 110vh;
+      /* lang, myk (utjevnet) uttoning så kanten ikke kan sees */
+      --fm: linear-gradient(to bottom,
+        #000 calc(100% - var(--fade)),
+        rgba(0,0,0,.94) calc(100% - var(--fade) * .85),
+        rgba(0,0,0,.8)  calc(100% - var(--fade) * .7),
+        rgba(0,0,0,.6)  calc(100% - var(--fade) * .55),
+        rgba(0,0,0,.4)  calc(100% - var(--fade) * .4),
+        rgba(0,0,0,.2)  calc(100% - var(--fade) * .25),
+        rgba(0,0,0,.06) calc(100% - var(--fade) * .1),
+        transparent);
+      -webkit-mask-image: var(--fm); mask-image: var(--fm);
+    }
+    /* Alle videofargene virvles sammen før «La oss skape noe.» avdekkes under */
+    .reel-fixed { z-index: 1; }
+    .mix { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: var(--mix, 0); overflow: hidden; }
+    .mix-spin {
+      position: absolute; inset: -25%;
+      filter: blur(70px) saturate(140%);
+      transform: rotate(calc(var(--mix, 0) * 160deg)) scale(calc(0.7 + var(--mix, 0) * 0.5));
+    }
+    .mix-spin i { position: absolute; width: 55%; height: 55%; border-radius: 50%; mix-blend-mode: screen; opacity: .75;
+      transform: translate(calc((1 - var(--mix, 0)) * var(--dx)), calc((1 - var(--mix, 0)) * var(--dy))); }
+    .mix-spin i:nth-child(1) { background: #d7262f; left: 5%;  top: 8%;  --dx: -30%; --dy: -20%; }
+    .mix-spin i:nth-child(2) { background: #2f5f9e; right: 5%; top: 5%;  --dx: 30%;  --dy: -25%; }
+    .mix-spin i:nth-child(3) { background: #e9741c; left: 25%; top: 40%; --dx: -10%; --dy: 35%; }
+    .mix-spin i:nth-child(4) { background: #7b3ff2; right: 8%; bottom: 6%; --dx: 35%; --dy: 25%; }
+    .mix-spin i:nth-child(5) { background: #1f9d55; left: 4%; bottom: 4%; --dx: -35%; --dy: 30%; }
+    /* «La oss skape noe.» ligger stille under og avdekkes – den skroller ikke opp */
+    .create.create { z-index: 1; }
+    /* ── Telefonversjonen: enkel og rolig ──
+       Ingen fargeovergang på slutten – man scroller rett ned til «La oss skape noe.» på svart bakgrunn */
+    html.touch .reel-item:last-child { height: 115vh; height: 115svh; -webkit-mask-image: none; mask-image: none; }
+    html.touch .mix, html.touch .create .aurora, html.touch .create-grain, html.touch .create::after { display: none; }
+    html.touch .create.create { background: #000; }
+    /* Kontakt og meny: små, nøytrale knapper som ikke stjeler oppmerksomhet */
+    html.touch .topbar .btn-pin.lglass, html.touch .topbar .menu-btn.lglass {
+      top: 14px; height: 38px;
+      background: rgba(20, 20, 22, .55) !important;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12) !important;
+    }
+    html.touch .topbar .lglass::before { display: none; }
+    html.touch .topbar .menu-btn { right: 14px; width: 38px; }
+    html.touch .topbar .menu-btn svg { width: 18px; height: 18px; }
+    html.touch .topbar .btn-pin { right: 60px; padding: 8px 15px; font-size: 14px; font-weight: 500; }
+    .reel-item:last-child .reel-fixed { will-change: transform, opacity, filter; }
+    .reel-item {
+      height: 115vh; height: 115svh;
+      background: var(--c);
+      /* rammen under er position:fixed – klippes til denne delen, så videoene "vaskes" over */
+      clip-path: inset(0);
+    }
+    .reel-fixed {
+      position: fixed; left: 0; right: 0; top: var(--reel-top, 14vh);
+      display: grid; justify-items: center; padding: 0 16px;
+    }
+    .reel-frame {
+      width: min(1100px, 100%); aspect-ratio: 16 / 9;
+      border-radius: clamp(12px, 1.6vw, 22px); overflow: hidden;
+      background: #000;
+      /* realistisk skygge i lag: tett kontaktskygge + myk skygge som sprer seg nedover */
+      box-shadow:
+        0 1px 2px rgba(0,0,0,0.16),
+        0 4px 8px rgba(0,0,0,0.12),
+        0 12px 24px rgba(0,0,0,0.14),
+        0 28px 48px -8px rgba(0,0,0,0.22),
+        0 52px 90px -24px rgba(0,0,0,0.30);
+      transform: translateZ(0);
+    }
+    .reel-frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .reel-bar {
+      width: min(1100px, 100%); margin-top: 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .reel-bar .reel-toggle { margin-left: auto; }
+    /* Knapp under videoen: dempet, i samme stil som pauseknappen ved siden av */
+    .reel-cta {
+      display: inline-flex; align-items: center; gap: 2px;
+      height: 36px; padding: 0 10px 0 16px; border-radius: 999px;
+      background: rgba(0,0,0,0.16); color: rgba(255,255,255,0.86);
+      font-family: var(--font-text); font-size: 14px; font-weight: 500; letter-spacing: -0.01em;
+      text-decoration: none; white-space: nowrap;
+      transition: background-color .2s, color .2s;
+    }
+    .reel-cta svg { width: 15px; height: 15px; opacity: .8; transition: transform .25s ease; }
+    .reel-cta:hover { background: rgba(0,0,0,0.26); color: #fff; }
+    .reel-cta:hover svg { transform: translateX(2px); }
+    .reel-cta:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+    .reel-toggle {
+      width: 36px; height: 36px; border-radius: 50%; border: 0; cursor: pointer;
+      display: grid; place-items: center;
+      background: rgba(0,0,0,0.22); color: #fff;
+      transition: background-color .2s;
+    }
+    .reel-toggle:hover { background: rgba(0,0,0,0.36); }
+    .reel-toggle:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+    .reel-toggle svg { width: 16px; height: 16px; fill: currentColor; }
+    .reel-toggle .i-play, .reel-item.paused .reel-toggle .i-pause { display: none; }
+    .reel-item.paused .reel-toggle .i-play { display: block; }
+    @media (max-width: 640px) { .reel { --reel-top: 112px; } .reel-fixed { padding: 0 12px; } }
+    /* PC: litt lengre fargedeler og litt mindre ramme, så knappen under videoen rekker å synes */
+    @media (min-width: 641px) {
+      .reel { --reel-top: 11vh; }
+      .reel-item { height: 140vh; height: 140svh; }
+      .reel-frame, .reel-bar { width: min(1040px, 100%); }
+    }
+    /* toppstripen på telefon får fargen til delen under, i stedet for svart */
+
+    /* ── «La arbeidet snakke for seg selv.» ── */
+    .work { position: relative; z-index: 1; height: 200vh; height: 200svh; }
+    .work-pin {
+      position: sticky; top: 0; height: 100vh; height: 100svh;
+      display: grid; place-items: center; padding: 0 20px;
+    }
+    .work-title {
+      font-family: var(--font-display);
+      font-size: clamp(44px, 9vw, 112px); line-height: 1.04;
+      letter-spacing: -0.015em; font-weight: 600;
+      text-align: center; max-width: 17ch; color: #f5f5f7;
+    }
+    .work-title .ww {
+      display: inline-block;
+      opacity: var(--o, 0.1); transition: opacity .12s linear;
+      transform: translateY(var(--wy, 0px)) scale(var(--ws, 1));
+      filter: blur(var(--wb, 0px));
+    }
+
+    /* ── Menyen (alle skjermstørrelser): rund knapp øverst til høyre åpner et premium glasspanel ── */
+    .topbar { position: fixed; }
+    .menu-btn { visibility: visible; pointer-events: auto; }
+    .topbar .nav {
+      position: fixed; top: 80px; right: 16px; left: auto; z-index: 30;
+      width: min(380px, calc(100vw - 32px)); max-height: calc(100svh - 100px); overflow: auto;
+      display: block; padding: 20px 10px 12px; transform: none; font-size: 17px;
+      --glass-r: 28px;
+      background: linear-gradient(180deg, rgba(30,30,34,0.78), rgba(18,18,20,0.84));
+      -webkit-backdrop-filter: blur(34px) saturate(170%) brightness(.9);
+              backdrop-filter: blur(34px) saturate(170%) brightness(.9);
+      box-shadow: inset 0 1px 0.5px rgba(255,255,255,0.28), inset 0 0 0 1px rgba(255,255,255,0.09),
+                  0 30px 80px rgba(0,0,0,0.55), 0 2px 8px rgba(0,0,0,0.3);
+      visibility: hidden; opacity: 0; pointer-events: none;
+      transform-origin: calc(100% - 26px) -14px;
+      scale: .92; filter: blur(8px);
+      transition: opacity .28s ease, scale .45s cubic-bezier(.2, 1.2, .3, 1), filter .3s ease, visibility 0s linear .3s;
+    }
+    .topbar .nav::before { display: none; }
+    .topbar .nav.open { visibility: visible; opacity: 1; pointer-events: auto; scale: 1; filter: none; transition: opacity .25s ease, scale .5s cubic-bezier(.2, 1.25, .3, 1), filter .3s ease; }
+    @media (min-width: 641px) { .topbar .nav { top: 92px; right: 24px; } }
+    .nav-head {
+      margin: 0 0 8px; padding: 0 14px;
+      font-family: var(--font-text); font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+      color: rgba(235,235,245,0.5);
+    }
+    .nav-list { list-style: none; margin: 0; padding: 0; }
+    .topbar .nav a { white-space: normal; opacity: 1; border: 0; }
+    .nav-list a {
+      display: grid; grid-template-columns: 34px 1fr 16px; align-items: center; gap: 6px;
+      padding: 13px 14px; border-radius: 16px; color: #f5f5f7; text-decoration: none;
+      font-family: var(--font-display); font-size: 18px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.25;
+      transition: background-color .2s;
+    }
+    .nav-list li + li a { box-shadow: 0 -1px 0 rgba(255,255,255,0.06); }
+    .nav-list li + li a:hover, .nav-list li:hover + li a { box-shadow: none; }
+    .nav-list .n { font-family: var(--font-text); font-size: 13px; font-weight: 500; color: rgba(235,235,245,0.42); font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+    .nav-list .chev, .nav-cta .chev { width: 15px; height: 15px; color: rgba(235,235,245,0.35); transition: transform .25s ease, color .2s; }
+    .nav-list a:hover, .nav-list a:focus-visible { background: rgba(255,255,255,0.08); outline: none; }
+    .nav-list a:hover .chev { transform: translateX(3px); color: #f5f5f7; }
+    .nav-cta {
+      display: flex; align-items: center; justify-content: center; gap: 4px; margin: 12px 4px 2px;
+      height: 46px; border-radius: 999px; background: #f5f5f7; color: #0b0b0d !important;
+      font-family: var(--font-text); font-size: 16px; font-weight: 600; letter-spacing: -0.01em; text-decoration: none;
+      transition: background-color .2s, transform .25s cubic-bezier(.2, 1.3, .3, 1);
+    }
+    .nav-cta .chev { color: #0b0b0d; }
+    .nav-cta:hover { background: #fff; }
+    .nav-cta:active { transform: scale(.97); }
+    .nav-cta:focus-visible { outline: 2px solid #2997ff; outline-offset: 3px; }
+    /* innholdet glir inn ett etter ett når panelet åpnes */
+    .topbar .nav .nav-head, .topbar .nav li, .topbar .nav .nav-cta { opacity: 0; translate: 0 8px; transition: opacity .2s, translate .2s; }
+    .topbar .nav.open .nav-head, .topbar .nav.open li, .topbar .nav.open .nav-cta {
+      opacity: 1; translate: 0 0;
+      transition: opacity .45s ease, translate .55s cubic-bezier(.2, 1, .3, 1);
+      transition-delay: calc(.06s + var(--k, 0) * .035s);
+    }
+    .topbar .nav.open .nav-cta { transition-delay: .32s; }
+    @media (prefers-reduced-motion: reduce) {
+      .topbar .nav, .topbar .nav * { transition: none !important; scale: 1 !important; filter: none !important; translate: none !important; }
+    }
+
+    /* Bakgrunnen dempes og blir uskarp når menyen er åpen */
+    .nav-scrim {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none;
+      background: rgba(0,0,0,0.45);
+      -webkit-backdrop-filter: blur(14px) saturate(120%); backdrop-filter: blur(14px) saturate(120%);
+      opacity: 0; transition: opacity .4s ease;
+    }
+    .topbar:has(.nav.open) .nav-scrim { opacity: 1; pointer-events: auto; }
+    /* Gruppe som kan foldes ut */
+    .nav-toggle {
+      width: 100%; display: grid; grid-template-columns: 34px 1fr 16px; align-items: center; gap: 6px;
+      padding: 13px 14px; border: 0; border-radius: 16px; background: none; cursor: pointer; text-align: left;
+      color: #f5f5f7; font-family: var(--font-display); font-size: 18px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.25;
+      box-shadow: 0 -1px 0 rgba(255,255,255,0.06); transition: background-color .2s;
+    }
+    .nav-toggle:hover, .nav-toggle:focus-visible { background: rgba(255,255,255,0.08); outline: none; }
+    .nav-toggle .n { font-family: var(--font-text); font-size: 13px; font-weight: 500; color: rgba(235,235,245,0.42); font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+    .nav-toggle .chev { width: 15px; height: 15px; color: rgba(235,235,245,0.45); transition: transform .35s cubic-bezier(.2, 1, .3, 1); }
+    .nav-toggle[aria-expanded="true"] .chev { transform: rotate(180deg); color: #f5f5f7; }
+    .nav-sub { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s cubic-bezier(.2, 1, .3, 1); }
+    .nav-group.open .nav-sub { grid-template-rows: 1fr; }
+    .nav-sub > ul { overflow: hidden; list-style: none; margin: 0; padding: 0 0 0 40px; }
+    .nav-sub a {
+      display: grid; grid-template-columns: 1fr 16px; align-items: center; gap: 6px;
+      padding: 10px 14px; border-radius: 12px; color: rgba(235,235,245,0.78); text-decoration: none;
+      font-family: var(--font-text); font-size: 16px; letter-spacing: -0.01em;
+      opacity: 0; translate: 0 -4px; transition: opacity .2s, translate .2s, background-color .2s, color .2s;
+    }
+    .nav-group.open .nav-sub a { opacity: 1; translate: 0 0; transition: opacity .35s ease .08s, translate .4s cubic-bezier(.2, 1, .3, 1) .08s, background-color .2s, color .2s; }
+    .nav-group.open .nav-sub li:nth-child(2) a { transition-delay: .13s, .13s, 0s, 0s; }
+    .nav-group.open .nav-sub li:nth-child(3) a { transition-delay: .18s, .18s, 0s, 0s; }
+    .nav-sub a:hover, .nav-sub a:focus-visible { background: rgba(255,255,255,0.07); color: #f5f5f7; outline: none; }
+    .nav-sub .chev { width: 13px; height: 13px; color: rgba(235,235,245,0.3); }
+    .nav-group + li a { box-shadow: 0 -1px 0 rgba(255,255,255,0.06); }
+
+    /* ── Meny i Apple-stil: flyout fra toppen (PC), helskjerm med undermeny (telefon) ── */
+    .topbar .menu-btn, .topbar .btn-pin { z-index: 40; }
+    .topbar .nav {
+      position: fixed; inset: 0 0 auto 0; z-index: 30; width: auto; max-height: 100svh; overflow: hidden auto;
+      padding: 0; border-radius: 0; scale: 1; filter: none; transform: none;
+      background: rgba(22,22,23,0.86);
+      -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);
+      box-shadow: none;
+      visibility: hidden; opacity: 0; pointer-events: none;
+      clip-path: inset(0 0 100% 0);
+      transition: clip-path .32s cubic-bezier(.4, 0, .6, 1), opacity .2s ease .12s, visibility 0s linear .35s;
+    }
+    .topbar .nav.open {
+      visibility: visible; opacity: 1; pointer-events: auto; clip-path: inset(0 0 0 0); scale: 1; filter: none;
+      transition: clip-path .5s cubic-bezier(.4, 0, .2, 1), opacity .15s ease;
+    }
+    .nav-scrim { background: rgba(0,0,0,0.38); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+    .mm { position: relative; max-width: 1024px; margin: 0 auto; padding: 92px 22px 64px; }
+    .mm-label { margin: 0 0 14px; font-family: var(--font-text); font-size: 12px; font-weight: 400; letter-spacing: -0.01em; color: #86868b; }
+    .mm ul { list-style: none; margin: 0; padding: 0; }
+    .topbar .nav a { white-space: normal; opacity: 1; }
+    .mm-big a {
+      display: inline-flex; align-items: center; gap: 8px; padding: 5px 0;
+      font-family: var(--font-display); font-size: 24px; line-height: 1.17; font-weight: 600; letter-spacing: .009em;
+      color: #e8e8ed; text-decoration: none; transition: color .2s;
+    }
+    .mm-small a {
+      display: inline-block; padding: 5px 0;
+      font-family: var(--font-text); font-size: 12px; line-height: 1.34; font-weight: 600; letter-spacing: -0.01em;
+      color: #e8e8ed; text-decoration: none; transition: color .2s;
+    }
+    .mm a:hover, .mm a:focus-visible { color: #fff; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; outline: none; }
+    .mm-chev { width: 18px; height: 18px; color: #86868b; display: none; }
+    .mm-main { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr); gap: 0 56px; }
+    .mm-sub { display: none; }
+    .mm-back { display: inline-flex; align-items: center; gap: 2px; margin: 0 0 22px -6px; padding: 6px; border: 0; background: none; color: #86868b; font: inherit; font-size: 15px; cursor: pointer; }
+    .mm-back svg { width: 18px; height: 18px; }
+    .mm-back:hover { color: #e8e8ed; }
+    /* innholdet tones inn ovenfra, ett element etter ett (som apple.com) */
+    .mm-primary .mm-label, .mm-big li, .mm-secondary { opacity: 0; translate: 0 -6px; transition: opacity .15s, translate .15s; }
+    .nav.open .mm-primary .mm-label, .nav.open .mm-big li, .nav.open .mm-secondary {
+      opacity: 1; translate: 0 0; transition: opacity .4s ease, translate .45s cubic-bezier(.2, .8, .2, 1);
+      transition-delay: calc(.12s + var(--k, 0) * .03s);
+    }
+    @media (max-width: 833px) {
+      .topbar .nav { inset: 0; height: 100svh; background: rgba(22,22,23,0.97); }
+      .nav-scrim { display: none; }
+      .mm { padding: 96px 32px 48px; overflow: hidden; min-height: 100%; }
+      .mm-main { display: block; }
+      .mm-big a { font-size: 28px; line-height: 1.14; font-weight: 600; letter-spacing: .007em; padding: 6px 0; }
+      .mm-more { justify-content: space-between; width: 100%; }
+      .mm-chev { display: block; }
+      .mm-film-col { display: none; }
+      .mm-secondary { margin-top: 36px; }
+      .mm-small a { font-size: 17px; font-weight: 400; color: #a1a1a6; padding: 7px 0; }
+      .mm-pane { transition: translate .45s cubic-bezier(.4, 0, .2, 1), opacity .3s ease; }
+      .mm-sub { display: block; position: absolute; inset: 0; padding: 96px 32px 48px; translate: 100% 0; opacity: 0; pointer-events: none; }
+      .nav.sub-open .mm-main { translate: -30% 0; opacity: 0; pointer-events: none; }
+      .nav.sub-open .mm-sub { translate: 0 0; opacity: 1; pointer-events: auto; }
+    }
+    @media (prefers-reduced-motion: reduce) { .topbar .nav, .mm-pane, .mm * { transition: none !important; } }
+
+    /* «Film og videoproduksjon» viser tydelig at den har mer inni seg */
+    .mm-more-text { display: flex; flex-direction: column; gap: 3px; }
+    .mm-more-text small { font-family: var(--font-text); font-size: 13px; font-weight: 400; letter-spacing: -0.01em; color: #86868b; }
+    .mm-badge { display: none; }
+    @media (min-width: 834px) {
+      /* PC: kolonnen med undertjenestene lyser opp når man peker på «Film og videoproduksjon» */
+      .mm-film-col { transition: opacity .25s; }
+      .mm-main:has(.mm-more:hover) .mm-film-col .mm-label { color: #e8e8ed; }
+      .mm-main:has(.mm-more:hover) .mm-film-col { opacity: 1; }
+      .mm-more-text small { margin-bottom: 2px; }
+    }
+    @media (max-width: 833px) {
+      .mm-more .mm-chev { display: block; width: 16px; height: 16px; color: #e8e8ed; }
+      .mm-badge {
+        display: grid; place-items: center; flex: none; width: 34px; height: 34px; border-radius: 50%;
+        background: rgba(255,255,255,0.1); transition: background-color .2s, transform .25s cubic-bezier(.2, 1.3, .3, 1);
+      }
+      .mm-more:hover .mm-badge, .mm-more:active .mm-badge { background: rgba(255,255,255,0.18); }
+      .mm-more:active .mm-badge { transform: translateX(3px); }
+      .mm-more { text-decoration: none !important; }
+      .mm-more-text small { font-size: 14px; }
+    }
+  </style>
+  <link rel="stylesheet" href="css/thread.css">
+  <link rel="stylesheet" href="css/create.css">
+</head>
+<body>
+  <!-- Forsiden: Orion-logoen eksploderer til en blekktråd som følger scrollingen (js/thread.js, css/thread.css) -->
+  <main class="thread-front" id="top">
+    <div class="front-dim" aria-hidden="true"></div>
+    <div class="front-rise" aria-hidden="true"></div>
+    <canvas id="thread" aria-hidden="true"></canvas>
+    <canvas id="thread-top" aria-hidden="true"></canvas>
+    <h1 class="visually-hidden">Orion Produksjon</h1>
+    <section class="tsec hero" aria-label="Orion Produksjon"></section>
+    <section class="tsec">
+      <div class="tbox lglass">
+          <h2>Hva er Orion Produksjon?</h2>
+          <p class="lead">Et lite, effektivt produksjonsstudio drevet av Orion&nbsp;Elias&nbsp;Scromeda.</p>
+          <p class="body">Du snakker direkte med personen som planlegger, filmer, klipper og designer. Ingen mellomledd, ingen unødvendige kostnader og ikke noe stort byråapparat i bakgrunnen.</p>
+          <a class="more" href="om.html?orion">Bli kjent med Orion<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </section>
+    <section class="tsec">
+      <div class="tbox lglass right">
+          <h2>Mer kreativitet. Mindre kostnader.</h2>
+          <p class="body">Store resultater krever ikke alltid store produksjoner. Med smarte løsninger, moderne teknologi og riktig utstyr får du mest mulig kvalitet ut av budsjettet ditt.</p>
+          <a class="more" href="#arbeid">Se tidligere prosjekter<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </section>
+    <section class="tsec">
+      <div class="tbox lglass ring">
+          <h2>Direkte kontakt. Ingen mellomledd.</h2>
+          <p class="body">Fra første idé til siste detalj samarbeider du med personen som skaper innholdet. Ingen kompliserte prosesser, unødvendige møter eller dyre mellomledd.</p>
+          <a class="more" href="prisgrunnlaget.html">Slik er prisene satt<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </section>
+    <section class="tsec last">
+      <div class="tbox lglass center">
+          <h2>Din idé. Helt uforpliktende.</h2>
+          <p class="body">Fortell hva du ser for deg. Vi utforsker mulighetene, finner den beste løsningen og gir deg et tydelig pristilbud. Du bestemmer om vi skal gå videre.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Overskriften lyses opp ord for ord med skrollingen -->
+  <section class="work" id="arbeid" aria-labelledby="arbeid-tittel">
+    <div class="work-pin">
+      <h2 class="work-title" id="arbeid-tittel">La arbeidet snakke for seg selv.</h2>
+    </div>
+  </section>
+
+  <!-- Videoer: hver fargedel har sin egen faste videoramme som bare synes innenfor delen,
+       så den neste videoen "vaskes" inn når fargegrensen skroller forbi (som på apple.com) -->
+  <section class="reel" aria-label="Utvalgte prosjekter">
+    <div class="reel-item" id="prosjekter" style="--c:#d7262f" data-src="video/01">
+      <div class="reel-fixed">
+        <div class="reel-frame"><video muted playsinline loop preload="none" poster="video/01-poster.jpg" aria-label="Intro – Orion Elias"></video></div>
+        <div class="reel-bar">
+          <a class="reel-cta" href="om.html?orion">Bli bedre kjent med Orion<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <button class="reel-toggle" type="button" aria-label="Sett video på pause"><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.8v12.4a.8.8 0 0 0 1.2.7l10-6.2a.8.8 0 0 0 0-1.4l-10-6.2A.8.8 0 0 0 8 5.8Z"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="reel-item" style="--c:#2f5f9e" data-src="video/02">
+      <div class="reel-fixed">
+        <div class="reel-frame"><video muted playsinline loop preload="none" poster="video/02-poster.jpg" aria-label="Kampen om fjell"></video></div>
+        <div class="reel-bar">
+          <button class="reel-toggle" type="button" aria-label="Sett video på pause"><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.8v12.4a.8.8 0 0 0 1.2.7l10-6.2a.8.8 0 0 0 0-1.4l-10-6.2A.8.8 0 0 0 8 5.8Z"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="reel-item" style="--c:#e9741c" data-src="video/03">
+      <div class="reel-fixed">
+        <div class="reel-frame"><video muted playsinline loop preload="none" poster="video/03-poster.jpg" aria-label="Kvikk Lunsj"></video></div>
+        <div class="reel-bar">
+          <button class="reel-toggle" type="button" aria-label="Sett video på pause"><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.8v12.4a.8.8 0 0 0 1.2.7l10-6.2a.8.8 0 0 0 0-1.4l-10-6.2A.8.8 0 0 0 8 5.8Z"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="reel-item" style="--c:#7b3ff2" data-src="video/04">
+      <div class="reel-fixed">
+        <div class="reel-frame"><video muted playsinline loop preload="none" poster="video/04-poster.jpg" aria-label="Svevende skjermer"></video></div>
+        <div class="reel-bar">
+          <button class="reel-toggle" type="button" aria-label="Sett video på pause"><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.8v12.4a.8.8 0 0 0 1.2.7l10-6.2a.8.8 0 0 0 0-1.4l-10-6.2A.8.8 0 0 0 8 5.8Z"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="reel-item" style="--c:#1f9d55" data-src="video/05">
+      <div class="mix" aria-hidden="true"><div class="mix-spin"><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="reel-fixed">
+        <div class="reel-frame"><video muted playsinline loop preload="none" poster="video/05-poster.jpg" aria-label="Kvikk Lunsj – skogen"></video></div>
+        <div class="reel-bar">
+          <button class="reel-toggle" type="button" aria-label="Sett video på pause"><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.8v12.4a.8.8 0 0 0 1.2.7l10-6.2a.8.8 0 0 0 0-1.4l-10-6.2A.8.8 0 0 0 8 5.8Z"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- «La oss skape noe.» – Orion Contact og Orion Estimate (js/create.js, css/create.css) -->
+  <section class="create" id="lag" data-manual-reveal aria-labelledby="lag-tittel">
+    <div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="create-grain" aria-hidden="true"></div>
+    <div class="create-inner">
+      <div class="create-kicker reveal" style="--rd:.1s">Orion Produksjon</div>
+      <h2 class="create-title reveal" id="lag-tittel" style="--rd:.06s">La oss skape noe.</h2>
+      <p class="create-lead reveal" style="--rd:.75s">Velg hvordan du vil starte. Uansett vei får du et tydelig svar – og du bestemmer selv om vi skal gå videre.</p>
+      <div class="paths">
+        <button class="path reveal" type="button" data-open="contact" style="--rd:.95s;--g1:#ff9f6e;--g2:#ff4f8b;--g3:#b46bff">
+          <span class="path-icon chat" aria-hidden="true"></span>
+          <h3>Jeg vil diskutere en idé</h3>
+          <p>Fortell hva du ser for deg. Vi finner løsningen sammen.</p>
+          <span class="go">Start samtalen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </button>
+        <button class="path reveal" type="button" data-open="estimate" style="--rd:1.6s;--g1:#5ac8fa;--g2:#4f7dff;--g3:#a46bff">
+          <span class="path-icon sliders" aria-hidden="true"></span>
+          <h3>Jeg vil beregne en pris</h3>
+          <p>Bygg din egen produksjon og få et uforpliktende prisestimat på sekunder.</p>
+          <span class="go">Bygg produksjonen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </button>
+      </div>
+      <p class="create-note reveal" style="--rd:2s">Uforpliktende. Du betaler ingenting før du har sagt ja.</p>
+      <a class="to-top" href="#">
+        <span class="to-top-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        Til toppen
+      </a>
+    </div>
+  </section>
+
+  <footer class="site-footer" aria-labelledby="footer-title">
+    <h2 id="footer-title" class="visually-hidden">Om nettstedet</h2>
+    <div class="ft-inner">
+      <div class="ft-top">
+        <a class="ft-brand" href="#" data-to-top aria-label="Orion Produksjon – til toppen">
+          <svg viewBox="737 193 380 380" aria-hidden="true"><path d="M857.27,321.28c-20.17,15.69-32.83,38.33-34.85,63.68-3.48,43.7,23.11,84.84,64.56,100.26,32.34,12.03,67.79,4.73,92.7-18.96,15.12-14.38,24.89-33,29.09-53.52,6.2-30.34.76-61.74-15.66-87.77-21.23-33.67-59.53-51.42-99.34-46.29-30.61,3.95-56.08,19.29-77.03,42.1,16.45-23.58,44.22-38.2,72.21-43.57,19.82-3.8,39.91-3.48,58.83,1.35,52.39,12.54,87.47,58.45,86.42,111.13-.83,41.4-25.1,77.99-64.14,94.59-58.92,25.04-132.43-.76-151.16-63.65-14.03-47.11,11.95-97.32,60.12-112.14-7.42,5.03-14.92,7.5-21.75,12.81"/><path d="M927.73,203.5c3,120,3,153,15,165s45,12,165,15c-120,3-153,3-165,15s-12,45-15,165c-3-120-3-153-15-165s-45-12-165-15c120-3,153-3,165-15s12-45,15-165Z"/></svg>
+          <span>Orion Produksjon</span>
+        </a>
+        <p class="ft-tag">Film, foto, drone og design – direkte fra personen som lager det.</p>
+      </div>
+
+      <nav class="ft-cols" aria-label="Bunntekst">
+        <div class="ft-col">
+          <h3>Tjenester</h3>
+          <ul>
+            <li><a href="tjenester.html#film">Film og videoproduksjon</a></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>Nettsider &amp; digitale løsninger</span><em>Kommer snart</em></span></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>Markedsføring &amp; strategi</span><em>Kommer snart</em></span></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>AI &amp; automatisering</span><em>Kommer snart</em></span></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>App</span><em>Kommer</em></span></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h3>Orion</h3>
+          <ul>
+            <li><a href="om.html?orion">Om Orion</a></li>
+            <li><a href="#prosjekter">Tidligere prosjekter</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h3>Kom i gang</h3>
+          <ul>
+            <li><a href="#" data-open-ft="contact">Diskuter en idé</a></li>
+            <li><a href="#" data-open-ft="estimate">Beregn en pris</a></li>
+              <li><a href="prisgrunnlaget.html">Prisgrunnlaget</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h3>Kontakt</h3>
+          <ul>
+            <li><a href="mailto:info@orionproduksjon.no">info@orionproduksjon.no</a></li>
+            <li><button class="ft-place" type="button" aria-haspopup="dialog">Follo / Oslo-området</button></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="ft-social" aria-label="Sosiale medier">
+        <a href="https://www.instagram.com/orion.produksjon" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/></svg></a>
+        <a class="off" aria-disabled="true" aria-label="YouTube (kommer)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10.2 9.2v5.6l4.8-2.8z" fill="currentColor"/></svg></a>
+        <a href="https://www.tiktok.com/@orion.produksjon" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 3v11.2a3.7 3.7 0 1 1-3.7-3.7M14.5 3c.4 2.6 2.1 4.3 4.8 4.6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="off" aria-disabled="true" aria-label="LinkedIn (kommer)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-3.4c0-1.6 1-2.6 2.3-2.6s2.2.9 2.2 2.6v3.4M11.5 10.5v6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></a>
+      </div>
+
+      <div class="ft-bottom">
+        <p>© <span data-year>2026</span> Orion Produksjon.</p>
+        <ul class="ft-legal">
+          <li><a href="personvern.html">Personvern</a></li>
+          <li><a href="personvern.html#lagring">Informasjonskapsler</a></li>
+          <li><a href="vilkar.html">Vilkår</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Topplinje: egen glass-rot. På telefon ligger den fast øverst til høyre -->
+  <div class="topbar">
+
+
+    <a class="btn-pin lglass" href="#kontakt">
+      <span>Kontakt</span>
+    </a>
+
+    <button class="menu-btn lglass" aria-label="Meny" aria-expanded="false" aria-controls="meny">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line class="l l1" x1="4" y1="6" x2="20" y2="6"/><line class="l l2" x1="4" y1="12" x2="20" y2="12"/><line class="l l3" x1="4" y1="18" x2="20" y2="18"/>
+      </svg>
+    </button>
+
+    <div class="nav-scrim" aria-hidden="true"></div>
+    <nav class="nav" id="meny" aria-label="Hovedmeny">
+      <div class="mm">
+        <div class="mm-pane mm-main">
+          <div class="mm-col mm-primary">
+            <h2 class="mm-label">Tjenester</h2>
+            <ul class="mm-big">
+              <li style="--k:0"><a href="om.html">Om</a></li>
+              <li style="--k:1"><a class="mm-more" href="tjenester.html#film" aria-controls="mm-film"><span class="mm-more-text">Film og videoproduksjon<small>3 tjenester · Film, foto &amp; drone, design</small></span><span class="mm-badge" aria-hidden="true"><svg class="mm-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5.5l6.5 6.5L9 18.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a></li>
+              <li style="--k:2"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">Nettsider &amp; digitale løsninger<span class="soon-wrap"><span class="soon-tag">Kommer snart</span></span></a></li>
+              <li style="--k:3"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">Markedsføring &amp; strategi<span class="soon-wrap"><span class="soon-tag">Kommer snart</span></span></a></li>
+              <li style="--k:4"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">AI &amp; automatisering<span class="soon-wrap"><span class="soon-tag">Kommer snart</span></span></a></li>
+              <li style="--k:5"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">App<span class="soon-wrap"><span class="soon-tag">Kommer</span></span></a></li>
+              <li style="--k:6"><a href="prisgrunnlaget.html">Prisgrunnlaget</a></li>
+            </ul>
+          </div>
+          <div class="mm-col mm-secondary mm-film-col" style="--k:5">
+            <h2 class="mm-label">Film og videoproduksjon</h2>
+            <ul class="mm-small"><li><a href="tjenester.html#film">Film &amp; videoproduksjon</a></li><li><a href="tjenester.html#foto">Foto &amp; drone</a></li><li><a href="tjenester.html#design">Grafisk design &amp; animasjon</a></li></ul>
+          </div>
+          <div class="mm-col mm-secondary" style="--k:6">
+            <h2 class="mm-label">Kom i gang</h2>
+            <ul class="mm-small">
+              <li><a href="#kontakt">Ta kontakt</a></li>
+              <li><a href="#" data-open-ft="contact">Diskuter en idé</a></li>
+              <li><a href="#" data-open-ft="estimate">Beregn en pris</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="mm-pane mm-sub" id="mm-film">
+          <button class="mm-back" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5.5L8.5 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Tjenester</span></button>
+          <h2 class="mm-label">Film og videoproduksjon</h2>
+          <ul class="mm-big"><li style="--k:0"><a href="tjenester.html#film">Film &amp; videoproduksjon</a></li><li style="--k:1"><a href="tjenester.html#foto">Foto &amp; drone</a></li><li style="--k:2"><a href="tjenester.html#design">Grafisk design &amp; animasjon</a></li></ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <script type="module">
+    // (LiquidGlass-biblioteket ble ikke brukt av noe element – fjernet: 57 kB mindre JS, og menyen
+    //  venter ikke lenger på at fontene er lastet før den settes opp)
+    const isLite = () => document.documentElement.classList.contains('lite');
+    // Berøringsskjerm (iPhone/Android): nettleserens egen, myke scrolling skal aldri overstyres
+    const isTouch = matchMedia('(pointer: coarse)').matches;
+    // Fast skjermhøyde (= CSS 100vh). innerHeight endrer seg når adresselinja på iPhone glir inn og ut,
+    // og da ville animasjonene hoppet litt midt i scrollingen.
+    const vhProbe = document.createElement('div');
+    vhProbe.setAttribute('aria-hidden', 'true');
+    vhProbe.style.cssText = 'position:fixed;top:0;left:0;width:0;height:100vh;visibility:hidden;pointer-events:none';
+    document.body.append(vhProbe);
+    let VH = vhProbe.offsetHeight || innerHeight;
+    addEventListener('resize', () => { VH = vhProbe.offsetHeight || innerHeight; });
+
+    // Nedtrekksmeny på telefon
+    const btn = document.querySelector('.menu-btn');
+    const nav = document.querySelector('.nav');
+    const topbar = document.querySelector('.topbar');
+    const isPhone = matchMedia('(max-width: 640px)');
+    const pinBtn = document.querySelector('.btn-pin');
+    const redraw = () => {};
+    let menuShown = false, pinned = false, closeTimer;
+    // Topplinja er sin egen glass-rot: den gjøres bare så stor som det som vises
+    const sizeTopbar = () => {
+      redraw();
+    };
+    const setOpen = (open) => {
+      clearTimeout(closeTimer);
+      if (open) { menuShown = true; sizeTopbar(); }
+      else closeTimer = setTimeout(() => { menuShown = false; sizeTopbar(); }, 220);
+      nav.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      redraw();
+    };
+    btn.addEventListener('click', (e) => { e.stopPropagation(); setOpen(!nav.classList.contains('open')); });
+    nav.addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
+    document.addEventListener('click', (e) => { if (!nav.contains(e.target)) setOpen(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const clamp01 = (v) => Math.min(1, Math.max(0, v));
+
+    // ── Bakgrunnen toner til svart, og «La arbeidet snakke for seg selv.» lyses opp ord for ord ──
+    const work = document.querySelector('.work');
+    const front = document.querySelector('.thread-front');
+    const workTitle = document.querySelector('.work-title');
+    const wText = workTitle.textContent.trim();
+    workTitle.setAttribute('aria-label', wText);
+    workTitle.textContent = '';
+    const wWords = wText.split(' ').map((word, i, arr) => {
+      const w = document.createElement('span');
+      w.className = 'ww'; w.textContent = word; w.setAttribute('aria-hidden', 'true');
+      workTitle.append(w);
+      if (i < arr.length - 1) workTitle.append(' ');
+      return w;
+    });
+    const firstReel = document.querySelector('.reel-item');
+    const updateWork = () => {
+      const top = work.getBoundingClientRect().top;
+      // starter mens punktene fortsatt synes, helt svart når delen er halvveis opp
+      const dim = clamp01((VH * 1.15 - top) / (VH * 0.75));
+      document.documentElement.style.setProperty('--dim', dim.toFixed(3));
+      // ordene lyses opp etter hverandre mens man skroller videre
+      const p = reduced ? 1 : clamp01((VH * 0.43 - top) / (VH * 0.36));   // ferdig tent før det røde kommer   // lyses opp mens den glir fra bunnen og opp til midten – ingen stopp
+      // r: det røde arket dras opp over overskriften (0 → dekker hele skjermen)
+      const r = clamp01(-top / VH);
+      wWords.forEach((w, i) => {
+        const k = clamp01(p * wWords.length - i);
+        // ordene løfter seg, blir uskarpe og forsvinner etter hverandre mens arket kommer
+        const x = reduced ? 0 : clamp01(r * 1.7 - i * 0.09);
+        const e = x * x;
+        w.style.setProperty('--o', ((0.1 + 0.9 * k) * (1 - e)).toFixed(3));
+        w.style.setProperty('--wy', `${(-e * (70 + i * 16)).toFixed(1)}px`);
+        w.style.setProperty('--ws', (1 - e * 0.12).toFixed(3));
+        w.style.setProperty('--wb', `${(e * 12).toFixed(1)}px`);
+      });
+      // runde hjørner på arket som retter seg ut når det når toppen
+      firstReel.style.setProperty('--rr', `${(36 * (1 - r)).toFixed(1)}px`);
+    };
+    addEventListener('scroll', () => requestAnimationFrame(updateWork), { passive: true });
+    addEventListener('resize', updateWork);
+    updateWork();
+
+    // ── Videoene: spiller bare når delen er på skjermen, lastes inn i god tid ──
+    const reelItems = [...document.querySelectorAll('.reel-item')];
+    // svake mobiler og sparemodus får alltid 720p (mindre å laste og dekode)
+    const pickRes = () => (!isLite() && !navigator.connection?.saveData && Math.min(innerWidth, 1100) * Math.min(devicePixelRatio || 1, 2) > 1000 ? '1080' : '720');
+    const loadVideo = (item) => {
+      const v = item.querySelector('video');
+      if (v.dataset.loaded) return;
+      v.dataset.loaded = '1';
+      v.src = `${item.dataset.src}-${pickRes()}.mp4`;
+      v.preload = 'auto';
+      v.load();
+    };
+    // spill av når delen synes; sørger alltid for at videoen er lastet først,
+    // og prøver igjen når nok data er klart (play() kan ellers avbrytes av innlastingen)
+    const setPlaying = (item, play) => {
+      const v = item.querySelector('video');
+      item.dataset.visible = play ? '1' : '';
+      if (play) loadVideo(item);
+      if (play && !item.classList.contains('paused') && !reduced) v.play().catch(() => {});
+      else v.pause();
+    };
+    reelItems.forEach((item) => {
+      const v = item.querySelector('video');
+      const retry = () => { if (item.dataset.visible && v.paused && !item.classList.contains('paused') && !reduced) v.play().catch(() => {}); };
+      v.addEventListener('loadeddata', retry);
+      v.addEventListener('canplay', retry);
+    });
+    // last inn når delen er én skjermhøyde unna
+    // Mobil: bare videoen like i nærheten lastes, og videoer langt unna tømmes fra minnet igjen.
+    // (iPhone har lite plass til videodekoding – mange videoer samtidig får Safari til å krasje siden.)
+    const unloadVideo = (item) => {
+      const v = item.querySelector('video');
+      if (!v.dataset.loaded) return;
+      v.pause(); v.removeAttribute('src'); v.load();
+      delete v.dataset.loaded;
+    };
+    const loadObs = new IntersectionObserver((es) => es.forEach((e) => {
+      if (e.isIntersecting) loadVideo(e.target);
+      else if (isLite()) unloadVideo(e.target);
+    }), { rootMargin: isLite() ? '25% 0px' : '150% 0px' });
+    // spill bare de som synes
+    // hver gang man scroller inn i en video, starter den fra begynnelsen
+    // (spoles tilbake når delen forlater skjermen – da skjer dekodingen av første bilde mens den ikke synes,
+    //  i stedet for å gi et lite hakk akkurat når den kommer inn)
+    const playObs = new IntersectionObserver((es) => es.forEach((e) => {
+      setPlaying(e.target, e.isIntersecting);
+      if (!e.isIntersecting) { const v = e.target.querySelector('video'); if (v.currentTime > 0.05) try { v.currentTime = 0; } catch {} }
+    }), { threshold: 0, rootMargin: '0px 0px -38% 0px' });   // starter først når fargedelen har kommet et stykke opp, der videoen synes
+    reelItems.forEach((item) => {
+      loadObs.observe(item); playObs.observe(item);
+      if (reduced) item.classList.add('paused');
+      item.querySelector('.reel-toggle').addEventListener('click', () => {
+        const paused = item.classList.toggle('paused');
+        item.querySelector('.reel-toggle').setAttribute('aria-label', paused ? 'Spill av video' : 'Sett video på pause');
+        setPlaying(item, !paused);
+      });
+    });
+
+
+    // ── Refraksjon for .lglass: et forvrengningskart per knapp som bøyer det som ligger bak
+    //    langs kantene, som en ekte glasslinse. Bare Chromium støtter dette; Safari/iPhone
+    //    får frostet glass med lys kant og glans (samme uttrykk, uten bøyningen).
+    if (/Chrome\//.test(navigator.userAgent) && !reduced && !isLite()) {
+      const NS = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('width', '0'); svg.setAttribute('height', '0');
+      svg.style.position = 'absolute';
+      document.body.append(svg);
+      const makeMap = (w, h, r, band) => {
+        const c = document.createElement('canvas'); c.width = w; c.height = h;
+        const ctx = c.getContext('2d'); const img = ctx.createImageData(w, h);
+        const hx = w / 2 - r, hy = h / 2 - r;
+        for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+          const px = x + 0.5 - w / 2, py = y + 0.5 - h / 2;
+          const qx = Math.abs(px) - hx, qy = Math.abs(py) - hy;
+          let nx, ny, depth;
+          if (qx > 0 && qy > 0) { const l = Math.hypot(qx, qy) || 1; nx = qx / l; ny = qy / l; depth = r - l; }
+          else if (qx > qy) { nx = 1; ny = 0; depth = r - qx; }
+          else { nx = 0; ny = 1; depth = r - qy; }
+          nx *= Math.sign(px) || 1; ny *= Math.sign(py) || 1;
+          const f = depth < band ? Math.pow(1 - Math.max(0, depth) / band, 2) : 0;
+          const k = (y * w + x) * 4;
+          img.data[k] = 128 + nx * f * 127; img.data[k + 1] = 128 + ny * f * 127; img.data[k + 2] = 128; img.data[k + 3] = 255;
+        }
+        ctx.putImageData(img, 0, 0);
+        return c.toDataURL();
+      };
+      let n = 0;
+      const refract = (el) => {
+        const w = Math.round(el.offsetWidth), h = Math.round(el.offsetHeight);
+        if (!w || !h) return;
+        const r = Math.min(h / 2, parseFloat(getComputedStyle(el).borderTopLeftRadius) || h / 2);
+        const id = el.dataset.lgId || (el.dataset.lgId = `lg${n++}`);
+        let f = svg.querySelector('#' + id);
+        if (!f) {
+          f = document.createElementNS(NS, 'filter');
+          f.id = id; f.setAttribute('x', '0'); f.setAttribute('y', '0');
+          f.setAttribute('width', '100%'); f.setAttribute('height', '100%');
+          f.setAttribute('color-interpolation-filters', 'sRGB');
+          f.innerHTML = '<feImage result="map" preserveAspectRatio="none"/><feDisplacementMap in="SourceGraphic" in2="map" xChannelSelector="R" yChannelSelector="G"/>';
+          svg.append(f);
+        }
+        const img = f.querySelector('feImage');
+        img.setAttribute('href', makeMap(w, h, r, Math.min(18, h * 0.38)));
+        img.setAttribute('width', w); img.setAttribute('height', h);
+        f.querySelector('feDisplacementMap').setAttribute('scale', String(Math.round(Math.min(46, h * 0.75))));
+        const bf = `url(#${id}) blur(4px) saturate(160%) brightness(1.04)`;   // tekstboksene er mer blurry
+        el.style.backdropFilter = bf; el.style.webkitBackdropFilter = bf;
+      };
+      const ro = new ResizeObserver((entries) => entries.forEach((e) => refract(e.target)));
+      document.querySelectorAll('.lglass:not(.nav)').forEach((el) => ro.observe(el));
+    }
+
+    // ── Fra videoene til «La oss skape noe.»: den siste fargen glir over i nøytral grafitt,
+    //    videoen krymper og forsvinner, og fargene blir liggende igjen som et svevende nordlys ──
+    const lastItem = reelItems.at(-1);
+    const lastFixed = lastItem.querySelector('.reel-fixed');
+    const createSec = document.querySelector('.create');
+    const lastColor = getComputedStyle(lastItem).getPropertyValue('--c').trim();
+    let createShift = 0, revealed = false, createEls = null;
+    const pinBtns = [...document.querySelectorAll('.btn-pin')];
+    const updateOutro = () => {
+      const H = VH;
+      // alle målinger først, så skrivingen – unngår tvungen omberegning av layout midt i bildet
+      const b = lastItem.getBoundingClientRect().bottom;
+      const natural = createSec.getBoundingClientRect().top - createShift;
+      // telefon: ingen overgang – bare vanlig scrolling, innholdet kommer fram når det er på skjermen
+      if (isTouch) {
+        const show = natural < H * 0.85;
+        if (show !== revealed) { revealed = show; window.__paths?.(show); }
+        return;
+      }
+      // 1) videoen forsvinner og fargene virvles sammen (b: 2H → 1.1H)
+      const t = clamp01((H * 2 - b) / (H * 0.9));
+      const e = t * t * (3 - 2 * t);
+      lastItem.style.background = `color-mix(in oklab, ${lastColor} ${((1 - e) * 100).toFixed(1)}%, #0e0f13)`;
+      lastItem.style.setProperty('--mix', reduced ? (e > 0.5 ? 1 : 0) : e.toFixed(3));
+      const v = clamp01(e * 1.6);
+      lastFixed.style.opacity = (1 - v).toFixed(3);
+      lastFixed.style.transform = reduced ? '' : `translateY(${(-40 * v).toFixed(1)}px) scale(${(1 - 0.16 * v).toFixed(3)})`;
+      lastFixed.style.filter = reduced || v < 0.01 ? '' : `blur(${(v * 12).toFixed(1)}px)`;
+      lastFixed.style.visibility = v > 0.995 ? 'hidden' : '';
+      // 2) fargedelen løfter seg bort og avdekker «La oss skape noe.», som ligger stille under
+      const F = H * 1.1;                            // høyden på den myke kanten
+      // PC: delen holdes stille og avdekkes under videoene. Mobil: vanlig scrolling – å holde noe på plass med
+      // JavaScript henger alltid ett bilde etter telefonens egen scrolling, og det ser ut som risting på iPhone.
+      createShift = !isTouch && natural > 0 && natural < H + F ? -natural : 0;
+      const k = clamp01(1 - natural / (H + F * 0.5)); // 0 → 1 mens den avdekkes
+      createSec.style.translate = createShift ? `0 ${createShift.toFixed(1)}px` : '';
+      createSec.style.filter = !reduced && k < 1 && natural > 0 ? `brightness(${(0.55 + 0.45 * k).toFixed(3)})` : '';
+      createSec.style.setProperty('--aurora', k.toFixed(3));
+      // scroller man tilbake opp, toner hele delen ut i takt med scrollingen – skyves litt opp, nederst først
+      {
+        const els = createEls || (createEls = [...createSec.querySelectorAll('.reveal')]);
+        const fk = Math.min(1, Math.max(0, (k - 0.66) / 0.34)), n = els.length;   // helt borte før delen dekkes
+        els.forEach((el, i) => {
+          const lag = (n - 1 - i) * 0.07;                       // nederste elementer toner ut først
+          const f = Math.min(1, Math.max(0, (fk - lag) / (1 - (n - 1) * 0.07)));
+          if (f < 1 && el.classList.contains('shown')) {
+            el.classList.add('scrollfade');
+            el.style.opacity = f.toFixed(3);
+            el.style.transform = `translateY(${(-(1 - f) * 30).toFixed(1)}px)`;
+            el.style.filter = f < 0.99 ? `blur(${((1 - f) * 6).toFixed(1)}px)` : '';
+          } else if (el.style.opacity) {
+            el.style.opacity = el.style.transform = el.style.filter = ''; el.classList.remove('scrollfade');
+          }
+        });
+      }
+      // Kontakt øverst tones ut mens bunnen kommer fram
+      const kOut = clamp01(k * 1.6);
+      pinBtns.forEach((el) => {
+        el.style.opacity = kOut ? (1 - kOut).toFixed(3) : '';
+        el.style.filter = kOut ? `blur(${(kOut * 6).toFixed(1)}px)` : '';
+        el.style.pointerEvents = kOut > 0.9 ? 'none' : '';
+      });
+      // helt avdekket: etter et øyeblikk glir alt over i svart
+      if (natural <= 1) {
+        if (!createSec.classList.contains('night') && !updateOutro.nt) updateOutro.nt = setTimeout(() => createSec.classList.add('night'), 1500);
+      } else {
+        clearTimeout(updateOutro.nt); updateOutro.nt = 0;
+        createSec.classList.remove('night');
+      }
+      const shouldShow = natural < H * 0.55;
+      if (shouldShow !== revealed) {
+        revealed = shouldShow;
+        window.__paths?.(shouldShow);
+      }
+    };
+    addEventListener('scroll', () => requestAnimationFrame(updateOutro), { passive: true });
+    addEventListener('resize', updateOutro);
+    updateOutro();
+
+    // ── «La oss skape noe.» ──
+    const { initCreate } = await import('./js/create.js');
+    initCreate();
+
+    // ── Overgangen til «La oss skape noe.»: hybrid mellom automatikk og kontroll – BARE inne i animasjonen.
+    //    Inne i overgangen forsterkes og mykes hver scrollbevegelse, og slipper du, lander den mykt i retningen
+    //    du var på vei. Rett etter landingen er det en liten brems: du blir liggende, men kan dra deg videre ned.
+    //    Utenfor dette området er scrollingen helt vanlig. ──
+    {
+      const GAIN = 1;                    // følger hånden én til én
+      const BRAKE = 1, BRAKE_LEN = 0;        // ingen brems etter landingen – den slipper deg med en gang
+      const HAND_MAX = 1300;             // px/s – scrolling opp til denne farten følges helt synkront; et raskt byks ut over dette tas ikke med
+      const MAX_LAND = 650;              // px/s – når du slipper, spiller animasjonen seg rolig ferdig av seg selv
+      let landStart = 0, rafStart = 0, lastSet = 0, gestureY = 0, tgt = null, cur = 0, lastInput = 0, raf = 0, lastT = 0, touchY = null, touchV = 0, touchT = 0;
+      const zone = () => {
+        const H = VH, end = lastItem.getBoundingClientRect().bottom + scrollY;   // landing: «La oss skape noe.» øverst
+        return { start: end - H * 2, end, brakeEnd: end + H * BRAKE_LEN };
+      };
+      const release = () => { if (raf) cancelAnimationFrame(raf); raf = 0; tgt = null; };
+      const tick = (now) => {
+        const dt = Math.min(.05, (now - lastT) / 1000 || .016); lastT = now;
+        const z = zone();
+        // har du selv scrollet på vanlig måte mens den glir: gi slipp med en gang (aldri kjemp mot deg)
+        if (Math.abs(scrollY - lastSet) > 3) { release(); return; }
+        // utenfor området: slipp helt – vanlig scrolling tar over
+        if (tgt < z.start - 1 || cur < z.start - 1 || tgt > z.brakeEnd || cur > z.brakeEnd) {
+          scrollTo(0, Math.max(0, Math.min(cur, z.brakeEnd + 1))); release(); return;
+        }
+        const idle = now - lastInput > 160;
+        // slipper man midt i animasjonen: lander mykt i den retningen man faktisk beveget seg
+        if (idle && tgt > z.start + 1 && tgt < z.end - 1) {
+          const moved = cur - gestureY;
+          if (Math.abs(moved) > 24) tgt = moved > 0 ? z.end : z.start;
+        }
+        // mens du scroller: følger hånden tett og synkront. Når du slipper: rolig, automatisk ferdig, med myk start
+        if (!idle) landStart = 0; else if (!landStart) landStart = now;
+        const rate = idle ? 2.4 : 22;
+        let step = (tgt - cur) * (1 - Math.exp(-dt * rate));
+        const ramp = idle ? Math.min(1, (now - landStart) / 450) : 1;
+        const vmax = idle ? MAX_LAND * dt * (0.2 + 0.8 * ramp * ramp) : 1e9;
+        cur += Math.max(-vmax, Math.min(vmax, step));
+        if (Math.abs(tgt - cur) < 0.6 && idle) { cur = tgt; scrollTo(0, cur); release(); return; }
+        scrollTo(0, cur); lastSet = scrollY;
+        raf = requestAnimationFrame(tick);
+      };
+      const push = (delta) => {
+        const z = zone();
+        if (tgt === null) { cur = scrollY; tgt = scrollY; gestureY = scrollY; }
+        else if (performance.now() - lastInput > 160) { tgt = cur; gestureY = cur; }
+        // synkront med hånden opp til en naturlig scrollefart – et raskt byks utover det tas ikke med,
+        // så animasjonen ikke hopper; resten spilles rolig av seg selv når du slipper
+        const nowT = performance.now(), dIn = Math.min(0.1, Math.max(0.008, (nowT - lastInput) / 1000));
+        const allow = HAND_MAX * dIn;
+        delta = Math.max(-allow, Math.min(allow, delta));
+        // inne i animasjonen: forsterket; i bremsen rett etter landingen: tyngre
+        const g = tgt >= z.end - 1 && delta > 0 ? BRAKE : GAIN;
+        tgt = tgt + delta * g;
+        lastInput = performance.now();
+        // et hardt sveip som startet inne i animasjonen fanges opp i bremsen (du blir liggende);
+        // en ny bevegelse som starter i bremsen kan dra deg videre ned
+        // drar man seg forbi bremsen: slipp med en gang, og la denne bevegelsen gå til vanlig scrolling
+        if (tgt > z.brakeEnd) { scrollTo(0, Math.round(cur)); release(); return false; }
+        // og oppover forbi starten av animasjonen: slipp med en gang – vanlig scrolling tar over
+        if (tgt < z.start) { scrollTo(0, Math.round(cur)); release(); return false; }
+        if (!raf) { lastT = rafStart = performance.now(); lastSet = scrollY; raf = requestAnimationFrame(tick); }
+        return true;
+      };
+      // tar bare imot scrolling som hører til animasjonen (eller bremsen rett etter den)
+      const active = (delta) => {
+        if (reduced || isTouch || window.__goingHome || isLite()) return false;
+        const z = zone(), y = tgt ?? scrollY;
+        if (delta > 0) return y > z.start - 2 && y < z.brakeEnd - 2;      // ned: gjennom animasjonen og bremsen
+        return y > z.start + 8 && y < z.end + 2;                           // opp: bare inne i animasjonen
+      };
+      const onWheel = (e) => {
+        const d = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+        if (!active(d)) { if (raf) release(); return; }
+        if (push(d)) e.preventDefault();
+      };
+      addEventListener('touchstart', (e) => { touchY = e.touches[0].clientY; touchV = 0; touchT = performance.now(); }, { passive: true });
+      const onTouchMove = (e) => {
+        if (touchY === null) return;
+        const y = e.touches[0].clientY, d = touchY - y, now = performance.now();
+        if (!active(d)) { if (raf) release(); touchY = y; return; }
+        touchV = d / Math.max(1, now - touchT); touchY = y; touchT = now; if (push(d)) e.preventDefault();
+      };
+      // De blokkerende lytterne (passive: false) henges bare på når man er i nærheten av overgangen.
+      // Ellers kan nettleseren skrolle resten av siden helt uten å vente på JavaScript.
+      let hooked = false;
+      const hook = () => {
+        const z = zone(), H = VH;
+        const near = !reduced && !isTouch && !isLite() && scrollY > z.start - H && scrollY < z.brakeEnd + H;
+        if (near === hooked) return;
+        hooked = near;
+        const fn = near ? 'addEventListener' : 'removeEventListener';
+        window[fn]('wheel', onWheel, { passive: false });
+        window[fn]('touchmove', onTouchMove, { passive: false });
+      };
+      addEventListener('scroll', hook, { passive: true });
+      addEventListener('resize', hook);
+      addEventListener('litechange', hook);
+      hook();
+      addEventListener('touchend', () => { if (tgt !== null && Math.abs(touchV) > .2) push(touchV * 120); touchY = null; }, { passive: true });
+      // brukes av «Til toppen» og «Kontakt»
+      window.__resetOutro = release;
+      window.__markOutroDone = release;
+    }
+
+    // ── Valgkortene i «La oss skape noe.»: kommer inn i rekkefølge når de er på skjermen,
+    //    og forsvinner i en bølge oppover (nederste først) når man scroller tilbake opp ──
+    {
+      // rekkefølge: tittel → kort 1 → kort 2 → «Orion Produksjon» og teksten samtidig (roligere) → «Uforpliktende…»
+      const STEP = (el) => el.classList.contains('create-title') ? 0
+        : el.classList.contains('path') ? 1
+        : (el.classList.contains('create-kicker') || el.classList.contains('create-lead')) ? 3 : 4;
+      const cards = [...document.querySelectorAll('.create .reveal')].sort((a, b) => STEP(a) - STEP(b));
+      let on = false, timers = [];
+      const clear = () => { timers.forEach(clearTimeout); timers = []; };
+      const showVisible = () => {
+        if (!on) return;
+        let k = -1, prevStep = null;
+        cards.every((c) => {   // stopper ved første element som ikke er på skjermen, så rekkefølgen aldri hopper
+          if (c.classList.contains('shown') || c.dataset.queued) return true;
+          if (c.getBoundingClientRect().top < innerHeight * 0.95) {
+            c.dataset.queued = '1';
+            // samme steg = samtidig (kicker og tekst); ellers ett steg etter forrige
+            const st = STEP(c) === 1 ? 'c' + cards.indexOf(c) : STEP(c);
+            if (st !== prevStep) { k++; prevStep = st; }
+            timers.push(setTimeout(() => { delete c.dataset.queued; if (on) { c.classList.remove('leaving'); c.classList.add('shown'); } }, 120 + k * 280));
+            return true;
+          }
+          return true;   // ikke på skjermen ennå: hoppes over nå og kommer når man scroller til det
+        });
+      };
+      window.__paths = (show) => {
+        if (show === on) return;
+        on = show; clear();
+        if (show) { cards.forEach((c) => { c.classList.remove('leaving'); delete c.dataset.queued; }); showVisible(); }
+        else cards.slice().reverse().forEach((c, i) => {   // bølge oppover: nederste kort først
+          delete c.dataset.queued;
+          if (!c.classList.contains('shown')) return;
+          c.style.setProperty('--ld', `${i * 90}ms`);
+          c.classList.remove('shown'); c.classList.add('leaving');
+        });
+      };
+      addEventListener('scroll', () => requestAnimationFrame(showVisible), { passive: true });
+    }
+
+    // ── Automatisk glidetur: «Til toppen» nederst, og «Kontakt» som kjører ned til bunnen ──
+    {
+      const glideTo = (getTarget, after) => {
+        if (window.__goingHome) return;
+        window.__goingHome = true;                       // stopper klapp- og fargeautomatikken underveis
+        document.documentElement.classList.add('locked');
+        const from = scrollY, to = getTarget(), d = Math.abs(to - from);
+        const t0 = performance.now(), ms = reduced ? 0 : Math.min(2800, 1200 + d / 8);
+        const f = (now) => {
+          const k = ms ? Math.min(1, (now - t0) / ms) : 1;
+          const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+          scrollTo(0, from + (to - from) * e);
+          if (k < 1) requestAnimationFrame(f);
+          else setTimeout(() => { after?.(); window.__goingHome = false; document.documentElement.classList.remove('locked'); }, 150);
+        };
+        requestAnimationFrame(f);
+      };
+      document.querySelector('.to-top').addEventListener('click', (e) => {
+        e.preventDefault();
+        glideTo(() => 0, () => window.__resetOutro?.());
+      });
+      document.querySelectorAll('a[href="#kontakt"]').forEach((a) => a.addEventListener('click', (e) => {
+        e.preventDefault();
+        // lander med «Orion Produksjon / La oss skape noe.» øverst på skjermen
+        glideTo(() => {
+          const sec = document.querySelector('.create'), kick = sec.querySelector('.create-kicker');
+          // offsetTop (ikke getBoundingClientRect), så inn-animasjonens forskyvning ikke telles med
+          let y = 0, el = kick;
+          while (el && el !== document.body) { y += el.offsetTop; el = el.offsetParent; }
+          y -= 16;
+          return Math.min(document.documentElement.scrollHeight - innerHeight, y);
+        }, () => window.__markOutroDone?.());
+      }));
+    }
+
+    // ── Bunntekst ──
+    document.querySelectorAll('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });
+    document.querySelectorAll('[data-to-top]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); document.querySelector('.to-top').click(); }));
+    document.querySelectorAll('[data-open-ft]').forEach((a) => a.addEventListener('click', (e) => {
+      e.preventDefault(); document.querySelector(`[data-open="${a.dataset.openFt}"]`)?.click();
+    }));
+
+    // ── Menygruppe som foldes ut ──
+    document.querySelectorAll('.nav-toggle').forEach((b) => b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const g = b.closest('.nav-group');
+      const open = !g.classList.contains('open');
+      g.classList.toggle('open', open);
+      b.setAttribute('aria-expanded', String(open));
+    }));
+
+    // ── Apple-meny: undermeny på telefon ──
+    {
+      const navEl = document.querySelector('.nav');
+      const small = matchMedia('(max-width: 833px)');
+      document.querySelector('.mm-more').addEventListener('click', (e) => {
+        if (!small.matches) return;            // PC: vanlig lenke
+        e.preventDefault(); e.stopPropagation();
+        navEl.classList.add('sub-open');
+      });
+      document.querySelector('.mm-back').addEventListener('click', (e) => { e.stopPropagation(); navEl.classList.remove('sub-open'); });
+      new MutationObserver(() => { if (!navEl.classList.contains('open')) setTimeout(() => navEl.classList.remove('sub-open'), 350); })
+        .observe(navEl, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    // ── Kommer man fra Om-siden via «Kontakt», kjøres man rett ned til «La oss skape noe.» ──
+    if (new URLSearchParams(location.search).has('pris')) {
+      history.replaceState(null, '', location.pathname);
+      setTimeout(() => document.querySelector('[data-open="estimate"]')?.click(), 400);
+    }
+    if (new URLSearchParams(location.search).has('kontakt')) {
+      history.replaceState(null, '', location.pathname);
+      setTimeout(() => document.querySelector('a[href="#kontakt"]')?.click(), 500);
+    }
+  </script>
+  <script src="js/thread.js"></script>
+  <script>
+    // «Kommer snart»-punktene i menyen: ingen navigasjon, menyen blir stående åpen, merket vises ved trykk
+    document.querySelectorAll('.mm-soon').forEach((el) => el.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      el.classList.add('tapped'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('tapped'), 1800);
+    }));
+  </script>
+  <script type="module" src="js/ft-map.js"></script>
+</body>
+</html>

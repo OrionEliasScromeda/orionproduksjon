@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>
+    /* Lett versjon: alle mobiler/nettbrett, svake maskiner (≤ 4 GB minne), sparemodus, treg tilkobling eller lav bildefrekvens
+       får html.lite – samme design, men uten de tyngste effektene. Test med ?lite eller ?full (huskes i fanen). */
+    (function () { try {
+      var d = document.documentElement, n = navigator, c = n.connection || {}, q = location.search, k = 'orion-lite', s = sessionStorage, m;
+      if (matchMedia('(pointer: coarse)').matches) d.classList.add('touch');   // mobil/nettbrett
+      if (/[?&]full\b/.test(q)) s.setItem(k, '0'); else if (/[?&]lite\b/.test(q)) s.setItem(k, '1');
+      m = s.getItem(k);
+      // to versjoner: PC får alltid den fulle, telefon/nettbrett alltid den lette (?lite / ?full overstyrer)
+      if (m ? m === '1' : d.classList.contains('touch')) d.classList.add('lite');
+    } catch (e) {} })();
+  </script>
+  <title>Om Orion – Orion Produksjon</title>
+  <meta name="description" content="Orion Elias Scromeda – mannen bak Orion Produksjon. Gjennomførte produksjoner til en mer tilgjengelig pris.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/om.css">
+</head>
+<body id="top">
+  <!-- Topplinje -->
+  <header class="om-top">
+    <a class="om-pill om-back" href="index.html" aria-label="Tilbake til forsiden">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5.5L8.5 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Orion</span>
+    </a>
+    <div class="om-right">
+      <a class="om-pill" href="index.html?kontakt">Kontakt</a>
+    <button class="om-pill menu-btn" type="button" aria-label="Meny" aria-expanded="false" aria-controls="meny">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line class="l l1" x1="4" y1="6" x2="20" y2="6"/><line class="l l2" x1="4" y1="12" x2="20" y2="12"/><line class="l l3" x1="4" y1="18" x2="20" y2="18"/>
+      </svg>
+    </button>
+    </div>
+  </header>
+  <div class="topbar">
+    <div class="nav-scrim" aria-hidden="true"></div>
+    <nav class="nav" id="meny" aria-label="Hovedmeny">
+      <div class="mm">
+        <div class="mm-pane mm-main">
+          <div class="mm-col mm-primary">
+            <h2 class="mm-label">Tjenester</h2>
+            <ul class="mm-big">
+              <li style="--k:0"><a href="om.html">Om</a></li>
+              <li style="--k:1"><a class="mm-more" href="tjenester.html#film" aria-controls="mm-film"><span class="mm-more-text">Film og videoproduksjon<small>3 tjenester · Film, foto &amp; drone, design</small></span><span class="mm-badge" aria-hidden="true"><svg class="mm-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5.5l6.5 6.5L9 18.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a></li>
+              <li style="--k:2"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">Nettsider &amp; digitale løsninger<span class="soon-wrap"><span class="soon-tag">Kommer snart</span></span></a></li>
+              <li style="--k:3"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">Markedsføring &amp; strategi<span class="soon-wrap"><span class="soon-tag">Kommer snart</span></span></a></li>
+              <li style="--k:4"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">AI &amp; automatisering<span class="soon-wrap"><span class="soon-tag">Kommer snart</span></span></a></li>
+              <li style="--k:5"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">App<span class="soon-wrap"><span class="soon-tag">Kommer</span></span></a></li>
+              <li style="--k:6"><a href="prisgrunnlaget.html">Prisgrunnlaget</a></li>
+            </ul>
+          </div>
+          <div class="mm-col mm-secondary mm-film-col" style="--k:5">
+            <h2 class="mm-label">Film og videoproduksjon</h2>
+            <ul class="mm-small"><li><a href="tjenester.html#film">Film &amp; videoproduksjon</a></li><li><a href="tjenester.html#foto">Foto &amp; drone</a></li><li><a href="tjenester.html#design">Grafisk design &amp; animasjon</a></li></ul>
+          </div>
+          <div class="mm-col mm-secondary" style="--k:6">
+            <h2 class="mm-label">Kom i gang</h2>
+            <ul class="mm-small">
+              <li><a href="index.html?kontakt">Ta kontakt</a></li>
+              <li><a href="index.html?kontakt">Diskuter en idé</a></li>
+              <li><a href="index.html?pris">Beregn en pris</a></li>
+              <li><a href="prisgrunnlaget.html">Prisgrunnlaget</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="mm-pane mm-sub" id="mm-film">
+          <button class="mm-back" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5.5L8.5 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Tjenester</span></button>
+          <h2 class="mm-label">Film og videoproduksjon</h2>
+          <ul class="mm-big"><li style="--k:0"><a href="tjenester.html#film">Film &amp; videoproduksjon</a></li><li style="--k:1"><a href="tjenester.html#foto">Foto &amp; drone</a></li><li style="--k:2"><a href="tjenester.html#design">Grafisk design &amp; animasjon</a></li></ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <main>
+    <!-- 0. Intro: «Skapt av nysgjerrighet.» -->
+    <section class="intro" aria-labelledby="intro-title">
+      <div class="intro-pin">
+        <div class="halo" aria-hidden="true"><i></i><i></i></div>
+        <div class="intro-inner">
+          <h1 class="intro-title" id="intro-title"><span class="it-a">Skapt av</span> <span class="it-b">nysgjerrighet.</span></h1>
+          <p class="intro-sub">Et kreativt studio med nye perspektiver.</p>
+        </div>
+        <div class="scroll-hint" aria-hidden="true"><span></span></div>
+      </div>
+    </section>
+
+    <!-- Film, design og teknologi møtes -->
+    <section class="merge" aria-label="Film, design og teknologi">
+      <div class="merge-pin">
+        <div class="trio" aria-hidden="true">
+          <span class="tw t1" data-text="Film.">Film.</span>
+          <span class="tw t2" data-text="Design.">Design.</span>
+          <span class="tw t3" data-text="Teknologi.">Teknologi.</span>
+        </div>
+        <p class="merge-q" data-merge-lit>Hva skjer når interessen for <em class="c-red">film</em>, <em class="c-blue">design</em> og <em class="c-purple">teknologi</em> møtes med et ønske om å gjøre ting litt annerledes?</p>
+      </div>
+    </section>
+
+    <!-- Tanken -->
+    <section class="block center thought">
+      <h2 class="statement reveal">Det er tanken bak <span class="grad">Orion Produksjon.</span></h2>
+      <p class="body-lg thought-body reveal" style="--d:.12s">Et uavhengig kreativt studio som kombinerer <strong>kreativitet</strong>, <strong>moderne teknologi</strong> og <strong>nye arbeidsmetoder</strong> for å utforske muligheter, utfordre det tradisjonelle og skape gjennomførte resultater.</p>
+    </section>
+
+    <section class="block center ideas-block">
+      <p class="ideas reveal">For gode ideer fortjener mer enn å bare forbli <span class="ideas-word" data-text="ideer.">ideer.</span></p>
+    </section>
+
+    <!-- 1. Portrett: 9:16 → 16:9 i full 4K-kvalitet, så flyr navnet inn bak Orion -->
+    <section class="pix" aria-labelledby="hei">
+      <div class="pix-pin">
+        <div class="pix-stage">
+          <div class="pix-photo">
+          <img class="pix-bg" src="img/orion-bg-hd.webp" srcset="img/orion-bg-sm.webp 1000w, img/orion-bg-hd.webp 1920w, img/orion-bg-4k.webp 3840w" sizes="100vw" alt="" aria-hidden="true" decoding="async" fetchpriority="low">
+          <div class="pix-name" aria-hidden="true">ORION ELIAS</div>
+          <img class="pix-cut" src="img/orion-cut-hd.webp" srcset="img/orion-cut-sm.webp 1000w, img/orion-cut-hd.webp 1920w, img/orion-cut-4k.webp 3840w" sizes="100vw" decoding="async"
+               alt="Orion Elias Scromeda i solbriller og caps på en sti mellom sanddyner, med et strå i munnen">
+          </div>
+        </div>
+        <div class="pix-text">
+          <p class="hero-kicker">Om Orion</p>
+          <h2 id="hei" class="hero-h"><span class="hi">Hei!</span> Jeg heter <span class="name">Orion&nbsp;Elias Scromeda.</span></h2>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Ordene lyses opp mens man skroller -->
+    <section class="block lit-block">
+      <p class="lit" data-lit>Jeg har alltid vært fascinert av hvor stor forskjell godt visuelt arbeid kan gjøre. Hvordan en gjennomtenkt <em class="c-red">film</em>, et godt <em class="c-blue">bilde</em> eller et sterkt <em class="c-purple">design</em> kan fange oppmerksomhet, vekke følelser og gjøre noe helt vanlig til noe spesielt.</p>
+    </section>
+
+    <!-- 3. Stor uttalelse -->
+    <section class="block center">
+      <h2 class="statement reveal">Det er nettopp denne forskjellen jeg ønsker å skape gjennom <span class="grad">Orion Produksjon.</span></h2>
+    </section>
+
+    <!-- 4. For hvem: tre store linjer som lyses opp etter hverandre -->
+    <section class="who" aria-labelledby="who-t">
+      <h2 class="visually-hidden" id="who-t">Hvem jeg lager for</h2>
+      <p class="who-kicker reveal">Uansett hvem du er</p>
+      <ul class="who-list" data-steps>
+        <li class="wl" style="--c1:#ff8a65;--c2:#ff3d6e" data-t="Store bedrifter.">Store bedrifter.</li>
+        <li class="wl" style="--c1:#ffd36e;--c2:#ff8a3d" data-t="Nye virksomheter.">Nye virksomheter.</li>
+        <li class="wl" style="--c1:#c4a1ff;--c2:#6e7bff" data-t="Spesielle øyeblikk.">Spesielle øyeblikk.</li>
+      </ul>
+      <p class="who-body reveal">Enten du driver en stor bedrift, akkurat har startet din egen virksomhet, eller ønsker å forevige et spesielt øyeblikk i livet, er målet mitt det samme: <strong>Å skape noe du virkelig blir fornøyd med, og som du kan være stolt av å vise frem.</strong></p>
+    </section>
+
+    <!-- 5–6. Fargefelt som fyller skjermen og skifter farge mens man skroller -->
+    <section class="field" aria-label="Kvalitet for alle">
+      <div class="field-pin">
+        <div class="field-bg" aria-hidden="true"><i class="fb1"></i><i class="fb2"></i><i class="fb3"></i></div>
+        <div class="field-slide fs1">
+          <p class="field-big">Men god kvalitet bør ikke være forbeholdt dem med de største budsjettene.</p>
+        </div>
+        <div class="field-slide fs2">
+          <p class="field-pre">Pris er ofte det som hindrer gode ideer i å bli virkelighet. Derfor bygger Orion Produksjon på en enkel tanke:</p>
+          <h2 class="field-big">Bruk ressursene der de faktisk utgjør en&nbsp;forskjell.</h2>
+        </div>
+        <a class="more field-more" href="index.html?pris">Les mer om pris<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.2 2.2 8 6l-3.8 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </section>
+
+    <!-- 7. Hvordan – fargede fliser -->
+    <section class="block how">
+      <p class="how-lead reveal">Ved å holde kostnadene nede, velge riktig utstyr til hvert oppdrag og legge større vekt på planlegging, kreativitet og etterarbeid, kan jeg tilby gjennomførte produksjoner til en <strong>mer tilgjengelig pris.</strong></p>
+      <p class="center-more reveal"><a class="more" href="index.html?pris">Se hvordan prisen settes<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.2 2.2 8 6l-3.8 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+      <div class="bento">
+        <article class="tile reveal t-gear" style="--d:.0s">
+          <span class="glyph g-gear" aria-hidden="true"></span>
+          <h3>Riktig utstyr til hvert oppdrag.</h3>
+          <p>Ikke mer enn jobben krever – ikke mindre heller.</p>
+          <a class="more tile-more" href="prisgrunnlaget.html#hvorfor">Om utstyret<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.2 2.2 8 6l-3.8 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </article>
+        <article class="tile reveal t-plan" style="--d:.08s">
+          <span class="glyph g-plan" aria-hidden="true"></span>
+          <h3>Planlegging.</h3>
+          <p>Godt forarbeid sparer tid, penger og overraskelser.</p>
+          <a class="more tile-more" href="prisgrunnlaget.html#budsjett">Slik planlegger vi<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.2 2.2 8 6l-3.8 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </article>
+        <article class="tile reveal t-create wide" style="--d:.16s">
+          <span class="glyph g-spark" aria-hidden="true"></span>
+          <h3>Kreativitet og etterarbeid.</h3>
+          <p>Her blir godt råmateriale til noe du er stolt av å vise frem.</p>
+          <a class="more tile-more" href="tjenester.html#film">Om etterarbeidet<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.2 2.2 8 6l-3.8 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </article>
+      </div>
+    </section>
+
+    <!-- 8. Tillit og erfaring -->
+    <section class="block exp">
+      <p class="exp-kicker reveal">Pris er ikke alt</p>
+      <h2 class="exp-big reveal">Flere års erfaring.</h2>
+      <p class="exp-body reveal">Samtidig vet jeg at pris ikke er alt. Det viktigste er å kunne stole på at sluttresultatet blir bra. Med flere års erfaring innen visuell produksjon, design og avansert redigeringsprogramvare har jeg opparbeidet meg en bred kompetanse som gjør det mulig å tilpasse både uttrykk og arbeidsmetoder til ulike prosjekter.</p>
+      <ul class="exp-list">
+        <li class="reveal" style="--d:.0s"><span class="ex-n">01</span><span class="ex-t">Visuell produksjon</span></li>
+        <li class="reveal" style="--d:.08s"><span class="ex-n">02</span><span class="ex-t">Design</span></li>
+        <li class="reveal" style="--d:.16s"><span class="ex-n">03</span><span class="ex-t">Avansert redigeringsprogramvare</span> <a class="more ex-more" href="prisgrunnlaget.html#programvare">Les mer om programmer<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.2 2.2 8 6l-3.8 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+      </ul>
+    </section>
+
+    <!-- 9. Avslutning -->
+    <section class="block finale">
+      <p class="lit lit-xl" data-lit>For meg handler det ikke om hvor stor produksjonen er, eller hvor dyrt utstyret er. Det handler om hva vi klarer å skape med det vi har.</p>
+      <div class="sign">
+        <div class="sign-mark"><span class="sign-glow" aria-hidden="true"></span><svg class="mark" viewBox="737 193 380 380" aria-hidden="true"><path d="M857.27,321.28c-20.17,15.69-32.83,38.33-34.85,63.68-3.48,43.7,23.11,84.84,64.56,100.26,32.34,12.03,67.79,4.73,92.7-18.96,15.12-14.38,24.89-33,29.09-53.52,6.2-30.34.76-61.74-15.66-87.77-21.23-33.67-59.53-51.42-99.34-46.29-30.61,3.95-56.08,19.29-77.03,42.1,16.45-23.58,44.22-38.2,72.21-43.57,19.82-3.8,39.91-3.48,58.83,1.35,52.39,12.54,87.47,58.45,86.42,111.13-.83,41.4-25.1,77.99-64.14,94.59-58.92,25.04-132.43-.76-151.16-63.65-14.03-47.11,11.95-97.32,60.12-112.14-7.42,5.03-14.92,7.5-21.75,12.81"/><path d="M927.73,203.5c3,120,3,153,15,165s45,12,165,15c-120,3-153,3-165,15s-12,45-15,165c-3-120-3-153-15-165s-45-12-165-15c120-3,153-3,165-15s12-45,15-165Z"/></svg></div>
+        <p class="sign-text" data-sign>Og det er akkurat det <strong>Orion Produksjon</strong> handler om.</p>
+        <p class="sign-name">Orion Elias Scromeda</p>
+        <div class="sign-cta">
+          <a class="btn-primary" href="index.html?kontakt">La oss skape noe</a>
+          <a class="btn-link" href="index.html">Se arbeidet ›</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" aria-labelledby="footer-title">
+    <h2 id="footer-title" class="visually-hidden">Om nettstedet</h2>
+    <div class="ft-inner">
+      <div class="ft-top">
+        <a class="ft-brand" href="#top" data-to-top aria-label="Orion Produksjon – til toppen">
+          <svg viewBox="737 193 380 380" aria-hidden="true"><path d="M857.27,321.28c-20.17,15.69-32.83,38.33-34.85,63.68-3.48,43.7,23.11,84.84,64.56,100.26,32.34,12.03,67.79,4.73,92.7-18.96,15.12-14.38,24.89-33,29.09-53.52,6.2-30.34.76-61.74-15.66-87.77-21.23-33.67-59.53-51.42-99.34-46.29-30.61,3.95-56.08,19.29-77.03,42.1,16.45-23.58,44.22-38.2,72.21-43.57,19.82-3.8,39.91-3.48,58.83,1.35,52.39,12.54,87.47,58.45,86.42,111.13-.83,41.4-25.1,77.99-64.14,94.59-58.92,25.04-132.43-.76-151.16-63.65-14.03-47.11,11.95-97.32,60.12-112.14-7.42,5.03-14.92,7.5-21.75,12.81"/><path d="M927.73,203.5c3,120,3,153,15,165s45,12,165,15c-120,3-153,3-165,15s-12,45-15,165c-3-120-3-153-15-165s-45-12-165-15c120-3,153-3,165-15s12-45,15-165Z"/></svg>
+          <span>Orion Produksjon</span>
+        </a>
+        <p class="ft-tag">Film, foto, drone og design – direkte fra personen som lager det.</p>
+      </div>
+
+      <nav class="ft-cols" aria-label="Bunntekst">
+        <div class="ft-col">
+          <h3>Tjenester</h3>
+          <ul>
+            <li><a href="tjenester.html#film">Film og videoproduksjon</a></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>Nettsider &amp; digitale løsninger</span><em>Kommer snart</em></span></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>Markedsføring &amp; strategi</span><em>Kommer snart</em></span></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>AI &amp; automatisering</span><em>Kommer snart</em></span></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>App</span><em>Kommer</em></span></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h3>Orion</h3>
+          <ul>
+            <li><a href="om.html?orion">Om Orion</a></li>
+            <li><a href="index.html#prosjekter">Tidligere prosjekter</a></li>
+            <li><a href="index.html?kontakt">Kontakt</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h3>Kom i gang</h3>
+          <ul>
+            <li><a href="index.html?kontakt">Diskuter en idé</a></li>
+            <li><a href="index.html?pris">Beregn en pris</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h3>Kontakt</h3>
+          <ul>
+            <li><a href="mailto:info@orionproduksjon.no">info@orionproduksjon.no</a></li>
+            <li><button class="ft-place" type="button" aria-haspopup="dialog">Follo / Oslo-området</button></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="ft-social" aria-label="Sosiale medier">
+        <a href="https://www.instagram.com/orion.produksjon" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/></svg></a>
+        <a class="off" aria-disabled="true" aria-label="YouTube (kommer)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10.2 9.2v5.6l4.8-2.8z" fill="currentColor"/></svg></a>
+        <a href="https://www.tiktok.com/@orion.produksjon" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 3v11.2a3.7 3.7 0 1 1-3.7-3.7M14.5 3c.4 2.6 2.1 4.3 4.8 4.6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="off" aria-disabled="true" aria-label="LinkedIn (kommer)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-3.4c0-1.6 1-2.6 2.3-2.6s2.2.9 2.2 2.6v3.4M11.5 10.5v6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></a>
+      </div>
+
+      <div class="ft-bottom">
+        <p>© <span data-year>2026</span> Orion Produksjon.</p>
+        <ul class="ft-legal">
+          <li><a href="personvern.html">Personvern</a></li>
+          <li><a href="personvern.html#lagring">Informasjonskapsler</a></li>
+          <li><a href="vilkar.html">Vilkår</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/om.js" defer></script>
+  <script>
+    // «Kommer snart»-punktene i menyen: ingen navigasjon, menyen blir stående åpen, merket vises ved trykk
+    document.querySelectorAll('.mm-soon').forEach((el) => el.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      el.classList.add('tapped'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('tapped'), 1800);
+    }));
+  </script>
+  <script type="module" src="js/ft-map.js"></script>
+</body>
+</html>

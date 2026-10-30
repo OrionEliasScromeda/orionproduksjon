@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>
+    /* Lett versjon: alle mobiler/nettbrett, svake maskiner (≤ 4 GB minne), sparemodus, treg tilkobling eller lav bildefrekvens
+       får html.lite – samme design, men uten de tyngste effektene. Test med ?lite eller ?full (huskes i fanen). */
+    (function () { try {
+      var d = document.documentElement, n = navigator, c = n.connection || {}, q = location.search, k = 'orion-lite', s = sessionStorage, m;
+      if (matchMedia('(pointer: coarse)').matches) d.classList.add('touch');   // mobil/nettbrett
+      if (/[?&]full\b/.test(q)) s.setItem(k, '0'); else if (/[?&]lite\b/.test(q)) s.setItem(k, '1');
+      m = s.getItem(k);
+      // to versjoner: PC får alltid den fulle, telefon/nettbrett alltid den lette (?lite / ?full overstyrer)
+      if (m ? m === '1' : d.classList.contains('touch')) d.classList.add('lite');
+    } catch (e) {} })();
+  </script>
+  <title>Priser og prisgrunnlag – Orion Produksjon</title>
+  <meta name="description" content="Priser for film, foto, drone, grafisk design og animasjon fra Orion Produksjon. Se hva du får, hva det koster og hva som alltid er inkludert.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/om.css">
+  <link rel="stylesheet" href="css/pg.css">
+</head>
+<body id="top">
+  <a class="skip" href="#innhold">Hopp til innhold</a>
+  <header class="om-top">
+    <a class="om-pill om-back" href="index.html" aria-label="Tilbake til forsiden">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5.5L8.5 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Orion</span>
+    </a>
+    <div class="om-right">
+      <a class="om-pill" href="index.html?kontakt">Kontakt</a>
+    <button class="om-pill menu-btn" type="button" aria-label="Meny" aria-expanded="false" aria-controls="meny">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line class="l l1" x1="4" y1="6" x2="20" y2="6"/><line class="l l2" x1="4" y1="12" x2="20" y2="12"/><line class="l l3" x1="4" y1="18" x2="20" y2="18"/>
+      </svg>
+    </button>
+    </div>
+  </header>
+  <div class="topbar">
+    <div class="nav-scrim" aria-hidden="true"></div>
+    <nav class="nav" id="meny" aria-label="Hovedmeny">
+      <div class="mm">
+        <div class="mm-pane mm-main">
+          <div class="mm-col mm-primary">
+            <h2 class="mm-label">Tjenester</h2>
+            <ul class="mm-big">
+              <li style="--k:0"><a href="om.html">Om</a></li>
+              <li style="--k:1"><a class="mm-more" href="tjenester.html#film" aria-controls="mm-film"><span class="mm-more-text">Film og videoproduksjon<small>3 tjenester · Film, foto &amp; drone, design</small></span><span class="mm-badge" aria-hidden="true"><svg class="mm-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5.5l6.5 6.5L9 18.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a></li>
+              <li style="--k:2"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">Nettsider &amp; digitale løsninger<span class="soon-wrap"><span class="soon-tag">Kommer snart</span></span></a></li>
+              <li style="--k:3"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">Markedsføring &amp; strategi<span class="soon-wrap"><span class="soon-tag">Kommer snart</span></span></a></li>
+              <li style="--k:4"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">AI &amp; automatisering<span class="soon-wrap"><span class="soon-tag">Kommer snart</span></span></a></li>
+              <li style="--k:5"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">App<span class="soon-wrap"><span class="soon-tag">Kommer</span></span></a></li>
+              <li style="--k:6"><a href="prisgrunnlaget.html">Prisgrunnlaget</a></li>
+            </ul>
+          </div>
+          <div class="mm-col mm-secondary mm-film-col" style="--k:5">
+            <h2 class="mm-label">Film og videoproduksjon</h2>
+            <ul class="mm-small"><li><a href="tjenester.html#film">Film &amp; videoproduksjon</a></li><li><a href="tjenester.html#foto">Foto &amp; drone</a></li><li><a href="tjenester.html#design">Grafisk design &amp; animasjon</a></li></ul>
+          </div>
+          <div class="mm-col mm-secondary" style="--k:6">
+            <h2 class="mm-label">Kom i gang</h2>
+            <ul class="mm-small">
+              <li><a href="index.html?kontakt">Ta kontakt</a></li>
+              <li><a href="index.html?kontakt">Diskuter en idé</a></li>
+              <li><a href="index.html?pris">Beregn en pris</a></li>
+              <li><a href="prisgrunnlaget.html">Prisgrunnlaget</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="mm-pane mm-sub" id="mm-film">
+          <button class="mm-back" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5.5L8.5 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Tjenester</span></button>
+          <h2 class="mm-label">Film og videoproduksjon</h2>
+          <ul class="mm-big"><li style="--k:0"><a href="tjenester.html#film">Film &amp; videoproduksjon</a></li><li style="--k:1"><a href="tjenester.html#foto">Foto &amp; drone</a></li><li style="--k:2"><a href="tjenester.html#design">Grafisk design &amp; animasjon</a></li></ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <main class="pg" id="innhold">
+    <section class="pg-hero">
+      <p class="pg-kicker reveal">Priser</p>
+      <h1 class="pg-title reveal" style="--d:.06s">Profesjonelt innhold.<br><span class="pg-grad">Til en pris som gir&nbsp;mening.</span></h1>
+      <p class="pg-lead reveal" style="--d:.14s">Film, foto, drone, design og animasjon for små bedrifter og privatpersoner. Du ser hva du får og hva det koster – før vi starter.</p>
+      <div class="pg-cta reveal" style="--d:.22s">
+        <a class="btn-primary" href="index.html?pris">Beregn din pris</a>
+        <a class="btn-link" href="#priser">Se alle priser ›</a>
+      </div>
+    </section>
+
+    <section class="pg-sec pg-pricing" id="priser" aria-labelledby="priser-h">
+      <h2 id="priser-h" class="reveal">Velg det som passer&nbsp;deg.</h2>
+      <p class="pg-p center reveal">Start enkelt, eller gå for mer. Prisene er fra-priser – du får bekreftet pris og innhold før oppstart.</p>
+      <div class="pg-tabs reveal" role="tablist" aria-label="Tjeneste" data-tabs></div>
+      <div class="pg-tiers" data-tiers aria-live="polite"></div>
+      <p class="pg-vat reveal" data-vat-label></p>
+    </section>
+
+    <section class="pg-sec" id="hvorfor" aria-labelledby="hvorfor-h">
+      <h2 id="hvorfor-h" class="reveal">Slik holder vi prisene&nbsp;nede.</h2>
+      <p class="pg-p center reveal">Du betaler for arbeidet som faktisk trengs – ikke for et stort apparat rundt det.</p>
+      <div class="pg-why">
+        <article class="pg-feat reveal"><span class="pg-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3 2.8-4.8 5.5-4.8s4.9 1.8 5.5 4.8"/><path d="M16 5.5a3 3 0 0 1 0 5.6M18 14.6c1.5.7 2.4 2.2 2.6 4.4"/></svg></span><h3>Direkte samarbeid</h3><p>Du snakker med den som faktisk gjør jobben. Færre mellomledd, raskere avklaringer – og ingen beskjeder som forsvinner på veien.</p></article>
+        <article class="pg-feat reveal" style="--d:.08s"><span class="pg-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13 2.5L4.5 13.5H11l-1 8 8.5-11H12z"/></svg></span><h3>Effektiv arbeidsmåte</h3><p>Opptak, klipp, grafikk og lyd i én og samme prosess. Gjennomarbeidede maler og oppsett gjør at tiden går til det som syns.</p></article>
+        <article class="pg-feat reveal" style="--d:.16s"><span class="pg-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2.5" y="6" width="13" height="12" rx="2.5"/><path d="M15.5 10.5l6-3.5v10l-6-3.5"/></svg></span><h3>Utstyr tilpasset oppdraget</h3><p>En kort reel trenger ikke et filmteam. Vi bruker det utstyret jobben krever – og du betaler ikke for mer.</p></article>
+      </div>
+    </section>
+
+    <section class="pg-sec pg-stats" id="erfaring" aria-labelledby="erfaring-h">
+      <h2 id="erfaring-h" class="reveal">Erfaring du kan stole&nbsp;på.</h2>
+      <ul class="pg-num">
+        <li class="reveal"><b><span data-count="5">5</span> år</b><span>med videoproduksjon</span></li>
+        <li class="reveal" style="--d:.08s"><b><span data-count="3">3</span> år</b><span>med medier og kommunikasjon</span></li>
+        <li class="reveal" style="--d:.16s"><b><span data-count="1">1</span> år</b><span>med entreprenørskap og markedsføring</span></li>
+      </ul>
+      <p class="pg-p center reveal">I tillegg visuell profil, grafisk materiell, sosiale medier og presentasjoner.</p>
+    </section>
+
+    <section class="pg-sec" id="inkludert" aria-labelledby="inkl-h">
+      <h2 id="inkl-h" class="reveal">Dette&nbsp;inngår.</h2>
+      <div class="pg-incl">
+        <div class="reveal"><b>1–3 korrekturrunder</b><span>Én på enkel, to på standard, tre på avansert.</span></div>
+        <div class="reveal" style="--d:.05s"><b>Våre feil retter vi gratis</b><span>Alltid, uansett pakke.</span></div>
+        <div class="reveal" style="--d:.1s"><b>Ferdig etterarbeid</b><span>Klipp, fargebalanse, lyd og eksport på ferdig redigerte videoer. Råklipp leveres uredigert.</span></div>
+        <div class="reveal" style="--d:.15s"><b>10 ferdig behandlede bilder</b><span>Inkludert i alle fotopakker.</span></div>
+        <div class="reveal" style="--d:.2s"><b>Kort reise er inkludert</b><span>40 km tur-retur og 1 time reisetid fra Siggerud.</span></div>
+        <div class="reveal" style="--d:.25s"><b>Pris før oppstart</b><span>Ekstraarbeid avtales alltid før det gjøres.</span></div>
+      </div>
+    </section>
+
+    <section class="pg-sec" id="tillegg" aria-labelledby="till-h">
+      <h2 id="till-h" class="reveal">Tillegg – bare når du trenger&nbsp;dem.</h2>
+      <div class="pg-addons reveal" data-addons></div>
+    </section>
+
+    <section class="pg-sec" id="reise" aria-labelledby="reise-h">
+      <h2 id="reise-h" class="reveal">Kjøring, enkelt&nbsp;forklart.</h2>
+      <ul class="pg-num">
+        <li class="reveal"><b><span data-count="40">40</span> km</b><span>tur-retur inkludert</span></li>
+        <li class="reveal" style="--d:.08s"><b><span data-count="6">6</span> kr</b><span>per km etter det</span></li>
+        <li class="reveal" style="--d:.16s"><b><span data-count="500">500</span> kr</b><span>per time reisetid etter første time</span></li>
+      </ul>
+      <p class="pg-p center reveal">Eksempel: 74 km én vei og 2,5 timer reisetid gir <b data-travel-sum>1 398 kr</b> i reise. Bom, parkering og ferge kommer i tillegg ved behov. Kalkulatoren regner ut ruten for deg.</p>
+    </section>
+
+    <section class="pg-sec" id="budsjett" aria-labelledby="bud-h">
+      <h2 id="bud-h" class="reveal">Få mer ut av&nbsp;budsjettet.</h2>
+      <ol class="pg-tips">
+        <li class="reveal"><b>Vit hva det skal brukes til.</b> Da treffer vi riktig første gang.</li>
+        <li class="reveal" style="--d:.05s"><b>Ha tekst og filer klare.</b> Mindre venting, mindre tid.</li>
+        <li class="reveal" style="--d:.1s"><b>Samle opptakene.</b> Ett sted, én dag – én reise.</li>
+        <li class="reveal" style="--d:.15s"><b>Bestill formatene samtidig.</b> Stående og liggende fra samme opptak.</li>
+        <li class="reveal" style="--d:.2s"><b>Samle tilbakemeldingene.</b> Én tydelig runde holder ofte.</li>
+      </ol>
+      <p class="pg-p center reveal">Usikker? Spør – så finner vi den enkleste løsningen sammen.</p>
+    </section>
+
+    <section class="pg-final" aria-labelledby="final-h">
+      <h2 id="final-h" class="reveal">Klar når du&nbsp;er.</h2>
+      <div class="pg-cta reveal" style="--d:.08s">
+        <a class="btn-primary" href="index.html?pris">Beregn din pris</a>
+        <a class="btn-link" href="index.html?kontakt">Eller ta kontakt ›</a>
+      </div>
+    </section>
+
+    <section class="pg-legal" id="vilkar" aria-label="Prisgrunnlaget og vilkår">
+      <button class="lg-toggle" type="button" aria-expanded="false" aria-controls="vilkar-tekst">Prisgrunnlaget og beregningsmåte<span aria-hidden="true">+</span></button>
+      <div class="lg-body" id="vilkar-tekst" hidden>
+        <h2>Prisgrunnlaget</h2>
+        <p class="lg-sub">Nærmere opplysninger om priser, beregningsmåte og leveranseomfang</p>
+        <p class="lg-date">Oppdatert 30. oktober 2026.</p>
+          <h3>1. Dokumentets formål og anvendelse</h3>
+          <p>Dette dokumentet beskriver grunnlaget for prisene på film, videoredigering, droneopptak, fotografi og grafisk design fra Orion Produksjon. Dokumentet utdyper hvordan oppdragets omfang, arbeidsprosess, leveransekrav og praktiske gjennomføring kan påvirke prisen.</p>
+          <p>Opplysningene skal gjøre det mulig å forstå og vurdere publiserte fra-priser, beregninger i priskalkulatoren og individuelle pristilbud. Dokumentet inneholder også eksempler på eksterne prisopplysninger og kostnader ved verktøy som kan inngå i produksjonsarbeidet.</p>
+          <p>Dokumentet er ikke i seg selv en bestilling eller en fullstendig oppdragsavtale. Den enkelte leveransen beskrives nærmere i tilbudet eller oppdragsbekreftelsen. Eventuelle særskilte vilkår må fremgå av avtalen før kunden blir bundet av dem.</p>
+          <p>Opplysningene begrenser ikke rettigheter som følger av ufravikelig lovgivning.</p>
+          <h3>2. Prisstrategi og virksomhetens arbeidsmodell</h3>
+          <p>Orion Produksjon tilbyr både mindre, avgrensede oppdrag og mer omfattende produksjoner. Prisstrategien bygger på at produksjonens omfang og ressursbruk skal tilpasses kundens faktiske behov.</p>
+          <p>Mindre oppdrag kan gjennomføres med en enklere produksjonsprosess enn oppdrag som krever flere opptaksdager, omfattende planlegging, særskilt teknisk utstyr eller flere medvirkende. En lav inngangspris forutsetter derfor et tilsvarende avgrenset oppdrag.</p>
+          <p>Kunden samarbeider direkte med personen som utfører store deler av produksjonsarbeidet. Når oppdragets art tillater det, kan planlegging, opptak, grafisk arbeid, redigering og levering håndteres i samme arbeidsprosess. Dette kan redusere behovet for overleveringer og gjentatte avklaringer.</p>
+          <p>Arbeidsmodellen innebærer ikke at alle produksjoner kan gjennomføres av én person eller med samme utstyr. Behov for innleid kompetanse, ekstra bemanning, leieutstyr eller andre eksterne ressurser vurderes ut fra det konkrete oppdraget og avklares i tilbudet.</p>
+          <p>Beskrivelsen av arbeidsmodellen er ikke en opplysning om en bestemt prosentvis kostnadsbesparelse sammenlignet med andre leverandører.</p>
+          <h3>3. Fra-priser og tilgjengelighet</h3>
+          <p>En fra-pris angir det laveste prisnivået for en reell, avgrenset leveranse innenfor den beskrevne tjenesten. Fra-prisen omfatter ikke enhver mulig utførelse av tjenesten.</p>
+          <p>Droneopptak tilbys fra 1 500 kroner. Denne pakken leveres som utvalgte, uredigerte råklipp fra én lokasjon. En ferdig redigert dronefilm starter fra 3 500 kroner. Opptaksomfang, lokasjon og utvalg av klipp avklares før bestilling. Flere lokasjoner eller særskilte operative forberedelser inngår ikke i fra-prisen.</p>
+          <p>Grafisk design til laveste pris gjelder en mindre oppgave, eksempelvis en enkel endring eller tilpasning i eksisterende materiell. En slik leveranse må skilles fra utvikling av en ny logo, en omfattende visuell identitet eller flere selvstendige designkonsepter.</p>
+          <p>Tilsvarende må enkel videoredigering av kundens materiale skilles fra et oppdrag som også omfatter planlegging og gjennomføring av nye opptak.</p>
+          <p>Kunden skal kunne se hva fra-prisen omfatter. Forutsetninger som er vesentlige for å oppnå den annonserte prisen, skal fremgå i tilknytning til tilbudet om tjenesten og ikke utelukkende av dette dokumentet. [<a class="lref" href="#kilde-1">1</a>]</p>
+          <h3>4. Prisestimat, fastpris og arbeid etter medgått tid</h3>
+          <p>Priskalkulatoren gir et estimat basert på opplysningene og valgene kunden legger inn. Beregningen forutsetter at valgene gir en dekkende beskrivelse av oppdraget.</p>
+          <p>Forhold som ikke er tilstrekkelig beskrevet i kalkulatoren, kan kreve nærmere avklaring. Dette kan blant annet gjelde omfattende råmateriale, flere opptakssteder, særskilte leveringskrav, spesialutstyr eller produksjon av nye visuelle konsepter.</p>
+          <p>Et individuelt tilbud skal gjøre det klart om oppdraget leveres til fastpris, etter medgått tid eller etter en annen uttrykkelig angitt beregningsmåte. Det skal også fremgå hvilke leveranser og kjente tillegg som inngår.</p>
+          <p>Ved avtalt fastpris for et bestemt omfang gir ikke ordinær feilberegning av egen arbeidsmengde i seg selv grunnlag for å belaste kunden ekstra. Endringer i kundens bestilling eller andre forhold som kan få betydning for pris eller levering, skal avklares før det aktuelle tilleggsarbeidet gjennomføres.</p>
+          <p>Et estimat innebærer ikke at Orion Produksjon har en generell adgang til å øke prisen med en bestemt prosentsats. Eventuelle endringer må vurderes ut fra avtalen og reglene som gjelder for det aktuelle oppdraget.</p>
+          <p>For tjenester til forbrukere gjelder kravene til prisopplysninger og skriftlig pristilbud etter prisopplysningsforskriften. [<a class="lref" href="#kilde-1">1</a>]</p>
+          <h3>5. Merverdiavgift og prisinformasjon</h3>
+          <p>Orion Produksjon er på tidspunktet for denne oppdateringen ikke registrert i Merverdiavgiftsregisteret. Det legges derfor ikke merverdiavgift til de gjeldende prisene.</p>
+          <p>En oppgitt pris på 1 500 kroner innebærer dermed 1 500 kroner for den beskrevne leveransen, før eventuelle særskilt opplyste og avtalte tillegg. Det kommer ingen merverdiavgift i tillegg.</p>
+          <p>Registreringsplikten må vurderes etter gjeldende regler. For ordinær avgiftspliktig virksomhet inntrer registreringsplikten normalt når avgiftspliktig omsetning overstiger 50 000 kroner i løpet av en periode på tolv måneder. [<a class="lref" href="#kilde-2">2</a>–<a class="lref" href="#kilde-3">3</a>]</p>
+          <p>Dersom registreringsstatusen endres, skal prisinformasjon, kalkulator og tilbud oppdateres i samsvar med gjeldende regler. Overfor forbrukere skal relevante avgifter inngå i den oppgitte sluttprisen. En endret avgiftsstatus gir ikke i seg selv adgang til å se bort fra allerede inngåtte prisavtaler. [<a class="lref" href="#kilde-1">1</a>]</p>
+          <h3>6. Arbeidet som inngår i en produksjon</h3>
+          <p>Prisen på en produksjon gjelder mer enn tiden som brukes til selve opptaket eller den synlige utformingen av sluttproduktet.</p>
+          <p>Avhengig av oppdraget kan arbeidsprosessen omfatte behovsavklaring, idébearbeiding, planlegging, klargjøring av utstyr og prosjektfiler, opptak, sortering av materiale, redigering, fargearbeid, lydbehandling, grafikk, korrektur, eksport, kontroll og digital levering.</p>
+          <p>Produksjonens tekniske og kreative kompleksitet kan ha større betydning for tidsbruken enn lengden på den ferdige videoen eller antallet leverte filer. En kort sekvens med animasjon, maskering eller sporing kan kreve mer arbeid enn en lengre sammenstilling av ferdig tilrettelagte opptak.</p>
+          <p>Materialets kvalitet og organisering kan også påvirke arbeidsmengden. Store mengder usorterte filer, manglende opplysninger, ufullstendig tekst eller behov for å erstatte uegnet materiale kan gjøre oppdraget mer omfattende. Slike forhold skal vurderes ved avklaring av pris og leveranse.</p>
+          <h3>7. Utstyr og tekniske produksjonsvalg</h3>
+          <p>Utstyret tilpasses oppdragets formål, opptaksforhold og avtalte kvalitetskrav. Enkelte produksjoner kan gjennomføres med telefonkamera, kompakt lys- og lydutstyr eller liten drone. Andre produksjoner kan kreve mer omfattende kamera-, lys- og lydoppsett.</p>
+          <p>Prisen bestemmes ikke utelukkende av kameraets eller utstyrets innkjøpsverdi. Arbeidstid, kompetanse, planlegging, etterarbeid og leveransekrav inngår i den samlede vurderingen.</p>
+          <p>Bruk av enklere utstyr skal ikke innebære at avtalte egenskaper ved leveransen settes til side. Dersom et bestemt teknisk krav forutsetter andre ressurser enn det som inngår i grunnpakken, skal dette fremgå av tilbudet.</p>
+          <p>Oppløsning, bildeformat, antall versjoner og andre tekniske leveringskrav skal avklares der de har betydning for pris eller anvendelse.</p>
+          <h3>8. Samproduksjon og flere leveranser</h3>
+          <p>Når flere leveranser kan produseres under samme oppdrag, kan enkelte arbeidsoperasjoner deles. Det kan for eksempel være mulig å bruke samme behovsavklaring, lokasjon, rigging og opptaksøkt til både film og foto.</p>
+          <p>En ekstra leveranse medfører likevel normalt noe arbeid til utvalg, bearbeiding, tilpasning og kontroll. En ny versjon er derfor ikke nødvendigvis kostnadsfri selv om den bygger på eksisterende materiale.</p>
+          <p>Droneopptak som utføres ved et allerede avtalt oppmøte, kan prises annerledes enn et selvstendig droneoppdrag. Forskjellen kan skyldes at reise og deler av forberedelsene allerede er dekket av hovedoppdraget.</p>
+          <p>Eventuelle pakkepriser eller samproduksjonsfordeler skal knyttes til den konkrete bestillingen. Det følger ikke automatisk en bestemt rabatt av at kunden bestiller flere tjenester.</p>
+          <h3>9. Korrektur og endringer</h3>
+          <p>Pakkene omfatter én samlet korrekturrunde på enkelt nivå, to på standardnivå og tre på avansert nivå, med mindre annet er tydelig avtalt for den aktuelle leveransen.</p>
+          <p>En korrekturrunde består av én samlet tilbakemelding innenfor avtalt retning og omfang. Kunden bør så langt det er praktisk mulig samle merknader fra relevante beslutningstakere før tilbakemeldingen sendes.</p>
+          <p>Nytt konsept, nytt hovedbudskap, nye opptak eller andre vesentlige endringer i bestillingen kan innebære et utvidet oppdrag. Pris og konsekvenser for levering skal i så fall avklares før arbeidet bestilles.</p>
+          <p>Ekstra endringsarbeid beregnes etter avtalt sats på 850 kroner per time, med minimum 30 minutter per bestilt endringsomgang og deretter intervaller på 15 minutter. Ved dagens avgiftsstatus legges det ikke merverdiavgift til denne satsen.</p>
+          <p>Minimumsberegningen gjelder ikke retting av feil Orion Produksjon selv har gjort. Inkluderte korrekturrunder begrenser heller ikke kundens adgang til å gjøre gjeldende en mangel ved leveransen.</p>
+          <p>Ved levering av råklipp skal det avklares hva eventuell korrektur omfatter. En korrekturrunde innebærer ikke automatisk rett til en ny opptaksøkt.</p>
+          <h3>10. Etterarbeid, formater og versjoner</h3>
+          <p>Grunnleggende etterarbeid må forstås i sammenheng med den valgte tjenesten. Ved avtalt levering av en ferdig video kan dette omfatte normal klipping, enkel fargebalanse, grunnleggende lydjustering og eksport i avtalt format. Ved levering av råopptak inngår ikke nødvendigvis slik bearbeiding.</p>
+          <p>Mer omfattende animasjon, visuelle effekter, avansert lydarbeid, individuell retusj eller andre spesialoppgaver skal beskrives særskilt når de ikke inngår i pakken.</p>
+          <p>En ekstra eksport av samme klipp må skilles fra en ny versjon som krever endret klippestruktur, grafikk eller budskap. Tilsvarende kan tilpasning fra liggende til stående format kreve mer enn en teknisk beskjæring.</p>
+          <p>Det samme arbeidet skal ikke belastes flere ganger gjennom overlappende tillegg. Prisoppsummeringen skal så langt som mulig vise hvilket ekstraarbeid hvert tillegg gjelder.</p>
+          <p>For foto angir valgene 10, 25 og 50 bilder totalt antall ferdige bilder. Valgene er alternative leveranser og skal ikke summeres som separate bildepakker.</p>
+          <h3>11. Prioritert levering</h3>
+          <p>Prioritert levering innebærer en særskilt avtalt gjennomføring innen en kortere frist enn det som ellers ville blitt avtalt. Tilgjengeligheten avhenger av kapasitet og oppdragets praktiske forutsetninger.</p>
+          <p>Tillegget er 25 prosent av eget produksjonsarbeid og aktuelle arbeidstillegg. Kjøring, reisetid og særskilte eksterne innkjøp inngår ikke i beregningsgrunnlaget.</p>
+          <p>Prioritert levering endrer ikke sikkerhetskrav, nødvendige avklaringer eller rettigheter etter lovgivningen. Leveringsfrist og eventuelle forutsetninger skal bekreftes i tilbudet eller oppdragsbekreftelsen.</p>
+          <h3>12. Kjøring og reisetid</h3>
+          <p>Kjøring og reisetid beregnes separat fordi de dekker forskjellige ressurser. Kilometerprisen gjelder bruk av kjøretøy, mens reisetidsprisen gjelder tiden som bindes opp under reisen.</p>
+          <p>For ett ordinært oppmøte beregnes kjøring tur-retur fra Siggerud. Første 40 kilometer tur-retur og første time samlet reisetid er inkludert. Deretter beregnes 6 kroner per kilometer og 500 kroner per time reisetid. Bom, parkering og ferge avklares separat når dette er relevant.</p>
+          <p>Ved flere oppmøter, flere lokasjoner eller et annet avtalt reiseopplegg skal beregningsgrunnlaget fremgå av tilbudet.</p>
+          <p>Som illustrasjon gir 74 kilometer én vei en kjørelengde på 148 kilometer tur-retur. Kilometerprisen blir da 648 kroner. Dersom samlet reisetid er 2,5 timer, blir reisetidsprisen 750 kroner. Samlet reisepris i dette eksemplet er 1 398 kroner før eventuelle avtalte utlegg.</p>
+          <p>Eksemplet bygger på oppgitt avstand og antatt reisetid. Det er ikke en ruteberegning eller en generell fastpris for et bestemt sted.</p>
+          <p>Skatteetatens sats for skattefri kilometergodtgjørelse er oppgitt til 3,50 kroner per kilometer. Skatteetaten viser samtidig til statens sats på 5,30 kroner. Disse satsene gjelder godtgjørelse og fastsetter ikke prisen Orion Produksjon kan avtale med kunden. [<a class="lref" href="#kilde-4">4</a>]</p>
+          <h3>13. Særskilte forhold ved droneopptak</h3>
+          <p>Droneopptak gjennomføres innenfor rammene av regelverket som gjelder for den aktuelle operasjonen. Vær, vind, sikt, luftrom, avstand til personer, lokale restriksjoner og andre sikkerhetsforhold kan påvirke om opptaket kan gjennomføres.</p>
+          <p>Krav til registrering, kompetanse, forsikring og eventuell tillatelse avhenger blant annet av dronen og operasjonens kategori. Denne prisbeskrivelsen er ikke dokumentasjon på en bestemt operatørgodkjenning eller kompetanseklasse. [<a class="lref" href="#kilde-5">5</a>]</p>
+          <p>Dersom forholdene gjør et planlagt opptak uforsvarlig eller ulovlig, må partene avklare videre gjennomføring, alternativ leveranse eller nytt tidspunkt. Denne bestemmelsen fastsetter ikke et automatisk avbestillingsgebyr eller en generell rett til å belaste kunden for en uteblitt leveranse.</p>
+          <p>En publisert fra-pris innebærer ikke en garanti for at ønsket opptak kan gjennomføres på ethvert sted eller tidspunkt.</p>
+          <h3 id="programvare">14. Programvare og lisenskostnader</h3>
+          <p>Orion Produksjon har oppgitt at arbeidsprosessen omfatter Adobe After Effects, Photoshop, Illustrator, Blender, Logic Pro, Final Cut Pro og DaVinci Resolve. Valg av verktøy avhenger av oppdragets behov.</p>
+          <p>Programvaren kan inngå i et abonnement, være kjøpt som en enkeltlisens eller være tilgjengelig uten lisensbetaling. Kostnaden skal derfor ikke beregnes ved å legge sammen alle applikasjonene som separate abonnementer dersom de allerede inngår i samme pakke.</p>
+          <p>Ved kildekontrollen var ordinær publisert pris for Adobe Creative Cloud Pro 961,25 kroner per måned inkludert merverdiavgift, for årsplan med månedlig betaling. Utdanningsalternativet var oppgitt til 238,75 kroner per måned første år og deretter 492,50 kroner per måned, med kvalifiseringsvilkår. [<a class="lref" href="#kilde-6">6</a>–<a class="lref" href="#kilde-7">7</a>]</p>
+          <p>Apple oppga Final Cut Pro til 3 990 kroner og Logic Pro til 2 490 kroner som engangskjøp. Apple Creator Studio ble oppgitt som et alternativt abonnement til 149 kroner per måned eller 1 490 kroner per år. Abonnement og engangskjøp er alternative anskaffelsesmåter og skal ikke uten videre summeres. [<a class="lref" href="#kilde-8">8</a>]</p>
+          <p>Blackmagic Design oppga en gratisversjon av DaVinci Resolve og Studio-versjonen til 2 850 kroner. Blender er tilgjengelig som fri programvare og kan benyttes kommersielt. Tredjepartsressurser og tillegg kan ha egne vilkår. [<a class="lref" href="#kilde-9">9</a>–<a class="lref" href="#kilde-10">10</a>]</p>
+          <p>Beløpene er offentlige prisopplysninger fra leverandørene. De dokumenterer ikke hva Orion Produksjon faktisk har betalt, hvilken rabatt virksomheten benytter eller hvilken lisens kunden får til innhold som inngår i leveransen.</p>
+          <h3>15. Illustrasjon av programvarekostnader</h3>
+          <p>For å illustrere hvordan anskaffelseskostnader kan fordeles over tid, kan engangskjøpene av Final Cut Pro, Logic Pro og DaVinci Resolve Studio fordeles over tre år. Samlet kjøpsbeløp i eksemplet er 9 330 kroner, tilsvarende 3 110 kroner per år.</p>
+          <p>Med ordinær Adobe Pro-pris gir dette 14 645 kroner per år. Med den oppgitte utdanningsprisen blir tilsvarende beløp 5 975 kroner første år og 9 020 kroner ved den oppgitte fornyelsesprisen.</p>
+          <p>Dersom gratisversjonen av DaVinci Resolve benyttes, reduseres den illustrerte årsfordelingen med 950 kroner.</p>
+          <p>Treårsperioden er en beregningsforutsetning. Den er ikke en opplysning om obligatorisk fornyelse, regnskapsmessig avskrivning eller faktisk brukstid. Beregningen benytter de oppgitte kjøpsbeløpene uten å trekke fra eventuell merverdiavgift og omfatter ikke andre abonnementer eller prosjektspesifikke innkjøp.</p>
+          <h3>16. Økonomisk beregningsmåte</h3>
+          <p>En produksjonspris må vurderes mot både prosjektets direkte kostnader og virksomhetens øvrige ressursbehov. Direkte kostnader kan eksempelvis være særskilt leieutstyr eller innkjøpte ressurser til ett bestemt oppdrag. Felles kostnader kan omfatte programvare, vedlikehold, forsikring, administrasjon og utstyr.</p>
+          <p>Arbeidstid som ikke faktureres direkte, må også finansieres gjennom virksomhetens samlede inntekter. Dette kan blant annet være tilbudsarbeid, egen markedsføring og generell administrasjon.</p>
+          <p>En illustrerende beregning av inntekt per arbeidstime er prosjektets pris uten eventuell merverdiavgift, fratrukket direkte prosjektutgifter, delt på samlet arbeidstid. Resultatet er ikke netto timelønn. Beløpet skal fortsatt bidra til felles kostnader og egen inntekt.</p>
+          <p>Et oppdrag til 4 900 kroner som tar fem timer gir, før direkte prosjektutgifter, 980 kroner per time. Et oppdrag til 9 000 kroner som tar tolv timer gir 750 kroner per time. Eksemplet viser hvordan effektiv gjennomføring kan gi lavere totalpris uten tilsvarende lavere inntekt per time.</p>
+          <p>Det følger ikke av eksemplet at leveransene er likeverdige, eller at disse timetallene er registrert hos Orion Produksjon. Generelle metoder for nullpunktsberegning beskriver forholdet mellom pris, variable kostnader, faste kostnader og volum. Slike metoder dokumenterer ikke lønnsomheten i en konkret virksomhet uten faktiske inngangsdata. [<a class="lref" href="#kilde-11">11</a>]</p>
+          <h3>17. Eksterne prisreferanser</h3>
+          <p>Ved kildekontrollen oppga Aase Media 5 500 kroner eksklusive merverdiavgift for en halv dag videoproduksjon og separat 5 500 kroner for en halv dag klipping. [<a class="lref" href="#kilde-12">12</a>]</p>
+          <p>L. J. Aga oppga 680 kroner per time eksklusive merverdiavgift. Leverandøren oppga også logopakke basert på kundens egen idé til 4 896 kroner og logodesign fra grunnen til 7 480 kroner. De beskrevne pakkene omfattet inntil tre korrekturrunder. [<a class="lref" href="#kilde-13">13</a>]</p>
+          <p>Follo Dronefoto oppga dronevideo fra 4 900 kroner eksklusive merverdiavgift og en ferdig redigert kort dronefilm fra 8 900 kroner. [<a class="lref" href="#kilde-14">14</a>]</p>
+          <p>Norsk Filmforbund oppga fra 1. juni 2026 en anbefalt dagslønn på 5 080 kroner ved laveste ansiennitetstrinn for blant annet fotograf/DOP og klipper innen reklamefilm og annet korttidsengasjement. Forbundet presiserer at fakturerende må legge til sosiale kostnader. Dette er en lønnsreferanse, ikke en ferdig kundepris for en komplett produksjon. [<a class="lref" href="#kilde-15">15</a>]</p>
+          <p>Referansene er et begrenset utvalg publiserte opplysninger. De utgjør ikke et statistisk markedsgjennomsnitt. Ulikheter i opptaksomfang, bemanning, utstyr, etterarbeid, rettigheter og avgiftsbehandling må vurderes før prisene sammenlignes.</p>
+          <p>Det beregnes derfor ikke en generell prosentvis besparelse mellom Orion Produksjon og disse leverandørene.</p>
+          <h3>18. Prisfordeler og dokumentasjon</h3>
+          <p>Orion Produksjons mål er å tilby lave inngangspriser gjennom tilpasset omfang og effektiv gjennomføring. Dette er ikke en ubetinget garanti om å ha lavest pris for alle tjenester eller alle oppdrag.</p>
+          <p>Konkrete påstander om å være billigst eller om bestemte besparelser må kunne dokumenteres med et grunnlag som dekker påstanden. Et begrenset utvalg konkurrentpriser er ikke tilstrekkelig til å fastslå at en virksomhet alltid er billigere enn markedet. [<a class="lref" href="#kilde-16">16</a>]</p>
+          <p>Prisvurderingen skal derfor bygge på hva kunden faktisk får, hvilke tillegg som gjelder, og den samlede prisen for det avtalte oppdraget.</p>
+          <h3>19. Bruksrett, tredjepartsinnhold og personopplysninger</h3>
+          <p>Tilbudet eller oppdragsbekreftelsen skal avklare relevant bruksomfang, herunder kanaler, formål og eventuelle begrensninger knyttet til musikk, bilder, fonter eller andre tredjepartsressurser.</p>
+          <p>Levering av en fil innebærer ikke i seg selv at all opphavsrett er overdratt. Rettighetene må vurderes ut fra avtalen og åndsverkloven. Det skal også avklares om råfiler, prosjektfiler eller redigerbare arbeidsfiler inngår. [<a class="lref" href="#kilde-17">17</a>]</p>
+          <p>Opptak og publisering av identifiserbare personer kan reise spørsmål både om personvern og retten til eget bilde. Det må avklares hvem som har ansvar for nødvendig informasjon, behandlingsgrunnlag og eventuelle samtykker. Det kan ikke legges til grunn at en vanlig produksjonsbestilling automatisk gir adgang til enhver senere publisering. [<a class="lref" href="#kilde-17">17</a>–<a class="lref" href="#kilde-18">18</a>]</p>
+          <p>Dette dokumentet gir ikke Orion Produksjon en selvstendig, generell rett til å bruke kundens materiale eller avbildede personer i egen markedsføring. Slik bruk må ha et gyldig grunnlag.</p>
+          <h3>20. Forbrukerrettigheter og bestilling</h3>
+          <p>Ved avtaler med forbrukere kan angrerettloven komme til anvendelse dersom avtalen inngås ved fjernsalg eller utenom faste forretningslokaler. For tjenester er utgangspunktet da en angrefrist på 14 dager fra avtaleinngåelsen, forutsatt at lovens øvrige vilkår er oppfylt. [<a class="lref" href="#kilde-19">19</a>]</p>
+          <p>Dersom kunden ønsker oppstart før angrefristens utløp, må kravene til uttrykkelig anmodning, informasjon og dokumentasjon ivaretas. Eventuell betalingsplikt for allerede utført arbeid ved bruk av angreretten avhenger av at lovens vilkår er oppfylt.</p>
+          <p>At en leveranse er kundetilpasset, innebærer ikke i seg selv at angreretten for en tjeneste automatisk bortfaller. Tilsvarende kan ikke nedlasting av en ferdig fil alene brukes som generell begrunnelse for bortfall. Tjenester og digitalt innhold kan være underlagt forskjellige bestemmelser. [<a class="lref" href="#kilde-19">19</a>]</p>
+          <p>Dette dokumentet fastsetter ingen særskilt reklamasjonsfrist, avbestillingsavgift eller ansvarsbegrensning. Vilkårene for oppdrag står på en egen side: <a href="vilkar.html">Vilkår</a>. Behandling av personopplysninger er beskrevet i <a href="personvern.html">Personvern</a>.</p>
+          <h3>21. Oppdateringer og kildebruk</h3>
+          <p>Eksterne priser og regler kan endres. Datoen for dette dokumentet angir tidspunktet for den foreliggende gjennomgangen, ikke en garanti for at alle eksterne opplysninger forblir uendret.</p>
+          <p>Endringer i publiserte priser gjelder ikke automatisk for allerede inngåtte oppdrag. Den avtalte leveransen og prisen må vurderes ut fra den konkrete avtalen.</p>
+          <p>Opplysninger om Orions erfaring, arbeidsmåte, verktøy og registreringsstatus bygger på informasjon fra virksomheten. Eksterne kilder brukes til å underbygge de eksterne faktapunktene de gjelder. Beregningseksemplene er illustrasjoner og er ikke hentet fra Orions regnskap eller timelister.</p>
+          <h3 id="kilder">Kilder</h3><ol class="lg-src">
+          <li id="kilde-1"><a href="https://lovdata.no/forskrift/2012-11-14-1066/%C2%A714" target="_blank" rel="noopener">Prisopplysningsforskriften – prisopplysninger for tjenester</a>. Grunnlag for opplysninger om pris, tillegg, avgifter og pristilbud. Lovtekst kontrollert gjennom tilgjengelige søkeutdrag.</li>
+          <li id="kilde-2"><a href="https://www.skatteetaten.no/bedrift-og-organisasjon/avgifter/mva/registrere-endre-slette/" target="_blank" rel="noopener">Skatteetaten – registrering i Merverdiavgiftsregisteret</a>. Opplysninger om registreringsvilkår og beløpsgrenser.</li>
+          <li id="kilde-3"><a href="https://info.altinn.no/starte-og-drive/skatt-og-avgift/avgift/merverdiavgift" target="_blank" rel="noopener">Altinn – merverdiavgift</a>. Generell veiledning om registrering og avgiftsbehandling.</li>
+          <li id="kilde-4"><a href="https://www.skatteetaten.no/satser/bilgodtgjorelse-kilometergodtgjorelse/" target="_blank" rel="noopener">Skatteetaten – bilgodtgjørelse og kilometergodtgjørelse</a>. Opplysninger om skattefri godtgjørelse og henvisning til statens sats.</li>
+          <li id="kilde-5"><a href="https://www.luftfartstilsynet.no/droneregler" target="_blank" rel="noopener">Luftfartstilsynet – droneregler</a>. Veiledning om operative kategorier og krav ved droneflyging. Se også <a href="https://www.luftfartstilsynet.no/droner/faq---droner---samlete-sporsmal/sporsmal-1/ma-jeg-ha-forsikring-nar-jeg-flyr-drone/" target="_blank" rel="noopener">Luftfartstilsynets opplysninger om ansvarsforsikring</a>, som beskriver relevante unntak fra forsikringskravet.</li>
+          <li id="kilde-6"><a href="https://www.adobe.com/no/creativecloud/plans.html" target="_blank" rel="noopener">Adobe – planer og priser</a>. Publisert ordinær pris og abonnementsform for Creative Cloud Pro.</li>
+          <li id="kilde-7"><a href="https://www.adobe.com/no/creativecloud/buy/students.html" target="_blank" rel="noopener">Adobe – utdanningspriser</a>. Publisert introduksjonspris, fornyelsespris og kvalifiseringsvilkår.</li>
+          <li id="kilde-8"><a href="https://www.apple.com/no/newsroom/2026/01/introducing-apple-creator-studio-an-inspiring-collection-of-creative-apps/" target="_blank" rel="noopener">Apple – Creator Studio og enkeltapper</a>. Opplysninger om abonnementsalternativ og priser for engangskjøp.</li>
+          <li id="kilde-9"><a href="https://www.blackmagicdesign.com/no/products/davinciresolve/studio" target="_blank" rel="noopener">Blackmagic Design – DaVinci Resolve</a>. Opplysninger om gratisversjon og publisert Studio-pris.</li>
+          <li id="kilde-10"><a href="https://www.blender.org/about/license/" target="_blank" rel="noopener">Blender – lisens</a>. Opplysninger om programvarens lisens og kommersiell bruk. Kontrollen bygger på tilgjengelig indeksert innhold.</li>
+          <li id="kilde-11"><a href="https://legacy.sba.gov/business-guide/plan-your-business/calculate-your-startup-costs/break-even-point" target="_blank" rel="noopener">U.S. Small Business Administration – break-even point</a>. Generell økonomisk metode for sammenhengen mellom pris, kostnader og volum. Ikke kilde til norske markedspriser.</li>
+          <li id="kilde-12"><a href="https://aasemediapriser.no/" target="_blank" rel="noopener">Aase Media – prisliste</a>. Eksterne priseksempler for produksjon og klipping.</li>
+          <li id="kilde-13"><a href="https://ljaga.no/prisliste/" target="_blank" rel="noopener">L. J. Aga – prisliste</a>. Eksterne priseksempler for grafisk design og logopakker.</li>
+          <li id="kilde-14"><a href="https://www.follodronefoto.no/tjenester/prisliste/" target="_blank" rel="noopener">Follo Dronefoto – prisliste</a>. Eksterne priseksempler for droneopptak og ferdig redigert dronefilm.</li>
+          <li id="kilde-15"><a href="https://filmforbundet.no/avtaler-og-rettigheter" target="_blank" rel="noopener">Norsk Filmforbund – avtaler og rettigheter</a>. Anbefalte lønnssatser og opplysninger om fakturering.</li>
+          <li id="kilde-16"><a href="https://www.forbrukertilsynet.no/wp-content/uploads/2022/05/fov-2021-9252a.pdf" target="_blank" rel="noopener">Forbrukertilsynet – dokumentasjonskrav ved billigstpåstander</a>. Grunnlag for omtalen av dokumentasjon ved konkrete pris- og billigstpåstander. Relevant innhold kontrollert gjennom tilgjengelige søkeutdrag.</li>
+          <li id="kilde-17"><a href="https://lovdata.no/lov/2018-06-15-40" target="_blank" rel="noopener">Åndsverkloven</a>. Særlig bestemmelsene om overdragelse av opphavsrett og retten til eget bilde. Relevante bestemmelser kontrollert gjennom tilgjengelige søkeutdrag.</li>
+          <li id="kilde-18"><a href="https://www.datatilsynet.no/personvern-pa-ulike-omrader/internett-og-apper/bilder-pa-nett/" target="_blank" rel="noopener">Datatilsynet – deling av bilder</a>. Veiledning om publisering av bilder og forholdet til personvern og samtykke.</li>
+          <li id="kilde-19"><a href="https://lovdata.no/lov/2014-06-20-27" target="_blank" rel="noopener">Angrerettloven</a> og <a href="https://www.regjeringen.no/globalassets/upload/BLD/FRL/Veileder_angrerettloven.pdf" target="_blank" rel="noopener">myndighetenes veileder til angrerettloven</a>. Grunnlag for omtalen av angrerett og oppstart av tjenester. Veilederen er eldre og må leses sammen med gjeldende lov, herunder senere endringer.</li>
+          </ol>
+        <p class="lg-note">Pakkeprisene på denne siden og i priskalkulatoren hentes fra én felles prisoversikt.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" aria-labelledby="footer-title">
+    <h2 id="footer-title" class="visually-hidden">Om nettstedet</h2>
+    <div class="ft-inner">
+      <div class="ft-top">
+        <a class="ft-brand" href="#top" data-to-top aria-label="Orion Produksjon – til toppen">
+          <svg viewBox="737 193 380 380" aria-hidden="true"><path d="M857.27,321.28c-20.17,15.69-32.83,38.33-34.85,63.68-3.48,43.7,23.11,84.84,64.56,100.26,32.34,12.03,67.79,4.73,92.7-18.96,15.12-14.38,24.89-33,29.09-53.52,6.2-30.34.76-61.74-15.66-87.77-21.23-33.67-59.53-51.42-99.34-46.29-30.61,3.95-56.08,19.29-77.03,42.1,16.45-23.58,44.22-38.2,72.21-43.57,19.82-3.8,39.91-3.48,58.83,1.35,52.39,12.54,87.47,58.45,86.42,111.13-.83,41.4-25.1,77.99-64.14,94.59-58.92,25.04-132.43-.76-151.16-63.65-14.03-47.11,11.95-97.32,60.12-112.14-7.42,5.03-14.92,7.5-21.75,12.81"/><path d="M927.73,203.5c3,120,3,153,15,165s45,12,165,15c-120,3-153,3-165,15s-12,45-15,165c-3-120-3-153-15-165s-45-12-165-15c120-3,153-3,165-15s12-45,15-165Z"/></svg>
+          <span>Orion Produksjon</span>
+        </a>
+        <p class="ft-tag">Film, foto, drone og design – direkte fra personen som lager det.</p>
+      </div>
+
+      <nav class="ft-cols" aria-label="Bunntekst">
+        <div class="ft-col">
+          <h3>Tjenester</h3>
+          <ul>
+            <li><a href="tjenester.html#film">Film og videoproduksjon</a></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>Nettsider &amp; digitale løsninger</span><em>Kommer snart</em></span></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>Markedsføring &amp; strategi</span><em>Kommer snart</em></span></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>AI &amp; automatisering</span><em>Kommer snart</em></span></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>App</span><em>Kommer</em></span></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h3>Orion</h3>
+          <ul>
+            <li><a href="om.html?orion">Om Orion</a></li>
+            <li><a href="index.html#prosjekter">Tidligere prosjekter</a></li>
+            <li><a href="index.html?kontakt">Kontakt</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h3>Kom i gang</h3>
+          <ul>
+            <li><a href="index.html?kontakt">Diskuter en idé</a></li>
+            <li><a href="index.html?pris">Beregn en pris</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h3>Kontakt</h3>
+          <ul>
+            <li><a href="mailto:info@orionproduksjon.no">info@orionproduksjon.no</a></li>
+            <li><button class="ft-place" type="button" aria-haspopup="dialog">Follo / Oslo-området</button></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="ft-social" aria-label="Sosiale medier">
+        <a href="https://www.instagram.com/orion.produksjon" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/></svg></a>
+        <a class="off" aria-disabled="true" aria-label="YouTube (kommer)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10.2 9.2v5.6l4.8-2.8z" fill="currentColor"/></svg></a>
+        <a href="https://www.tiktok.com/@orion.produksjon" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 3v11.2a3.7 3.7 0 1 1-3.7-3.7M14.5 3c.4 2.6 2.1 4.3 4.8 4.6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="off" aria-disabled="true" aria-label="LinkedIn (kommer)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-3.4c0-1.6 1-2.6 2.3-2.6s2.2.9 2.2 2.6v3.4M11.5 10.5v6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></a>
+      </div>
+
+      <div class="ft-bottom">
+        <p>© <span data-year>2026</span> Orion Produksjon.</p>
+        <ul class="ft-legal">
+          <li><a href="personvern.html">Personvern</a></li>
+          <li><a href="personvern.html#lagring">Informasjonskapsler</a></li>
+          <li><a href="vilkar.html">Vilkår</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/pg.js"></script>
+  <script>
+    // «Kommer snart»-punktene i menyen: ingen navigasjon, menyen blir stående åpen, merket vises ved trykk
+    document.querySelectorAll('.mm-soon').forEach((el) => el.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      el.classList.add('tapped'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('tapped'), 1800);
+    }));
+  </script>
+  <script type="module" src="js/ft-map.js"></script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>
+    /* Lett versjon: alle mobiler/nettbrett, svake maskiner (≤ 4 GB minne), sparemodus, treg tilkobling eller lav bildefrekvens
+       får html.lite – samme design, men uten de tyngste effektene. Test med ?lite eller ?full (huskes i fanen). */
+    (function () { try {
+      var d = document.documentElement, n = navigator, c = n.connection || {}, q = location.search, k = 'orion-lite', s = sessionStorage, m;
+      if (matchMedia('(pointer: coarse)').matches) d.classList.add('touch');   // mobil/nettbrett
+      if (/[?&]full\b/.test(q)) s.setItem(k, '0'); else if (/[?&]lite\b/.test(q)) s.setItem(k, '1');
+      m = s.getItem(k);
+      // to versjoner: PC får alltid den fulle, telefon/nettbrett alltid den lette (?lite / ?full overstyrer)
+      if (m ? m === '1' : d.classList.contains('touch')) d.classList.add('lite');
+    } catch (e) {} })();
+  </script>
+  <title>Vilkår for oppdrag – Orion Produksjon</title>
+  <meta name="description" content="Vilkår for oppdrag hos Orion Produksjon: tilbud, levering, korrektur, betaling, bruksrett, avbestilling og angrerett.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/om.css">
+  <link rel="stylesheet" href="css/legal.css">
+</head>
+<body id="top">
+  <a class="skip" href="#innhold">Hopp til innhold</a>
+  <!-- Topplinje -->
+  <header class="om-top">
+    <a class="om-pill om-back" href="index.html" aria-label="Tilbake til forsiden">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5.5L8.5 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Orion</span>
+    </a>
+    <div class="om-right">
+      <a class="om-pill" href="index.html?kontakt">Kontakt</a>
+    <button class="om-pill menu-btn" type="button" aria-label="Meny" aria-expanded="false" aria-controls="meny">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line class="l l1" x1="4" y1="6" x2="20" y2="6"/><line class="l l2" x1="4" y1="12" x2="20" y2="12"/><line class="l l3" x1="4" y1="18" x2="20" y2="18"/>
+      </svg>
+    </button>
+    </div>
+  </header>
+  <div class="topbar">
+    <div class="nav-scrim" aria-hidden="true"></div>
+    <nav class="nav" id="meny" aria-label="Hovedmeny">
+      <div class="mm">
+        <div class="mm-pane mm-main">
+          <div class="mm-col mm-primary">
+            <h2 class="mm-label">Tjenester</h2>
+            <ul class="mm-big">
+              <li style="--k:0"><a href="om.html">Om</a></li>
+              <li style="--k:1"><a class="mm-more" href="tjenester.html#film" aria-controls="mm-film"><span class="mm-more-text">Film og videoproduksjon<small>3 tjenester · Film, foto &amp; drone, design</small></span><span class="mm-badge" aria-hidden="true"><svg class="mm-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5.5l6.5 6.5L9 18.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a></li>
+              <li style="--k:2"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">Nettsider &amp; digitale løsninger<span class="soon-wrap"><span class="soon-tag">Kommer snart</span></span></a></li>
+              <li style="--k:3"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">Markedsføring &amp; strategi<span class="soon-wrap"><span class="soon-tag">Kommer snart</span></span></a></li>
+              <li style="--k:4"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">AI &amp; automatisering<span class="soon-wrap"><span class="soon-tag">Kommer snart</span></span></a></li>
+              <li style="--k:5"><a class="mm-soon" role="link" aria-disabled="true" tabindex="0">App<span class="soon-wrap"><span class="soon-tag">Kommer</span></span></a></li>
+              <li style="--k:6"><a href="prisgrunnlaget.html">Prisgrunnlaget</a></li>
+            </ul>
+          </div>
+          <div class="mm-col mm-secondary mm-film-col" style="--k:5">
+            <h2 class="mm-label">Film og videoproduksjon</h2>
+            <ul class="mm-small"><li><a href="tjenester.html#film">Film &amp; videoproduksjon</a></li><li><a href="tjenester.html#foto">Foto &amp; drone</a></li><li><a href="tjenester.html#design">Grafisk design &amp; animasjon</a></li></ul>
+          </div>
+          <div class="mm-col mm-secondary" style="--k:6">
+            <h2 class="mm-label">Kom i gang</h2>
+            <ul class="mm-small">
+              <li><a href="index.html?kontakt">Ta kontakt</a></li>
+              <li><a href="index.html?kontakt">Diskuter en idé</a></li>
+              <li><a href="index.html?pris">Beregn en pris</a></li>
+              <li><a href="prisgrunnlaget.html">Prisgrunnlaget</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="mm-pane mm-sub" id="mm-film">
+          <button class="mm-back" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5.5L8.5 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Tjenester</span></button>
+          <h2 class="mm-label">Film og videoproduksjon</h2>
+          <ul class="mm-big"><li style="--k:0"><a href="tjenester.html#film">Film &amp; videoproduksjon</a></li><li style="--k:1"><a href="tjenester.html#foto">Foto &amp; drone</a></li><li style="--k:2"><a href="tjenester.html#design">Grafisk design &amp; animasjon</a></li></ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <main id="innhold" class="legal">
+    <header class="lg-head">
+      <p class="lg-eyebrow">Orion Produksjon</p>
+      <h1>Vilkår for oppdrag</h1>
+      <p class="lg-meta">Gjelder fra 30. oktober 2026</p>
+      <p class="lg-lead">Her står hvordan et oppdrag hos Orion Produksjon fungerer – fra forespørsel til levering. Prisene og hvordan de beregnes, finner du i <a href="prisgrunnlaget.html">Prisgrunnlaget</a>. Hvordan vi behandler personopplysninger, står i <a href="personvern.html">Personvern</a>.</p>
+    </header>
+
+    <nav class="lg-toc" aria-label="Innhold">
+      <ol>
+        <li><a href="#v1">Hvem du avtaler med</a></li>
+        <li><a href="#v2">Hva avtalen består av</a></li>
+        <li><a href="#v3">Forespørsel, kalkulator og bestilling</a></li>
+        <li><a href="#v4">Hva som inngår i leveransen</a></li>
+        <li><a href="#v5">Pris og tillegg</a></li>
+        <li><a href="#v6">Reise og utlegg</a></li>
+        <li><a href="#v7">Det vi trenger fra deg</a></li>
+        <li><a href="#v8">Korrektur og endringer</a></li>
+        <li><a href="#v9">Levering</a></li>
+        <li><a href="#v10">Droneopptak</a></li>
+        <li><a href="#v11">Betaling</a></li>
+        <li><a href="#v12">Bruksrett og arbeidsfiler</a></li>
+        <li><a href="#v13">Personer på bilder og film, og fortrolighet</a></li>
+        <li><a href="#v14">Personopplysninger og verktøy</a></li>
+        <li><a href="#v15">Oppbevaring av filer</a></li>
+        <li><a href="#v16">Flytting og avbestilling</a></li>
+        <li><a href="#v17">Angrerett for forbrukere</a></li>
+        <li><a href="#v18">Forsinkelse, feil og klage</a></li>
+        <li><a href="#v19">Ansvar</a></li>
+        <li><a href="#v20">Endringer i vilkårene og uenighet</a></li>
+      </ol>
+    </nav>
+
+    <section id="v1"><h2>1. Hvem du avtaler med</h2>
+      <p>Orion Produksjon drives av Orion Elias Scromeda og holder til på Siggerud i Follo. Virksomheten er foreløpig ikke registrert i Enhetsregisteret og har derfor ikke organisasjonsnummer ennå. Organisasjonsnummeret blir oppgitt her når registreringen er på plass.</p>
+      <p>Spørsmål om tilbud, gjennomføring, levering, avbestilling og klager sendes til <a href="mailto:info@orionproduksjon.no">info@orionproduksjon.no</a>.</p>
+      <p>Vilkårene gjelder enkeltstående oppdrag innen film og video, videoredigering, droneopptak, foto, grafisk design og animasjon. Andre tjenester og løpende avtaler krever egne avtalepunkter.</p>
+    </section>
+
+    <section id="v2"><h2>2. Hva avtalen består av</h2>
+      <p>Avtalen består av tilbudet du har akseptert eller oppdragsbekreftelsen, beskrivelsen av leveransen og den versjonen av disse vilkårene du fikk før du bestilte. Det vi har avtalt særskilt med deg, går foran disse vilkårene. Lover som ikke kan fravikes, gjelder alltid.</p>
+      <p>Er du forbruker – altså en privatperson som ikke handler som ledd i næringsvirksomhet – har du rettigheter etter forbrukerlovgivningen som disse vilkårene ikke begrenser.</p>
+    </section>
+
+    <section id="v3"><h2>3. Forespørsel, kalkulator og bestilling</h2>
+      <p>Det er uforpliktende å sende en forespørsel og å bruke priskalkulatoren. En forespørsel er ikke en bestilling og reserverer ikke en opptaksdato.</p>
+      <p>Kalkulatoren gir et foreløpig prisestimat basert på valgene dine. Endelig innhold, pris, reise og eventuelle forbehold bekreftes i et konkret tilbud før vi starter.</p>
+      <p>Et tilbud gjelder i perioden som står i tilbudet. Oppdraget blir bindende når du aksepterer tilbudet innen fristen. Du får deretter en oppdragsbekreftelse med pris, leveranse, tidsplan og vilkår som du kan lagre. Er du forbruker, får du samtidig informasjonen loven krever, og angreskjema når det er aktuelt.</p>
+    </section>
+
+    <section id="v4"><h2>4. Hva som inngår i leveransen</h2>
+      <p>Tilbudet beskriver hva som inngår. Avhengig av tjenesten kan det for eksempel være opptakssted, tid til opptak, antall lokasjoner, antall bilder eller filmer, omtrentlig lengde, format, etterarbeid, antall korrekturrunder, hvordan filene leveres og hvilken bruksrett du får.</p>
+      <p>Råklipp og ferdig redigert film er to forskjellige leveranser. Enkel dronepakke fra 1 500 kr leveres som utvalgte, uredigerte råklipp fra én lokasjon. Ferdig redigert dronefilm inngår i standard- og avansertpakkene, eller når det er avtalt særskilt.</p>
+      <p>Ved redigering av materiale du har filmet selv, avklarer vi mengden og kvaliteten på materialet på forhånd. Ved grafisk design og animasjon avklarer vi blant annet antall forslag, formater og om arbeidet bygger på eksisterende materiell eller en mal. Navn som «standard» og «avansert» gir ikke mer enn det som står i tilbudet.</p>
+    </section>
+
+    <section id="v5"><h2>5. Pris og tillegg</h2>
+      <p>Prisene oppgis i norske kroner. Orion Produksjon er ikke registrert i Merverdiavgiftsregisteret. Det kommer derfor ingen merverdiavgift i tillegg, og prisene er sluttpriser for den avtalte leveransen.</p>
+      <p>Ved fastpris betaler du den avtalte prisen for det avtalte innholdet. Bruker vi lengre tid enn vi regnet med på det som er avtalt, er det vår risiko. Prises oppdraget etter medgått tid, står timepris og eventuell kostnadsramme i tilbudet, og vi gir beskjed før rammen nås.</p>
+      <p>Endringer i bestillingen og ekstraarbeid avtales med pris før arbeidet gjøres. Du skal ikke betale to ganger for det samme arbeidet. Prisendringer på nettsiden gjelder ikke oppdrag som allerede er avtalt.</p>
+    </section>
+
+    <section id="v6"><h2>6. Reise og utlegg</h2>
+      <p>For ett vanlig oppmøte er de første 40 km tur-retur og den første timen samlet reisetid fra Siggerud inkludert. Utover dette beregnes 6 kr per km og 500 kr per time reisetid.</p>
+      <p>Reiseberegningen i kalkulatoren er et anslag og kan avvike fra faktisk rute. Bom, parkering, ferge, overnatting eller leie av spesialutstyr avtales før de påløper. Du får totalpris eller en tydelig beregningsmåte før avtalen inngås.</p>
+    </section>
+
+    <section id="v7"><h2>7. Det vi trenger fra deg</h2>
+      <p>Du leverer tekst, logo, bilder, referanser og annet vi har avtalt innen fristene vi blir enige om, og sier fra om praktiske begrensninger ved opptaksstedet.</p>
+      <p>Du må ha rett til å bruke materialet du ber oss bruke. Vi har selv ansvaret for materiale og lisenser vi skaffer.</p>
+      <p>Blir noe forsinket fra din side, gir vi beskjed om hva det betyr for tidsplanen og foreslår en ny plan. Eventuelle nye kostnader avtales før ekstraarbeid gjøres. At du ikke svarer, regnes ikke som godkjenning av ny pris, ny leveranse eller publisering.</p>
+    </section>
+
+    <section id="v8"><h2>8. Korrektur og endringer</h2>
+      <p>Antall korrekturrunder står i tilbudet: normalt én på enkel, to på standard og tre på avansert. En korrekturrunde er én samlet tilbakemelding på en levert versjon, innenfor avtalt idé og omfang. Nye opptak, nytt konsept eller ubegrensede endringer inngår ikke uten avtale.</p>
+      <p>Ekstra endringsarbeid utover det avtalte koster 850 kr per time, minimum 30 minutter og deretter per påbegynte 15 minutter, når dette er avtalt før arbeidet gjøres.</p>
+      <p>Feil vi har gjort, retter vi uten kostnad. Slik retting regnes ikke som en av korrekturrundene dine. At du godkjenner et utkast, fjerner ikke rettighetene du har hvis leveransen har feil.</p>
+    </section>
+
+    <section id="v9"><h2>9. Levering</h2>
+      <p>Leveringsdato eller -periode avtales for hvert oppdrag. Frister som avhenger av materiale eller tilbakemeldinger fra deg, eller av tillatelser til droneflyging, står i tilbudet. Filene leveres digitalt i avtalte formater. Får du ikke lastet ned eller brukt leveransen som avtalt, hjelper vi deg.</p>
+      <p>Prioritert levering tilbys når vi har kapasitet, og avtales med en konkret frist. Tillegget er 25 % av eget produksjonsarbeid og valgte arbeidstillegg. Reise og andre utlegg får ikke dette tillegget.</p>
+      <p>Har en nedlastingslenke utløpsdato, får du vite det før du bestiller. Er det vår feil at du ikke fikk levert det avtalte, mister du ikke kravet ditt fordi lenken har utløpt.</p>
+    </section>
+
+    <section id="v10"><h2>10. Droneopptak</h2>
+      <p>Om et droneopptak kan gjennomføres, avhenger blant annet av regelverket, luftrom og restriksjoner, vær, omgivelser og sikkerhet. Vi sørger for å oppfylle kravene som gjelder for det konkrete oppdraget. Vi flyr ikke der det er ulovlig eller uforsvarlig, og vi tar hensyn til mennesker, dyr, verneområder og privatliv.</p>
+      <p>Trengs det særskilte tillatelser eller ekstra planlegging, avtaler vi tid, kostnad og hva som skjer hvis tillatelsen ikke gis, før du bestiller dette.</p>
+      <p>Kan opptaket ikke gjennomføres trygt eller lovlig, sier vi fra så snart som mulig og foreslår ny dato eller et alternativ. Finnes det ingen egnet løsning, faller den delen bort. Du betaler ikke full pakkepris for en droneflyging som ikke ble gjennomført, og forskudd for arbeid som ikke skal betales, får du tilbake.</p>
+    </section>
+
+    <section id="v11"><h2>11. Betaling</h2>
+      <p>Betalingsmåte, forfallsdato og eventuelt forskudd står i tilbudet eller oppdragsbekreftelsen. Et forskudd kan ikke uten videre beholdes hvis oppdraget avbestilles, heves eller angreretten brukes – da gjøres det opp etter reglene som gjelder.</p>
+      <p>Ved forsinket betaling kan vi kreve forsinkelsesrente og lovlige purre- og inkassokostnader. Har leveransen feil eller er forsinket, har du rett til å holde tilbake betaling etter reglene som gjelder.</p>
+    </section>
+
+    <section id="v12"><h2>12. Bruksrett og arbeidsfiler</h2>
+      <p>Tilbudet sier hvordan du kan bruke det vi leverer – for eksempel hvilke kanaler og formål, i hvor lang tid, og om betalt annonsering eller bruk hos andre virksomheter inngår. Opphavsretten overføres ikke bare ved at du får en fil, med mindre det er avtalt.</p>
+      <p>Lager vi en logo til deg, avtaler vi særskilt hvilke rettigheter du får til den. Vi garanterer ikke at en logo kan registreres som varemerke med mindre en slik undersøkelse er avtalt.</p>
+      <p>Musikk, fonter, stockmateriale og maler kan ha egne lisensvilkår. Vi sier fra før bestilling hvis dette begrenser den avtalte bruken. At du får en ferdig film med musikk, betyr ikke at du får bruke musikken fritt i andre produksjoner.</p>
+      <p>Råfiler, prosjektfiler og redigerbare arbeidsfiler inngår bare når det er avtalt. Det gjelder ikke når råklipp er selve det du har bestilt.</p>
+    </section>
+
+    <section id="v13"><h2>13. Personer på bilder og film, og fortrolighet</h2>
+      <p>Vi avklarer sammen hvem som informerer de som er med på opptak, og hvem som innhenter samtykke der det trengs. Barn og andre som trenger særlig beskyttelse krever ekstra hensyn. At du har bestilt et oppdrag, betyr ikke at alle som er med, har samtykket.</p>
+      <p>Vi bruker ikke navnet ditt, logoen din, leveransen eller opptak av personer i vår egen markedsføring bare fordi du har bestilt et oppdrag. Slik bruk avtales separat.</p>
+      <p>Materiale og opplysninger som ikke er offentlige, behandler vi fortrolig. Si fra på forhånd om du har særskilte krav til taushet.</p>
+    </section>
+
+    <section id="v14"><h2>14. Personopplysninger og verktøy</h2>
+      <p>Hvordan vi behandler kontakt- og kundeopplysninger, står i <a href="personvern.html">personvernerklæringen</a>. Hvis vi behandler personopplysninger på dine vegne, inngår vi en databehandleravtale før vi starter.</p>
+      <p>Bruker vi underleverandører eller KI-verktøy på en måte som berører rettighetene dine, fortrolig materiale eller personopplysninger, avtaler vi det med deg først. Fortrolig materiale og personopplysninger lastes ikke opp til slike tjenester uten at det er avklart.</p>
+    </section>
+
+    <section id="v15"><h2>15. Oppbevaring av filer</h2>
+      <p>Hvor lenge ferdige filer er tilgjengelige for nedlasting, og om materiale arkiveres etter levering, avtales for hvert oppdrag. Vi anbefaler at du tar sikkerhetskopi av filene du mottar, men det fritar oss ikke fra ansvaret for det vi har avtalt.</p>
+    </section>
+
+    <section id="v16"><h2>16. Flytting og avbestilling</h2>
+      <p>Du kan be om å flytte eller avbestille oppdraget ved å kontakte oss. Avbestilling bekreftes skriftlig. Vi prøver først å finne en ny dato. Flytting koster ikke noe ekstra med mindre det er avtalt på forhånd.</p>
+      <p>Ved avbestilling betaler du for arbeid som allerede er gjort og dokumenterte kostnader vi har hatt, etter reglene som gjelder. Du betaler ikke full pris for det som ikke blir levert. Et eventuelt avbestillingsgebyr må stå i tilbudet og være innenfor lovens grenser.</p>
+      <p>Bruker du angreretten, gjelder punkt 17 i stedet. Leverer vi ikke som avtalt, gjelder reglene om forsinkelse og feil.</p>
+    </section>
+
+    <section id="v17"><h2>17. Angrerett for forbrukere</h2>
+      <p>Inngår du som forbruker avtalen på avstand – for eksempel på e-post – eller utenfor faste forretningslokaler, har du normalt angrerett i 14 dager fra avtalen inngås. Får du ikke informasjonen loven krever, kan fristen bli lengre.</p>
+      <p>Vil du bruke angreretten, sender du en tydelig beskjed til <a href="mailto:info@orionproduksjon.no">info@orionproduksjon.no</a>. Du trenger ikke begrunne det eller bruke et bestemt skjema.</p>
+      <p>Vil du at vi skal starte før angrefristen er ute, må du be uttrykkelig om det. Bruker du angreretten etter at vi har startet, kan du måtte betale en forholdsmessig del for arbeidet som er gjort – vi forteller deg på forhånd hva det innebærer. Angreretten for et ferdig utført oppdrag faller bare bort når lovens vilkår er oppfylt.</p>
+      <p>Har du betalt noe du skal ha tilbake, betaler vi det tilbake uten unødig opphold og innen lovens frist.</p>
+    </section>
+
+    <section id="v18"><h2>18. Forsinkelse, feil og klage</h2>
+      <p>Hvis noe kan forsinke oppdraget, sier vi fra så snart vi vet det, og foreslår ny leveringsdato og mulige løsninger.</p>
+      <p>Si fra om feil så snart du oppdager dem, og beskriv hva som avviker fra avtalen. Dette er en oppfordring – det korter ikke ned fristene du har etter loven.</p>
+      <p>Har leveransen feil eller er forsinket, kan du etter forholdene ha krav på retting, levering, å holde tilbake betaling, prisavslag, heving eller erstatning. Vi får mulighet til å rette feilen der loven gir adgang til det.</p>
+    </section>
+
+    <section id="v19"><h2>19. Ansvar</h2>
+      <p>Ansvaret vårt følger av avtalen og loven. Vilkårene inneholder ingen generell fraskrivelse av ansvar. Eventuelle ansvarsbegrensninger for bedriftskunder må avtales særskilt.</p>
+      <p>Skjer det noe ekstraordinært som ingen av oss kan kontrollere, gir den som rammes beskjed og begrenser følgene så langt det er rimelig. Det gir ikke rett til å beholde betaling for noe som ikke blir levert. Vanlig vær ved droneopptak håndteres etter punkt 10.</p>
+    </section>
+
+    <section id="v20"><h2>20. Endringer i vilkårene og uenighet</h2>
+      <p>Det er versjonen du fikk ved bestilling, som gjelder for oppdraget ditt. Nye vilkår gjelder ikke oppdrag som allerede er avtalt.</p>
+      <p>Blir vi uenige, prøver vi først å løse det sammen. Som forbruker kan du også klage til <a href="https://www.forbrukertilsynet.no" target="_blank" rel="noopener">Forbrukertilsynet</a>, som kan mekle. Norsk rett gjelder.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer" aria-labelledby="footer-title">
+    <h2 id="footer-title" class="visually-hidden">Om nettstedet</h2>
+    <div class="ft-inner">
+      <div class="ft-top">
+        <a class="ft-brand" href="#top" data-to-top aria-label="Orion Produksjon – til toppen">
+          <svg viewBox="737 193 380 380" aria-hidden="true"><path d="M857.27,321.28c-20.17,15.69-32.83,38.33-34.85,63.68-3.48,43.7,23.11,84.84,64.56,100.26,32.34,12.03,67.79,4.73,92.7-18.96,15.12-14.38,24.89-33,29.09-53.52,6.2-30.34.76-61.74-15.66-87.77-21.23-33.67-59.53-51.42-99.34-46.29-30.61,3.95-56.08,19.29-77.03,42.1,16.45-23.58,44.22-38.2,72.21-43.57,19.82-3.8,39.91-3.48,58.83,1.35,52.39,12.54,87.47,58.45,86.42,111.13-.83,41.4-25.1,77.99-64.14,94.59-58.92,25.04-132.43-.76-151.16-63.65-14.03-47.11,11.95-97.32,60.12-112.14-7.42,5.03-14.92,7.5-21.75,12.81"/><path d="M927.73,203.5c3,120,3,153,15,165s45,12,165,15c-120,3-153,3-165,15s-12,45-15,165c-3-120-3-153-15-165s-45-12-165-15c120-3,153-3,165-15s12-45,15-165Z"/></svg>
+          <span>Orion Produksjon</span>
+        </a>
+        <p class="ft-tag">Film, foto, drone og design – direkte fra personen som lager det.</p>
+      </div>
+
+      <nav class="ft-cols" aria-label="Bunntekst">
+        <div class="ft-col">
+          <h3>Tjenester</h3>
+          <ul>
+            <li><a href="tjenester.html#film">Film og videoproduksjon</a></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>Nettsider &amp; digitale løsninger</span><em>Kommer snart</em></span></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>Markedsføring &amp; strategi</span><em>Kommer snart</em></span></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>AI &amp; automatisering</span><em>Kommer snart</em></span></li>
+            <li><span class="ft-soon" aria-disabled="true"><span>App</span><em>Kommer</em></span></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h3>Orion</h3>
+          <ul>
+            <li><a href="om.html?orion">Om Orion</a></li>
+            <li><a href="index.html#prosjekter">Tidligere prosjekter</a></li>
+            <li><a href="index.html?kontakt">Kontakt</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h3>Kom i gang</h3>
+          <ul>
+            <li><a href="index.html?kontakt">Diskuter en idé</a></li>
+            <li><a href="index.html?pris">Beregn en pris</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h3>Kontakt</h3>
+          <ul>
+            <li><a href="mailto:info@orionproduksjon.no">info@orionproduksjon.no</a></li>
+            <li><button class="ft-place" type="button" aria-haspopup="dialog">Follo / Oslo-området</button></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="ft-social" aria-label="Sosiale medier">
+        <a href="https://www.instagram.com/orion.produksjon" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/></svg></a>
+        <a class="off" aria-disabled="true" aria-label="YouTube (kommer)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10.2 9.2v5.6l4.8-2.8z" fill="currentColor"/></svg></a>
+        <a href="https://www.tiktok.com/@orion.produksjon" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 3v11.2a3.7 3.7 0 1 1-3.7-3.7M14.5 3c.4 2.6 2.1 4.3 4.8 4.6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="off" aria-disabled="true" aria-label="LinkedIn (kommer)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-3.4c0-1.6 1-2.6 2.3-2.6s2.2.9 2.2 2.6v3.4M11.5 10.5v6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></a>
+      </div>
+
+      <div class="ft-bottom">
+        <p>© <span data-year>2026</span> Orion Produksjon.</p>
+        <ul class="ft-legal">
+          <li><a href="personvern.html">Personvern</a></li>
+          <li><a href="personvern.html#lagring">Informasjonskapsler</a></li>
+          <li><a href="vilkar.html">Vilkår</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/legal.js"></script>
+  <script>
+    // «Kommer snart»-punktene i menyen: ingen navigasjon, menyen blir stående åpen, merket vises ved trykk
+    document.querySelectorAll('.mm-soon').forEach((el) => el.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      el.classList.add('tapped'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('tapped'), 1800);
+    }));
+  </script>
+  <script type="module" src="js/ft-map.js"></script>
+</body>
+</html>
