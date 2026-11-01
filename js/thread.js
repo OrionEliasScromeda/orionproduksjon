@@ -144,7 +144,7 @@ const L2D=(x,y)=>[VW/2+(x-931)*SC,VH*.5+(y-530)*SC];
 
 function build(){
   VW=innerWidth;VH=stableVH();DPR=Math.min(LITE()&&!TOUCH?1:2,devicePixelRatio||1);   // svake PC-er: halv oppløsning; mobil: skarpt
-  CH=TOUCH?Math.round(VH*1.5):VH;FT=FRONT.offsetTop;lastCA=-1;
+  CH=TOUCH?Math.round(VH*2):VH;FT=FRONT.offsetTop;lastCA=-1;
   cv.width=VW*DPR|0;cv.height=CH*DPR|0;cvTop.width=cv.width;cvTop.height=cv.height;
   if(TOUCH){cv.style.height=cvTop.style.height=CH+'px';}
   DOC_H=document.documentElement.scrollHeight;
@@ -539,10 +539,13 @@ function frame(now){
   const flow=sm(.25,.8,b);
   let target=Math.max(flow*sFromY(VH*1.35),headTargetFromScroll(scrollY)*flow);
   if(scrollY>FRONT_H-VH*1.55)target=ROPE.L;            // slutten er alltid ferdig tegnet før tråden dras ut
-  head+=(target-head)*(1-Math.exp(-dt*(reduce?20:(target>=ROPE.L?12:6))));   // mot slutten skynder stjerna seg
+  head+=(target-head)*(1-Math.exp(-dt*(reduce?20:(target>=ROPE.L?12:(TOUCH?13:6)))));   // mot slutten skynder stjerna seg; mobil følger fingeren tettere
   const vHead=(head-prevHead)/Math.max(dt,1e-3);prevHead=head;   // med fortegn: negativ når tråden trekkes tilbake
 
-  CA=TOUCH?Math.max(0,Math.round(scrollY-VH*.25)):scrollY;   // toppen av lerretet, i sidens koordinater
+  // toppen av lerretet, i sidens koordinater. Mobil: flyttes bare når skjermen nærmer seg kanten av lerretet,
+  // ellers ligger det helt i ro og scroller med siden
+  if(!TOUCH)CA=scrollY;
+  else if(lastCA<0||scrollY<CA+40||scrollY+VH>CA+CH-40)CA=Math.max(0,Math.round(scrollY-VH*.5));
   if(TOUCH&&CA!==lastCA){lastCA=CA;cv.style.transform=cvTop.style.transform=`translate3d(0,${CA-FT}px,0)`;}
   ctx=ctxBase;ctx.setTransform(DPR,0,0,DPR,0,0);ctx.clearRect(0,0,VW,CH);
   ctxTop.setTransform(1,0,0,1,0,0);ctxTop.clearRect(0,0,cvTop.width,cvTop.height);
@@ -612,8 +615,12 @@ requestAnimationFrame(frame);
 // Tekstboksene kommer inn når de nærmer seg midten av skjermen (og går tilbake når man scroller opp)
 (() => {
   const boxes = [...document.querySelectorAll('.thread-front .tbox')];
-  const io = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle('in', e.isIntersecting)), { rootMargin: '0px 0px -18% 0px', threshold: .15 });
-  boxes.forEach((b) => io.observe(b));
+  // inn når boksen er godt inne på skjermen; ut igjen først når den er helt under skjermkanten (scroller man opp).
+  // Ingen av/på-blinking når man scroller i små dytt rundt grensen.
+  const touch = matchMedia('(pointer: coarse)').matches;   // PC: som før – av og på ved samme grense
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) e.target.classList.add('in'); else if (!touch) e.target.classList.remove('in'); }), { rootMargin: '0px 0px -18% 0px', threshold: .15 });
+  const out = new IntersectionObserver((es) => es.forEach((e) => { if (!e.isIntersecting && e.boundingClientRect.top > 0) e.target.classList.remove('in'); }), { threshold: 0 });
+  boxes.forEach((b) => { io.observe(b); if (touch) out.observe(b); });
 })();
 
 // Siden er alltid i mørk modus (klassen står på <html> i index.html)
