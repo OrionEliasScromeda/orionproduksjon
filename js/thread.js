@@ -123,6 +123,9 @@ const LETTERS=[];{let x=TEXT_X;for(const ch of TEXT){const w=ctx.measureText(ch)
 
 /* ---------- geometri i dokument-piksler (bygges på nytt ved resize) ---------- */
 let VW=0,VH=0,DPR=1,SC=1,DOC_H=0,FRONT_H=0;
+// Lerretet: på PC ligger det fast over skjermen. På mobil ligger det i selve siden (litt høyere enn skjermen) og
+// scroller med innholdet – telefonen scroller i 120 Hz, men tegner bare i 60, så et fast lerret ville ristet.
+let CA=0,CH=0,FT=0,lastCA=-1;
 let lastFlood=-1,dimS=0,lastRise=-1,riseS=0;
 const RISE=document.querySelector('.front-rise');
 const DIM=document.querySelector('.front-dim');
@@ -141,7 +144,9 @@ const L2D=(x,y)=>[VW/2+(x-931)*SC,VH*.5+(y-530)*SC];
 
 function build(){
   VW=innerWidth;VH=stableVH();DPR=Math.min(LITE()&&!TOUCH?1:2,devicePixelRatio||1);   // svake PC-er: halv oppløsning; mobil: skarpt
-  cv.width=VW*DPR|0;cv.height=VH*DPR|0;cvTop.width=cv.width;cvTop.height=cv.height;
+  CH=TOUCH?Math.round(VH*1.5):VH;FT=FRONT.offsetTop;lastCA=-1;
+  cv.width=VW*DPR|0;cv.height=CH*DPR|0;cvTop.width=cv.width;cvTop.height=cv.height;
+  if(TOUCH){cv.style.height=cvTop.style.height=CH+'px';}
   DOC_H=document.documentElement.scrollHeight;
   FRONT_H=FRONT.offsetHeight;   // effekten varer bare gjennom forsiden
   SC=Math.min(VW/1650,VH/980)*.92;
@@ -336,7 +341,7 @@ function ropeFrame(s,t){
 }
 function drawRope(head,t,seed,vHead,scrollY,tail=0,vis=1,tailV=0){
   if(head<2)return;
-  const yMin=scrollY-120,yMax=scrollY+VH+120;
+  const yMin=CA-120,yMax=CA+CH+120;
   for(let k=0;k<ROPE_N;k++){
     let run=[],Z=[],sig=[];
     const flushRun=()=>{if(run.length>1){const J=jitter(run,sig,1.1,seed,40+k);inkLine(J,Z,sig,k===0?2.1:1.5,0,.66,seed,60+k,1e9);}run=[];Z=[];sig=[];};
@@ -537,7 +542,9 @@ function frame(now){
   head+=(target-head)*(1-Math.exp(-dt*(reduce?20:(target>=ROPE.L?12:6))));   // mot slutten skynder stjerna seg
   const vHead=(head-prevHead)/Math.max(dt,1e-3);prevHead=head;   // med fortegn: negativ når tråden trekkes tilbake
 
-  ctx=ctxBase;ctx.setTransform(DPR,0,0,DPR,0,0);ctx.clearRect(0,0,VW,VH);
+  CA=TOUCH?Math.max(0,Math.round(scrollY-VH*.25)):scrollY;   // toppen av lerretet, i sidens koordinater
+  if(TOUCH&&CA!==lastCA){lastCA=CA;cv.style.transform=cvTop.style.transform=`translate3d(0,${CA-FT}px,0)`;}
+  ctx=ctxBase;ctx.setTransform(DPR,0,0,DPR,0,0);ctx.clearRect(0,0,VW,CH);
   ctxTop.setTransform(1,0,0,1,0,0);ctxTop.clearRect(0,0,cvTop.width,cvTop.height);
   const past=scrollY>FRONT_H+40;
   // blekkflommen: starter når stjerna lander i bunnen, dekker hele skjermen før «La arbeidet snakke for seg selv.»
@@ -561,7 +568,7 @@ function frame(now){
   document.documentElement.classList.toggle('on-paper',flood<.5&&!DARK);
   const calm=Math.abs(target-head)<.5&&(bTime===0||bTime===1)&&dimS===fGoal;
   if(past){settled=calm;requestAnimationFrame(frame);return;}   // forbi forsiden: ingenting å tegne
-  ctx.setTransform(DPR,0,0,DPR,0,-scrollY*DPR);
+  ctx.setTransform(DPR,0,0,DPR,0,-CA*DPR);
   ctx.save();ctx.beginPath();ctx.rect(-200,0,VW+400,FRONT_H);ctx.clip();
   if(scrollY<VH*1.6){drawStrands(t,b,bVel,seed);drawBurst(b,seed);}
   // nederst: stjerna tar en lang løkke og forsvinner ut av siden – tråden dras ut etter den
@@ -580,13 +587,13 @@ function frame(now){
   // fremre del av ringen: tegnes på nytt over boksen (bare innenfor boksen), så tråden går foran glasset
   if(RINGRECT&&Math.abs(RINGRECT[1]-scrollY)<VH*1.5){
     ctx=ctxTop;ONLY_FRONT=true;
-    ctx.setTransform(DPR,0,0,DPR,0,-scrollY*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,-CA*DPR);
     ctx.save();ctx.beginPath();ctx.rect(RINGRECT[0]-2,RINGRECT[1]-2,RINGRECT[2]+4,RINGRECT[3]+4);ctx.clip();
     drawRope(head,t,seed,vHead,scrollY,tail,sv,tailV);
     ctx.restore();
     ONLY_FRONT=false;ctx=ctxBase;
   }
-  ctx.setTransform(DPR,0,0,DPR,0,0);
+  ctx.setTransform(DPR,0,0,DPR,0,(scrollY-CA)*DPR);   // pila: fast på skjermen
   // pila kommer først tilbake når alt har trukket seg helt inn igjen (og toner rolig inn), forsvinner fort
   const hintOn=t>2.2&&b<.01&&head<3&&scrollY<24;
   hintA=clamp(hintA+(hintOn?dt/.7:-dt/.15));
